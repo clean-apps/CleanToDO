@@ -55,19 +55,18 @@ class _TasksPageState extends State<TasksPage> {
   
   void updateTask( Task task ){
     this.setState((){
+
+      if( tasksData.indexOf( task ) < 0 ){
+        task.id = tasksData.length + 1;
+        task.category = new Category( text: 'Home' );
+        tasksData.add( task );
+      }
+
       tasksData.elementAt( tasksData.indexOf( task ) ).title = task.title;
       tasksData.elementAt( tasksData.indexOf( task ) ).category = task.category;
       tasksData.elementAt( tasksData.indexOf( task ) ).deadline = task.deadline;
       tasksData.elementAt( tasksData.indexOf( task ) ).reminder = task.reminder;
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
-    });
-  }
-
-  void addTask( Task task ){
-    this.setState( (){
-      task.id = tasksData.length + 1;
-      task.category = new Category( text: 'Home' );
-      tasksData.add( task );
     });
   }
 
@@ -106,8 +105,8 @@ class _TasksPageState extends State<TasksPage> {
             context, 
             new MaterialPageRoute(
               builder: (context) => new TaskDetail( 
-                                          task: new Task(),
-                                          updateTask: addTask,
+                                          task: new Task( completed: false ),
+                                          updateTask: updateTask,
                                         )
             )
           );

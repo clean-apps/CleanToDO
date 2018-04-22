@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/detail/TaskDetailTile.dart';
+import 'package:clean_todo/detail/DummyInputDialog.dart';
 
 class TaskDetail extends StatefulWidget {
 
@@ -29,7 +30,7 @@ class _TaskDetailState extends State<TaskDetail> {
     return new Scaffold(
 
       appBar: new AppBar(
-        title: new Text( widget.task.category.text ),
+        title: widget.task.category == null ? new Text( 'To-Do' ) : new Text( widget.task.category.text ),
       ),
 
       body: new Column(
@@ -50,6 +51,7 @@ class _TaskDetailState extends State<TaskDetail> {
                           
                           this.setState((){
                             widget.task.completed ? widget.task.completed = false : widget.task.completed = true ;
+                            widget.updateTask( widget.task );
                           });
 
                         },
@@ -65,13 +67,29 @@ class _TaskDetailState extends State<TaskDetail> {
 
                           new Text( 'Title', style: new TextStyle( fontSize: 12.0, color: Colors.grey ), ),
                           widget.task.title == null ? 
-                                              new Text( 'untitled' ) :
+                                              new Text( 'untitled', style: new TextStyle( fontSize: 24.0, color: Colors.grey ), ) :
                                               new Text( widget.task.title, style: new TextStyle( fontSize: 24.0, ) ),
 
                         ],
 
                       ) ,
-                    ) 
+                    ),
+
+                    onTap: (){
+                      showDialog(
+                        context: context,
+                        child: new DummyInputDialog(
+                          title: 'Title',
+                          content: widget.task.title,
+                          updateContent: (content){
+                            this.setState( (){
+                              widget.task.title = content;
+                              widget.updateTask( widget.task );
+                            });
+                          },
+                        ),
+                      );
+                    }, 
                   )
 
                 ],
@@ -90,6 +108,7 @@ class _TaskDetailState extends State<TaskDetail> {
                     updateContent: (content){
                       this.setState( (){
                         widget.task.deadline = content;
+                        widget.updateTask( widget.task );
                       });
                     },
                   ),
@@ -103,6 +122,7 @@ class _TaskDetailState extends State<TaskDetail> {
                     updateContent: (content){
                       this.setState( (){
                         widget.task.reminder = content;
+                        widget.updateTask( widget.task );
                       });
                     },
                   ),
@@ -122,6 +142,7 @@ class _TaskDetailState extends State<TaskDetail> {
                     updateContent: (content){
                       this.setState( (){
                         widget.task.notes = content;
+                        widget.updateTask( widget.task );
                       });
                     },
                   ),
@@ -129,34 +150,10 @@ class _TaskDetailState extends State<TaskDetail> {
               
             ),
 
-            new ButtonTheme.bar(
-              child: new ButtonBar(
-                children: <Widget>[
-
-                  new FlatButton(
-                    child: const Text('Cancel'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-
-                  new FlatButton(
-                    child: const Text('Save'),
-                    onPressed: () {
-                      widget.updateTask( widget.task );
-                      Navigator.pop(context);
-                    },
-                  ),
-
-                ],
-              ),
-            ),
-
         ],
 
       )
       
-
     );
   }
 
