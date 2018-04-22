@@ -4,15 +4,15 @@ import 'package:clean_todo/lists/TaskTile.dart';
 
 class TasksList extends StatefulWidget {
 
-  TasksList({ this.tasks, this.toggleTask });
+  TasksList({ this.tasks, this.toggleTask, this.updateTask });
   List<Task> tasks ;
   ValueChanged<Task> toggleTask;
+  final ValueChanged<Task> updateTask ;
 
   @override
   _TasksListState createState() => new _TasksListState();
 
 }
-
 
 class _TasksListState extends State<TasksList> {
 
@@ -23,7 +23,12 @@ class _TasksListState extends State<TasksList> {
       widget.tasks.forEach(  (task){
 
           taskRowsList.add(
-            new TaskTile (  task : task ),
+            new TaskTile (  
+              task : task,
+              updateTask : (task){
+                              widget.updateTask(task);
+                            },
+            ),
           );
 
           taskRowsList.add( new Divider( ) ); //color : Theme.of(context).primaryColor ) );

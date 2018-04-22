@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/detail/TaskDetailTile.dart';
 
-class TaskDetail extends StatelessWidget {
+class TaskDetail extends StatefulWidget {
 
-  TaskDetail({ this.task });
+  TaskDetail({ this.task, this.updateTask });
   final Task task ;
+  final ValueChanged<Task> updateTask ;
+
+  _TaskDetailState createState() => new _TaskDetailState();
+}
+
+class _TaskDetailState extends State<TaskDetail> {
 
   Widget getStatusIcon( bool completed, context ){
 
@@ -23,7 +29,7 @@ class TaskDetail extends StatelessWidget {
     return new Scaffold(
 
       appBar: new AppBar(
-        title: new Text( task.category.text ),
+        title: new Text( widget.task.category.text ),
       ),
 
       body: new Column(
@@ -38,7 +44,17 @@ class TaskDetail extends StatelessWidget {
 
                   new ListTile(
 
-                    leading: getStatusIcon( task.completed, context ),
+                    leading: new IconButton(
+                        icon:  getStatusIcon( widget.task.completed, context ),
+                        onPressed: (){
+                          
+                          this.setState((){
+                            widget.task.completed ? widget.task.completed = false : widget.task.completed = true ;
+                          });
+
+                        },
+                    ),
+
                     title: new Padding(
 
                       padding: new EdgeInsets.only( top : 20.0, bottom: 20.0 ),
@@ -48,7 +64,9 @@ class TaskDetail extends StatelessWidget {
                         children: <Widget>[
 
                           new Text( 'Title', style: new TextStyle( fontSize: 12.0, color: Colors.grey ), ),
-                          new Text( task.title, style: new TextStyle( fontSize: 24.0, ) ),
+                          widget.task.title == null ? 
+                                              new Text( 'untitled' ) :
+                                              new Text( widget.task.title, style: new TextStyle( fontSize: 24.0, ) ),
 
                         ],
 
@@ -66,17 +84,27 @@ class TaskDetail extends StatelessWidget {
                 children: <Widget>[
 
                   new TaskDetailTile(
-                    text: task.deadline,
+                    text: widget.task.deadline,
                     hint: 'Add Due Date',
                     icon: Icons.calendar_today,
+                    updateContent: (content){
+                      this.setState( (){
+                        widget.task.deadline = content;
+                      });
+                    },
                   ),
 
                   new Divider(),
 
                   new TaskDetailTile(
-                    text: task.reminder,
+                    text: widget.task.reminder,
                     hint: 'Remind Me',
                     icon: Icons.alarm_on,
+                    updateContent: (content){
+                      this.setState( (){
+                        widget.task.reminder = content;
+                      });
+                    },
                   ),
 
                 ],
@@ -88,9 +116,14 @@ class TaskDetail extends StatelessWidget {
               child: new Padding(
                 padding: new EdgeInsets.only(bottom: 40.0),
                 child: new TaskDetailTile(
-                    text: task.notes,
+                    text: widget.task.notes,
                     hint: 'Add a note',
                     icon: Icons.chat_bubble_outline,
+                    updateContent: (content){
+                      this.setState( (){
+                        widget.task.notes = content;
+                      });
+                    },
                   ),
               )
               
@@ -110,6 +143,7 @@ class TaskDetail extends StatelessWidget {
                   new FlatButton(
                     child: const Text('Save'),
                     onPressed: () {
+                      widget.updateTask( widget.task );
                       Navigator.pop(context);
                     },
                   ),

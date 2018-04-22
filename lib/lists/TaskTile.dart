@@ -4,9 +4,10 @@ import 'package:clean_todo/detail/TaskDetail.dart';
 
 class TaskTile extends StatefulWidget {
 
-  TaskTile({ this.task , this.toggleTask });
+  TaskTile({ this.task , this.toggleTask, this.updateTask });
   final Task task ;
-  ValueChanged<Task> toggleTask;
+  final ValueChanged<Task> toggleTask;
+  final ValueChanged<Task> updateTask ;
 
   @override
   _TasksTileState createState() => new _TasksTileState();
@@ -122,7 +123,13 @@ class _TasksTileState extends State<TaskTile> {
         onTap: (){
           Navigator.push(
             context, 
-            new MaterialPageRoute( builder: (context) => new TaskDetail( task: widget.task ) )
+            new MaterialPageRoute( builder: (context) => 
+                        new TaskDetail( 
+                            task: widget.task,
+                            updateTask: (task){
+                              widget.updateTask(task);
+                            },
+                        ) )
           );
 
         },
