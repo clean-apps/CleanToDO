@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
+import 'package:clean_todo/lists/LeaveBehindView.dart';
 
 class TaskTile extends StatefulWidget {
 
-  TaskTile({ this.task , this.toggleTask, this.updateTask });
+  TaskTile({ this.task , this.toggleTask, this.updateTask, this.deleteTask });
   final Task task ;
   final ValueChanged<Task> toggleTask;
   final ValueChanged<Task> updateTask ;
+  final ValueChanged<Task> deleteTask ;
 
   @override
   _TasksTileState createState() => new _TasksTileState();
@@ -90,15 +92,27 @@ class _TasksTileState extends State<TaskTile> {
     return subtitleWidgets;
   }
 
+  Map<DismissDirection, double> _dismissThresholds() {
+    Map<DismissDirection, double> map = new Map<DismissDirection, double>();
+    map.putIfAbsent(DismissDirection.horizontal, () => 0.5);
+    return map;
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final TextStyle taskTitle = new TextStyle( fontWeight: FontWeight.normal );
     final TextStyle taskTitleChecked = new TextStyle( fontWeight: FontWeight.normal, decoration: TextDecoration.lineThrough );
 
+    return new Dismissible(
 
-
-    return new ListTile(
+      key: new Key( widget.task.id.toString() ),
+      background: new LeaveBehindViewLeft(),
+      secondaryBackground: new LeaveBehindViewRight(),
+      direction: DismissDirection.horizontal,
+      dismissThresholds: _dismissThresholds(),
+      onDismissed: (disDir) =>  widget.deleteTask(widget.task),
+      child: new ListTile(
 
         leading: new IconButton(
             icon:  getStatusIcon( widget.task.completed ),
@@ -134,7 +148,8 @@ class _TasksTileState extends State<TaskTile> {
 
         },
 
-      );
+      ),
+    );
   }
 
 }

@@ -8,6 +8,7 @@ import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/lists/TasksList.dart';
 import 'package:clean_todo/data/FakeDataGenerator.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
+import 'package:clean_todo/detail/TaskAdd.dart';
 
 class TasksPage extends StatefulWidget {
   TasksPage({Key key, this.title}) : super(key: key);
@@ -23,6 +24,7 @@ class _TasksPageState extends State<TasksPage> {
   CategoryData categoryData ;
   UserData userData ;
   List<Task> tasksData ;
+  Task newTask ;
   
   _TasksPageState(){
     DataProvider dataProvider = new FakeDataGenerator();
@@ -30,10 +32,10 @@ class _TasksPageState extends State<TasksPage> {
     categoryData = dataProvider.getSidebarData();
     userData = dataProvider.getUserData();
     tasksData = dataProvider.getAllTasks();
-  }
 
-  void _incrementCounter() {
-    //do nothing
+    newTask = new Task();
+    newTask.id = tasksData.length + 1;
+    newTask.completed = false;
   }
 
   void changeBodyText( newText ){
@@ -57,7 +59,6 @@ class _TasksPageState extends State<TasksPage> {
     this.setState((){
 
       if( tasksData.indexOf( task ) < 0 ){
-        task.id = tasksData.length + 1;
         task.category = new Category( text: 'Home' );
         tasksData.add( task );
       }
@@ -67,6 +68,12 @@ class _TasksPageState extends State<TasksPage> {
       tasksData.elementAt( tasksData.indexOf( task ) ).deadline = task.deadline;
       tasksData.elementAt( tasksData.indexOf( task ) ).reminder = task.reminder;
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
+    });
+  }
+
+  void deleteTask(Task task){
+    this.setState((){
+      tasksData.remove( task );
     });
   }
 
@@ -96,6 +103,7 @@ class _TasksPageState extends State<TasksPage> {
         tasks: tasksData, 
         toggleTask: toggleTask,
         updateTask: updateTask,
+        deleteTask: deleteTask,
       ),
 
       floatingActionButton: new FloatingActionButton(
@@ -105,7 +113,7 @@ class _TasksPageState extends State<TasksPage> {
             context, 
             new MaterialPageRoute(
               builder: (context) => new TaskDetail( 
-                                          task: new Task( completed: false ),
+                                          task: newTask,
                                           updateTask: updateTask,
                                         )
             )
