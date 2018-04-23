@@ -8,7 +8,6 @@ import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/lists/TasksList.dart';
 import 'package:clean_todo/data/FakeDataGenerator.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
-import 'package:clean_todo/detail/TaskAdd.dart';
 
 class TasksPage extends StatefulWidget {
   TasksPage({Key key, this.title}) : super(key: key);
@@ -61,6 +60,10 @@ class _TasksPageState extends State<TasksPage> {
       if( tasksData.indexOf( task ) < 0 ){
         task.category = new Category( text: 'Home' );
         tasksData.add( task );
+
+        newTask = new Task();
+        newTask.id = tasksData.length + 1;
+        newTask.completed = false;
       }
 
       tasksData.elementAt( tasksData.indexOf( task ) ).title = task.title;

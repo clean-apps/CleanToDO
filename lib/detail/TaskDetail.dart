@@ -51,7 +51,6 @@ class _TaskDetailState extends State<TaskDetail> {
                           
                           this.setState((){
                             widget.task.completed ? widget.task.completed = false : widget.task.completed = true ;
-                            widget.updateTask( widget.task );
                           });
 
                         },
@@ -84,7 +83,6 @@ class _TaskDetailState extends State<TaskDetail> {
                           updateContent: (content){
                             this.setState( (){
                               widget.task.title = content;
-                              widget.updateTask( widget.task );
                             });
                           },
                         ),
@@ -108,7 +106,6 @@ class _TaskDetailState extends State<TaskDetail> {
                     updateContent: (content){
                       this.setState( (){
                         widget.task.deadline = content;
-                        widget.updateTask( widget.task );
                       });
                     },
                   ),
@@ -122,7 +119,6 @@ class _TaskDetailState extends State<TaskDetail> {
                     updateContent: (content){
                       this.setState( (){
                         widget.task.reminder = content;
-                        widget.updateTask( widget.task );
                       });
                     },
                   ),
@@ -142,7 +138,6 @@ class _TaskDetailState extends State<TaskDetail> {
                     updateContent: (content){
                       this.setState( (){
                         widget.task.notes = content;
-                        widget.updateTask( widget.task );
                       });
                     },
                   ),
@@ -152,7 +147,15 @@ class _TaskDetailState extends State<TaskDetail> {
 
         ],
 
-      )
+      ),
+
+      floatingActionButton: new FloatingActionButton(
+              child: new Icon(Icons.save),
+              onPressed: (){
+                widget.updateTask( widget.task ); 
+                Navigator.pop(context);
+              },
+            ),
       
     );
   }
