@@ -1,6 +1,6 @@
-# clean_todo
+# Clean To-Do
 
-A new Flutter project.
+A Clean To-Do manager for Android mande with Flutter and ❤️
 
 ## Getting Started
 
