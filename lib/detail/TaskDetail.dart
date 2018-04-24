@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
-import 'package:clean_todo/detail/TaskDetailTile.dart';
-import 'package:clean_todo/detail/DummyInputDialog.dart';
+import 'package:clean_todo/detail/TextTaskDetailTile.dart';
+import 'package:clean_todo/detail/TextInputDialog.dart';
+import 'package:clean_todo/beans/Category.dart';
 
 class TaskDetail extends StatefulWidget {
 
@@ -26,6 +27,52 @@ class _TaskDetailState extends State<TaskDetail> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> datesAndReminder = <Widget>[
+
+        new TextTaskDetailTile(
+          text: widget.task.deadline,
+          hint: 'Add Due Date',
+          icon: Icons.calendar_today,
+          updateContent: (content){
+            this.setState( (){
+              widget.task.deadline = content;
+            });
+          },
+        ),
+
+        new Divider(),
+
+        new TextTaskDetailTile(
+          text: widget.task.reminder,
+          hint: 'Remind Me',
+          icon: Icons.alarm_on,
+          updateContent: (content){
+            this.setState( (){
+              widget.task.reminder = content;
+            });
+          },
+        ),
+
+    ];
+
+    if( widget.task.reminder != null ){
+
+      datesAndReminder.add( new Divider() );
+      datesAndReminder.add( 
+        new TextTaskDetailTile(
+          text: widget.task.repeat,
+          hint: 'Repeat',
+          icon: Icons.refresh,
+          updateContent: (content){
+            this.setState( (){
+              widget.task.repeat = content;
+            });
+          },
+        ),
+       );
+
+    }
 
     return new Scaffold(
 
@@ -77,7 +124,7 @@ class _TaskDetailState extends State<TaskDetail> {
                     onTap: (){
                       showDialog(
                         context: context,
-                        child: new DummyInputDialog(
+                        child: new TextInputDialog(
                           title: 'Title',
                           content: widget.task.title,
                           updateContent: (content){
@@ -99,26 +146,14 @@ class _TaskDetailState extends State<TaskDetail> {
 
                 children: <Widget>[
 
-                  new TaskDetailTile(
-                    text: widget.task.deadline,
-                    hint: 'Add Due Date',
-                    icon: Icons.calendar_today,
+                  new TextTaskDetailTile(
+                    text: widget.task.category == null ? null : widget.task.category.text,
+                    hint: 'Add to a List',
+                    icon: Icons.list,
                     updateContent: (content){
                       this.setState( (){
-                        widget.task.deadline = content;
-                      });
-                    },
-                  ),
-
-                  new Divider(),
-
-                  new TaskDetailTile(
-                    text: widget.task.reminder,
-                    hint: 'Remind Me',
-                    icon: Icons.alarm_on,
-                    updateContent: (content){
-                      this.setState( (){
-                        widget.task.reminder = content;
+                        if( content == null ) widget.task.category = null ;
+                        else widget.task.category = new Category(text: content);
                       });
                     },
                   ),
@@ -129,9 +164,15 @@ class _TaskDetailState extends State<TaskDetail> {
             ),
 
             new Card(
+              child: new Column(
+                children: datesAndReminder,
+              ),
+            ),
+
+            new Card(
               child: new Padding(
                 padding: new EdgeInsets.only(bottom: 40.0),
-                child: new TaskDetailTile(
+                child: new TextTaskDetailTile(
                     text: widget.task.notes,
                     hint: 'Add a note',
                     icon: Icons.chat_bubble_outline,

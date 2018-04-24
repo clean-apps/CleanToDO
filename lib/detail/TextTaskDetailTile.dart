@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:clean_todo/detail/DummyInputDialog.dart';
+import 'package:clean_todo/detail/TextInputDialog.dart';
 
-class TaskDetailTile extends StatelessWidget{
+class TextTaskDetailTile extends StatelessWidget{
   
-  TaskDetailTile({ this.text, this.hint, this.icon, this.updateContent });
+  TextTaskDetailTile({ this.text, this.hint, this.icon, this.updateContent });
 
   final String text ;
   final String hint ;
   final IconData icon ;
-  final ValueChanged<String> updateContent; 
+  final ValueChanged<String> updateContent ;
 
   @override
     Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class TaskDetailTile extends StatelessWidget{
           onTap: (){
             showDialog(
               context: context,
-              child: new DummyInputDialog(
+              child: new TextInputDialog(
                 title: this.hint,
                 content: this.text,
                 updateContent: (content){
@@ -43,5 +43,6 @@ class TaskDetailTile extends StatelessWidget{
           
         );
     }
+
 
 }

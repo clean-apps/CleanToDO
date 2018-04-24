@@ -16,9 +16,9 @@ class _SystemPaddingDID extends StatelessWidget {
   }
 }
 
-class DummyInputDialog extends StatelessWidget {
+class TextInputDialog extends StatelessWidget {
 
-  DummyInputDialog({ this.title, this.content, this.updateContent });
+  TextInputDialog({ this.title, this.content, this.updateContent });
 
   final String title ;
   String content;

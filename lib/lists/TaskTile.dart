@@ -122,7 +122,7 @@ class _TasksTileState extends State<TaskTile> {
                 widget.task.completed ? widget.task.completed = false : widget.task.completed = true ;
               });
 
-              widget.toggleTask( widget.task );
+              widget.updateTask( widget.task );
 
             },
         ),

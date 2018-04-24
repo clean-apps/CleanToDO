@@ -11,6 +11,7 @@ class Task {
   Category category ;
   String deadline ;
   String reminder ;
+  String repeat ;
   String notes ;
 
   get hashCode =>  this.id;
