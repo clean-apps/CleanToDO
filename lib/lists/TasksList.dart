@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/lists/TaskTile.dart';
+import 'package:clean_todo/beans/Category.dart';
 
 class TasksList extends StatefulWidget {
 
-  TasksList({ this.tasks, this.toggleTask, this.updateTask, this.deleteTask });
+  TasksList({ this.tasks, this.categories, this.toggleTask, this.updateTask, this.deleteTask });
+
   List<Task> tasks ;
+  final List<Category> categories ;
+
   final ValueChanged<Task> toggleTask;
   final ValueChanged<Task> updateTask ;
   final ValueChanged<Task> deleteTask ;
@@ -26,6 +30,7 @@ class _TasksListState extends State<TasksList> {
           taskRowsList.add(
             new TaskTile (  
               task : task,
+              categories: widget.categories,
               updateTask : (task){
                               widget.updateTask(task);
                             },

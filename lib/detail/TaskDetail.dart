@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/detail/TextTaskDetailTile.dart';
 import 'package:clean_todo/detail/TextInputDialog.dart';
+import 'package:clean_todo/detail/DropdownTile.dart';
 import 'package:clean_todo/beans/Category.dart';
+import 'dart:async';
 
 class TaskDetail extends StatefulWidget {
 
-  TaskDetail({ this.task, this.updateTask });
+  TaskDetail({ this.task, this.updateTask, this.categories });
+
   final Task task ;
   final ValueChanged<Task> updateTask ;
+  final List<Category> categories ;
 
   _TaskDetailState createState() => new _TaskDetailState();
 }
@@ -29,6 +33,8 @@ class _TaskDetailState extends State<TaskDetail> {
   Widget build(BuildContext context) {
 
     List<Widget> datesAndReminder = <Widget>[
+
+      
 
         new TextTaskDetailTile(
           text: widget.task.deadline,
@@ -146,10 +152,16 @@ class _TaskDetailState extends State<TaskDetail> {
 
                 children: <Widget>[
 
-                  new TextTaskDetailTile(
+                  new DropdownTile(
                     text: widget.task.category == null ? null : widget.task.category.text,
                     hint: 'Add to a List',
                     icon: Icons.list,
+                    options: widget.categories.map( (Category pCategory){
+                                            return new DropdownMenuItem<String>(
+                                              value: pCategory.text,
+                                              child: new Text(pCategory.text),
+                                            );
+                                        }).toList(),
                     updateContent: (content){
                       this.setState( (){
                         if( content == null ) widget.task.category = null ;

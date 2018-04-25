@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/lists/LeaveBehindView.dart';
+import 'package:clean_todo/beans/Category.dart';
 
 class TaskTile extends StatefulWidget {
 
-  TaskTile({ this.task , this.toggleTask, this.updateTask, this.deleteTask });
+  TaskTile({ this.task , this.categories, this.toggleTask, this.updateTask, this.deleteTask });
+
   final Task task ;
+  final List<Category> categories ;
   final ValueChanged<Task> toggleTask;
   final ValueChanged<Task> updateTask ;
   final ValueChanged<Task> deleteTask ;
@@ -140,6 +143,7 @@ class _TasksTileState extends State<TaskTile> {
             new MaterialPageRoute( builder: (context) => 
                         new TaskDetail( 
                             task: widget.task,
+                            categories: widget.categories,
                             updateTask: (task){
                               widget.updateTask(task);
                             },

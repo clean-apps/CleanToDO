@@ -103,7 +103,8 @@ class _TasksPageState extends State<TasksPage> {
               ),
 
       body: new TasksList( 
-        tasks: tasksData, 
+        tasks: tasksData,
+        categories: this.categoryData.user,
         toggleTask: toggleTask,
         updateTask: updateTask,
         deleteTask: deleteTask,
@@ -118,6 +119,7 @@ class _TasksPageState extends State<TasksPage> {
               builder: (context) => new TaskDetail( 
                                           task: newTask,
                                           updateTask: updateTask,
+                                          categories: this.categoryData.user,
                                         )
             )
           );
