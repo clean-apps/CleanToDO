@@ -3,6 +3,9 @@ import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/detail/TextTaskDetailTile.dart';
 import 'package:clean_todo/detail/TextInputDialog.dart';
 import 'package:clean_todo/detail/DropdownTile.dart';
+import 'package:clean_todo/detail/CTDropdownMenuItem.dart';
+import 'package:clean_todo/calender/DateToString.dart';
+import 'package:clean_todo/calender/Dates.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'dart:async';
 
@@ -19,6 +22,8 @@ class TaskDetail extends StatefulWidget {
 
 class _TaskDetailState extends State<TaskDetail> {
 
+  final List<String> _deadlines = ['Today', 'Tomorrow', 'Next Week'];
+
   Widget getStatusIcon( bool completed, context ){
 
     return completed ?
@@ -29,21 +34,59 @@ class _TaskDetailState extends State<TaskDetail> {
 
   }
 
+  String getValueForCustom( deadline ){
+    if( deadline == null ){
+      return 'Custom';
+
+    } else if ( _deadlines.contains(deadline) ) {
+      return 'Custom';
+
+    } else {
+      return  deadline;
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
     List<Widget> datesAndReminder = <Widget>[
 
-      
-
-        new TextTaskDetailTile(
+        new DropdownTile(
           text: widget.task.deadline,
           hint: 'Add Due Date',
           icon: Icons.calendar_today,
+          options: <DropdownMenuItem<String>>[
+            new DropdownMenuItem<String>( value: 'Today', child: new Text( 'Today' ), ),
+            new DropdownMenuItem<String>( value: 'Tomorrow', child: new Text( 'Tomorrow' ), ),
+            new DropdownMenuItem<String>( value: 'Next Week', child: new Text( 'Next Week' ), ),
+            new DropdownMenuItem<String>( value: getValueForCustom(widget.task.deadline), child: new Text( 'Custom' ), ),
+          ],
+
           updateContent: (content){
-            this.setState( (){
-              widget.task.deadline = content;
-            });
+
+            if( !_deadlines.contains(content)){
+               Future<DateTime> picked = showDatePicker(
+                context: context,
+                firstDate: Dates.now,
+                initialDate: content == 'Custom' ? Dates.now : DateTime.parse( widget.task.deadline ),
+                lastDate: new DateTime.now().add( new Duration( days: 365 ) ),
+              );
+              
+              picked.then( (pickedValue){
+                 if ( pickedValue != null )
+                  this.setState( (){
+                    widget.task.deadline = Dates.parse(pickedValue);
+                  });
+              });
+
+            } else {
+
+              this.setState( (){
+                widget.task.deadline = content;
+              });
+
+            }
           },
         ),
 
@@ -61,24 +104,6 @@ class _TaskDetailState extends State<TaskDetail> {
         ),
 
     ];
-
-    if( widget.task.reminder != null ){
-
-      datesAndReminder.add( new Divider() );
-      datesAndReminder.add( 
-        new TextTaskDetailTile(
-          text: widget.task.repeat,
-          hint: 'Repeat',
-          icon: Icons.refresh,
-          updateContent: (content){
-            this.setState( (){
-              widget.task.repeat = content;
-            });
-          },
-        ),
-       );
-
-    }
 
     return new Scaffold(
 

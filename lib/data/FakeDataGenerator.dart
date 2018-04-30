@@ -32,11 +32,11 @@ class FakeDataGenerator implements DataProvider {
 
   List<Task> getAllTasks(){
     return [
-      new Task( id : 0, completed : true, title: 'fix the lightbulb', category: new Category( text: 'Home' ) , deadline: 'tomorrow', reminder: 'morning', notes:  'yes' ),
+      new Task( id : 0, completed : true, title: 'fix the lightbulb', category: new Category( text: 'Home' ) , deadline: 'Tomorrow', reminder: 'morning', notes:  'yes' ),
       new Task( id : 1, completed : false, title: 'clean the garden', category: new Category( text: 'Home' ) ),
-      new Task( id : 2, completed : false, title: 'fix the fire hose', category: new Category( text: 'Home' ), deadline: 'next week', reminder: 'morning' ),
+      new Task( id : 2, completed : false, title: 'fix the fire hose', category: new Category( text: 'Home' ), deadline: 'Next Week', reminder: 'morning' ),
       new Task( id : 3, completed : true, title: 'finish the annual reports', category: new Category( text: 'Work' ) ),
-      new Task( id : 4, completed : false, title: 'come up with ideas for the pre-sales task', category: new Category( text: 'Work' ), deadline: 'next week' ),
+      new Task( id : 4, completed : false, title: 'come up with ideas for the pre-sales task', category: new Category( text: 'Work' ), deadline: 'Next Week' ),
       new Task( id : 5, completed : false, title: 'buy ring for aniversary', category: new Category( text: 'Shopping' ) ),
       new Task( id : 6, completed : false, title: 'buy shirts for presentation', category: new Category( text: 'Shopping' ), reminder: 'morning' ),
     ];
