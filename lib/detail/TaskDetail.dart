@@ -47,43 +47,58 @@ class _TaskDetailState extends State<TaskDetail> {
     }
   }
 
+  String getTitleForCustom( deadline_val ){
+    if( deadline_val == null ){
+      return 'Custom';
+
+    } else if ( _deadlines.contains(deadline_val) ) {
+      return 'Custom';
+
+    } else {
+      return  deadline_val;
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
     List<Widget> datesAndReminder = <Widget>[
 
         new DropdownTile(
-          text: widget.task.deadline,
+          text: _deadlines.contains( widget.task.deadline ) ? widget.task.deadline : widget.task.deadline_val,
           hint: 'Add Due Date',
           icon: Icons.calendar_today,
           options: <DropdownMenuItem<String>>[
             new DropdownMenuItem<String>( value: 'Today', child: new Text( 'Today' ), ),
             new DropdownMenuItem<String>( value: 'Tomorrow', child: new Text( 'Tomorrow' ), ),
             new DropdownMenuItem<String>( value: 'Next Week', child: new Text( 'Next Week' ), ),
-            new DropdownMenuItem<String>( value: getValueForCustom(widget.task.deadline), child: new Text( 'Custom' ), ),
+            new DropdownMenuItem<String>( value: getValueForCustom(widget.task.deadline_val), 
+                                          child: new Text( getTitleForCustom(widget.task.deadline)  ), ),
           ],
 
           updateContent: (content){
 
-            if( !_deadlines.contains(content)){
+            if( !_deadlines.contains(content) && content != null ){
+
                Future<DateTime> picked = showDatePicker(
                 context: context,
-                firstDate: Dates.now,
-                initialDate: content == 'Custom' ? Dates.now : DateTime.parse( widget.task.deadline ),
+                firstDate: Dates.today,
+                initialDate: content == 'Custom' ? Dates.today : DateTime.parse( widget.task.deadline_val ),
                 lastDate: new DateTime.now().add( new Duration( days: 365 ) ),
               );
               
               picked.then( (pickedValue){
                  if ( pickedValue != null )
                   this.setState( (){
-                    widget.task.deadline = Dates.parse(pickedValue);
+                    widget.task.deadline_val = Dates.parse(pickedValue);
                   });
               });
 
             } else {
 
               this.setState( (){
-                widget.task.deadline = content;
+                widget.task.deadline_val = Dates.parse_string(content);
               });
 
             }

@@ -13,6 +13,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  intl: ^0.15.6
 
 flutter_icons:
   image_path: "images/logo.png" 
