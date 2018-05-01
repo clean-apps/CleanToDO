@@ -17,6 +17,7 @@ class Task {
   String deadline_val ;
   
   String reminder ;
+  String reminder_val ;
   String notes ;
 
   get hashCode =>  this.id;
