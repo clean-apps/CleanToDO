@@ -11,7 +11,7 @@ class TextTaskDetailTile extends StatelessWidget{
   final ValueChanged<String> updateContent ;
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
       return new ListTile(
 
           leading: new Icon( icon, color: Theme.of(context).primaryColor, size: 28.0 ,),
