@@ -6,6 +6,6 @@ class Category {
 
   final String text ;
   final IconData icon ;
-  final int count ;
+  int count ;
 
 }

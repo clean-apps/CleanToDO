@@ -6,14 +6,14 @@ import 'package:clean_todo/beans/CategoryData.dart';
 
 class AppSidebar extends StatefulWidget {
 
-  AppSidebar({  Key key, this.categories, this.addCategory, this.changeBodyText, this.userData })
+  AppSidebar({  Key key, this.categories, this.addCategory, this.filter, this.userData })
    : super(key: key);
 
   final UserData userData ;
   final CategoryData categories ;
 
   final ValueChanged<Category> addCategory ;
-  final ValueChanged<String> changeBodyText ;
+  final ValueChanged<String> filter ;
 
   @override
   _AppSidebarState createState() => new _AppSidebarState();
@@ -21,7 +21,19 @@ class AppSidebar extends StatefulWidget {
 }
 
 class _AppSidebarState extends State<AppSidebar> {
-  
+
+  ListTile getAsSystemListTile( Category categoryData ){
+
+    return new ListTile(
+        leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).accentColor,  ),
+        title: new SidebarText( textContent : categoryData.text ),
+        onTap: () {
+          widget.filter( categoryData.text );
+        }
+    );
+
+  }
+
   ListTile getAsListTile( Category categoryData ){
 
     return new ListTile(
@@ -29,7 +41,7 @@ class _AppSidebarState extends State<AppSidebar> {
       title: new SidebarText( textContent : categoryData.text ),
       trailing: new Text( categoryData.count == null ? "0" : categoryData.count.toString() ),
       onTap: () {
-          widget.changeBodyText( categoryData.text );
+          widget.filter( categoryData.text );
       }
     );
 
@@ -40,7 +52,7 @@ class _AppSidebarState extends State<AppSidebar> {
 
     List<Widget> systemCategoryWdigets = [];
     widget.categories.system.forEach( (cb) {
-      systemCategoryWdigets.add(  getAsListTile(cb) );
+      systemCategoryWdigets.add(  getAsSystemListTile(cb) );
     });
 
     List<Widget> userCategoryWdigets = [];

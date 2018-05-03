@@ -19,9 +19,9 @@ class FakeDataGenerator implements DataProvider {
       ],
 
       user: [
-        new Category( text: 'Home' ),
-        new Category( text: 'Work' ),
-        new Category( text: 'Shopping' ),
+        new Category( text: 'Home', count: 3 ),
+        new Category( text: 'Work', count: 2 ),
+        new Category( text: 'Shopping', count: 2 ),
       ],
 
     );

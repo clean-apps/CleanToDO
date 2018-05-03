@@ -8,6 +8,7 @@ import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/lists/TasksList.dart';
 import 'package:clean_todo/data/FakeDataGenerator.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
+import 'package:clean_todo/data/DataCache.dart';
 
 class TasksPage extends StatefulWidget {
   TasksPage({Key key, this.title}) : super(key: key);
@@ -19,66 +20,32 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TasksPageState extends State<TasksPage> {
-  
-  CategoryData categoryData ;
-  UserData userData ;
-  List<Task> tasksData ;
-  Task newTask ;
-  
+
+  DataCache cache = new DataCache();
+
   _TasksPageState(){
     DataProvider dataProvider = new FakeDataGenerator();
 
-    categoryData = dataProvider.getSidebarData();
-    userData = dataProvider.getUserData();
-    tasksData = dataProvider.getAllTasks();
-
-    newTask = new Task();
-    newTask.id = tasksData.length + 1;
-    newTask.completed = false;
+    if( !cache.isCached ) {
+      cache.categoryData = dataProvider.getSidebarData();
+      cache.userData = dataProvider.getUserData();
+      cache.tasksData = dataProvider.getAllTasks();
+      cache.isCached = true;
+    }
   }
 
-  void changeBodyText( newText ){
-    //do nothing
-  }
+  filter( String categoryName ){
+    this.setState( (){
 
-  void addCategory( newCategoryLT ){
-     this.setState((){
-        this.categoryData.user.add(newCategoryLT);
-     });
-  }
+      if( categoryName == 'To-Do' )
+        cache.filterCategory = null;
 
+      else
+        cache.filterCategory = categoryName;
 
-  void toggleTask( Task task ){
-    this.setState((){
-      tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
     });
-  }
-  
-  void updateTask( Task task ){
-    this.setState((){
 
-      if( tasksData.indexOf( task ) < 0 ){
-        task.category = new Category( text: 'Home' );
-        tasksData.add( task );
-
-        newTask = new Task();
-        newTask.id = tasksData.length + 1;
-        newTask.completed = false;
-      }
-
-      tasksData.elementAt( tasksData.indexOf( task ) ).title = task.title;
-      tasksData.elementAt( tasksData.indexOf( task ) ).category = task.category;
-      tasksData.elementAt( tasksData.indexOf( task ) ).deadline_val = task.deadline_val;
-      tasksData.elementAt( tasksData.indexOf( task ) ).reminder_date = task.reminder_date;
-      tasksData.elementAt( tasksData.indexOf( task ) ).reminder_time = task.reminder_time;
-      tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
-    });
-  }
-
-  void deleteTask(Task task){
-    this.setState((){
-      tasksData.remove( task );
-    });
+    Navigator.pop( context );
   }
 
   @override
@@ -87,7 +54,7 @@ class _TasksPageState extends State<TasksPage> {
     return new Scaffold(
 
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: cache.filterCategory == null ? new Text(widget.title) : new Text(cache.filterCategory),
         actions: <Widget>[
           new IconButton(
             icon: new Icon( Icons.search ),
@@ -97,18 +64,18 @@ class _TasksPageState extends State<TasksPage> {
       ),
 
       drawer: new AppSidebar( 
-                              categories : categoryData, 
-                              addCategory : addCategory,
-                              changeBodyText : changeBodyText,
-                              userData : userData 
+                              categories : cache.categoryData,
+                              addCategory : cache.addCategory,
+                              filter : filter,
+                              userData : cache.userData
               ),
 
       body: new TasksList( 
-        tasks: tasksData,
-        categories: this.categoryData.user,
-        toggleTask: toggleTask,
-        updateTask: updateTask,
-        deleteTask: deleteTask,
+        tasks: cache.tasks,
+        categories: cache.categoryData.user,
+        toggleTask: cache.toggleTask,
+        updateTask: cache.updateTask,
+        deleteTask: cache.deleteTask,
       ),
 
       floatingActionButton: new FloatingActionButton(
@@ -118,9 +85,9 @@ class _TasksPageState extends State<TasksPage> {
             context, 
             new MaterialPageRoute(
               builder: (context) => new TaskDetail( 
-                                          task: newTask,
-                                          updateTask: updateTask,
-                                          categories: this.categoryData.user,
+                                          task: cache.newTask,
+                                          updateTask: cache.updateTask,
+                                          categories: cache.categoryData.user,
                                         )
             )
           );
