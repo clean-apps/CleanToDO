@@ -69,7 +69,8 @@ class _TasksPageState extends State<TasksPage> {
       tasksData.elementAt( tasksData.indexOf( task ) ).title = task.title;
       tasksData.elementAt( tasksData.indexOf( task ) ).category = task.category;
       tasksData.elementAt( tasksData.indexOf( task ) ).deadline_val = task.deadline_val;
-      tasksData.elementAt( tasksData.indexOf( task ) ).reminder = task.reminder;
+      tasksData.elementAt( tasksData.indexOf( task ) ).reminder_date = task.reminder_date;
+      tasksData.elementAt( tasksData.indexOf( task ) ).reminder_time = task.reminder_time;
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
     });
   }

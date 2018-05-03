@@ -5,7 +5,8 @@ import 'package:clean_todo/detail/TextInputDialog.dart';
 import 'package:clean_todo/detail/DropdownTile.dart';
 import 'package:clean_todo/detail/CTDropdownMenuItem.dart';
 import 'package:clean_todo/calender/DateToString.dart';
-import 'package:clean_todo/calender/Dates.dart';
+import 'package:clean_todo/calender/DateUtil.dart';
+import 'package:clean_todo/calender/TimeUtil.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'dart:async';
 
@@ -23,7 +24,7 @@ class TaskDetail extends StatefulWidget {
 class _TaskDetailState extends State<TaskDetail> {
 
   final List<String> _deadlines = ['Today', 'Tomorrow', 'Next Week'];
-  final List<String> _reminders = ['Later Today', 'Tomorrow', 'Next Week'];
+  final List<String> _reminders = ['Later Today @ 0900', 'Later Today @ 2100', 'Tomorrow @ 0900', 'Next Week @ 0900'];
 
   Widget getStatusIcon( bool completed, context ){
 
@@ -61,59 +62,101 @@ class _TaskDetailState extends State<TaskDetail> {
     }
   }
 
+  String getReminderValueForCustom( reminder ){
+    if( reminder == null ){
+      return 'Custom';
+
+    } else if ( _reminders.contains(reminder) ) {
+      return 'Custom';
+
+    } else {
+      return  reminder;
+
+    }
+  }
+
+  String getReminderTitleForCustom( reminder_val ){
+    if( reminder_val == null ){
+      return 'Custom';
+
+    } else if ( _reminders.contains(reminder_val) ) {
+      return 'Custom';
+
+    } else {
+      return  reminder_val;
+
+    }
+  }
+
   _update_deadline(content){
 
     if( !_deadlines.contains(content) && content != null ){
 
           Future<DateTime> picked = showDatePicker(
           context: context,
-          firstDate: Dates.today,
-          initialDate: content == 'Custom' ? Dates.today : DateTime.parse( widget.task.deadline_val ),
+          firstDate: DateUtil.today,
+          initialDate: content == 'Custom' ? DateUtil.today : DateTime.parse( widget.task.deadline_val ),
           lastDate: new DateTime.now().add( new Duration( days: 365 ) ),
         );
         
         picked.then( (pickedValue){
             if ( pickedValue != null )
             this.setState( (){
-              widget.task.deadline_val = Dates.parse(pickedValue);
+              widget.task.deadline_val = DateUtil.parse(pickedValue);
             });
         });
 
       } else {
 
         this.setState( (){
-          widget.task.deadline_val = Dates.parse_string(content);
+          widget.task.deadline_val = DateUtil.parse_string(content);
         });
 
       }
   }
 
-   _update_reminder(content){
+   _update_reminder(String content) {
 
-    if( !_reminders.contains(content) && content != null ){
+     if (!_reminders.contains(content) && content != null) {
+       Future<DateTime> pickedDate = showDatePicker(
+         context: context,
+         firstDate: DateUtil.today,
+         initialDate: content == 'Custom' ? DateUtil.today : DateTime.parse(
+             widget.task.reminder_date),
+         lastDate: new DateTime.now().add(new Duration(days: 365)),
+       );
 
-        Future<DateTime> picked = showDatePicker(
-          context: context,
-          firstDate: Dates.today,
-          initialDate: content == 'Custom' ? Dates.today : DateTime.parse( widget.task.deadline_val ),
-          lastDate: new DateTime.now().add( new Duration( days: 365 ) ),
-        );
-        
-        picked.then( (pickedValue){
-            if ( pickedValue != null )
-            this.setState( (){
-              widget.task.deadline_val = Dates.parse(pickedValue);
-            });
-        });
+       pickedDate.then((pickedDateValue) {
 
-      } else {
+         Future<TimeOfDay> pickedTime = showTimePicker(
+           context: context,
+           initialTime: content == 'Custom' ? TimeUtil.now : TimeUtil.parse_back(
+               widget.task.reminder_time),
+         );
 
-        this.setState( (){
-          widget.task.deadline_val = Dates.parse_string(content);
-        });
+         pickedTime.then((pickedTimeValue) {
+           if (pickedDateValue != null && pickedTimeValue != null)
+             this.setState(() {
+               widget.task.reminder_date = DateUtil.parse(pickedDateValue);
+               widget.task.reminder_time = TimeUtil.parse(pickedTimeValue);
+             });
+         });
 
-      }
-  }
+       });
+
+     } else if (content != null) {
+       this.setState(() {
+         List<String> date_time = content.split('@');
+         widget.task.reminder_date = DateUtil.parse_string( date_time[0].trim() );
+         widget.task.reminder_time = date_time[1].trim();
+       });
+     } else {
+       this.setState(() {
+         widget.task.reminder_date = null;
+         widget.task.reminder_time = null;
+       });
+     }
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +167,7 @@ class _TaskDetailState extends State<TaskDetail> {
           text: _deadlines.contains( widget.task.deadline ) ? widget.task.deadline : widget.task.deadline_val,
           hint: 'Add Due Date',
           icon: Icons.calendar_today,
+
           options: <DropdownMenuItem<String>>[
             new DropdownMenuItem<String>( value: 'Today', child: new Text( 'Today' ), ),
             new DropdownMenuItem<String>( value: 'Tomorrow', child: new Text( 'Tomorrow' ), ),
@@ -138,29 +182,18 @@ class _TaskDetailState extends State<TaskDetail> {
         new Divider(),
 
         new DropdownTile(
-          text: _reminders.contains( widget.task.reminder ) ? widget.task.reminder : widget.task.reminder_val,
-          hint: 'Remind Me',
-          icon: Icons.alarm_on,
-          options: <DropdownMenuItem<String>>[
-            new DropdownMenuItem<String>( value: 'Later Today', child: new Text( 'Later Today' ), ),
-            new DropdownMenuItem<String>( value: 'Tomorrow', child: new Text( 'Tomorrow' ), ),
-            new DropdownMenuItem<String>( value: 'Next Week', child: new Text( 'Next Week' ), ),
-            new DropdownMenuItem<String>( value: getValueForCustom(widget.task.reminder_val), 
-                                          child: new Text( getTitleForCustom(widget.task.reminder)  ), ),
-          ],
-
-          updateContent: _update_reminder,
-        ),
-
-        new TextTaskDetailTile(
           text: widget.task.reminder,
           hint: 'Remind Me',
           icon: Icons.alarm_on,
-          updateContent: (content){
-            this.setState( (){
-              widget.task.reminder = content;
-            });
-          },
+          options: <DropdownMenuItem<String>>[
+            new DropdownMenuItem<String>( value: 'Later Today @ ' + TimeUtil.reminder_time_val, child: new Text( 'Later Today @' + TimeUtil.reminder_time ), ),
+            new DropdownMenuItem<String>( value: 'Tomorrow @ 0900', child: new Text( 'Tomorrow @9' ), ),
+            new DropdownMenuItem<String>( value: 'Next Week @ 0900', child: new Text( 'Next Week @9' ), ),
+            new DropdownMenuItem<String>( value: getReminderValueForCustom(widget.task.reminder),
+                                          child: new Text( getReminderTitleForCustom(widget.task.reminder)  ), ),
+          ],
+
+          updateContent: _update_reminder,
         ),
 
     ];

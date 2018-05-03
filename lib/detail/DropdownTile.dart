@@ -21,7 +21,7 @@ class DropdownTile extends StatelessWidget{
             child: new DropdownButton<String>(
               value: this.text,
               hint: new Text(this.hint),
-
+              iconSize: 0.0,
               items: options,
 
               style: new TextStyle( color: Theme.of(context).primaryColor ),

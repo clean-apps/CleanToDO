@@ -1,6 +1,6 @@
 import "package:intl/intl.dart";
 
-class Dates {
+class DateUtil {
 
   static get today{
     DateTime timeIsNow = new DateTime.now();
