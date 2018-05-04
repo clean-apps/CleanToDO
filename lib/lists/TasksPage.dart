@@ -51,21 +51,49 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
 
-    return new Scaffold(
-
-      appBar: new AppBar(
-        title: cache.filterCategory == null ? new Text(widget.title) : new Text(cache.filterCategory),
-        actions: <Widget>[
+    List<Widget> appbar_menu = [];
+    if( cache.filterCategory == null )
+      appbar_menu.add(
           new IconButton(
             icon: new Icon( Icons.search ),
             onPressed: (){ /* ... todo ... */ },
           )
-        ],
+      );
+
+    else
+      appbar_menu.add(
+        new PopupMenuButton<String>(
+            onSelected: (value) =>  this.setState( (){
+              cache.deleteCategory(value);
+            }),
+            itemBuilder:(BuildContext context) {
+              return <PopupMenuEntry<String>>[
+
+                new PopupMenuItem<String>(
+                  value: cache.filterCategory,
+                  child: new Text('Delete Category'),
+                ),
+
+              ];
+
+            })
+
+      );
+
+    return new Scaffold(
+
+      appBar: new AppBar(
+        title: cache.filterCategory == null ? new Text(widget.title) : new Text(cache.filterCategory),
+        actions: appbar_menu,
       ),
 
       drawer: new AppSidebar( 
                               categories : cache.categoryData,
-                              addCategory : cache.addCategory,
+                              addCategory : ((newCategory) =>
+                                  this.setState( (){
+                                    cache.addCategory(newCategory);
+                                  })
+                              ),
                               filter : filter,
                               userData : cache.userData
               ),

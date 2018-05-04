@@ -35,6 +35,34 @@ class DataCache {
       this.categoryData.user.add( newCategoryLT );
   }
 
+  void deleteCategory( categoryTitle ){
+
+    if( categoryTitle != null ) {
+
+      List<Task> toDelete = [];
+      this.tasksData.forEach((task) {
+        if (task != null &&
+            task.category != null &&
+            task.category.text == categoryTitle)
+
+          toDelete.add(task);
+      });
+
+      toDelete.forEach( (task){
+        deleteTask(task);
+      });
+
+      int indexToDelete = -1;
+      this.categoryData.user.asMap().forEach( (i, cat){
+        if( cat.text == categoryTitle ) indexToDelete = i;
+      });
+
+      this.categoryData.user.removeAt(indexToDelete);
+      filterCategory = null;
+    }
+
+  }
+
   void toggleTask( Task task ){
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
   }

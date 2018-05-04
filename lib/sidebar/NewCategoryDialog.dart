@@ -76,6 +76,9 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
                           )
                         );
                       });
+
+                      Navigator.pop(context);
+
                     })),
 
                 ],

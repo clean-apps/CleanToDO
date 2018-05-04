@@ -8,4 +8,5 @@ class Category {
   final IconData icon ;
   int count ;
 
+  int get hashCode => text.hashCode;
 }
