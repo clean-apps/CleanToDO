@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/lists/TasksPage.dart';
+import 'package:clean_todo/settings/Themes.dart';
 
 void main() => runApp(new MyApp());
 
@@ -10,12 +11,9 @@ class MyApp extends StatelessWidget {
 
     return new MaterialApp(
 
-      theme: new ThemeData(
-        primaryColor: Colors.blue,
-        accentColor: Colors.blue
-      ),
-
+      theme: Themes.get(null),
       home: new TasksPage(title: 'Clean To-Do'),
+
     ); 
   }
 }

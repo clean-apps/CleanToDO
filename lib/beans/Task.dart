@@ -14,6 +14,7 @@ class Task {
   get deadline{
     return DateUtil.detect_desc( deadline_val );
   }
+
   String deadline_val ;
   
   get reminder {
@@ -25,6 +26,22 @@ class Task {
   String reminder_time ;
 
   String notes ;
+
+  bool get isDue{
+
+    if( completed )
+      return false;
+
+    else if ( deadline_val == null )
+      return false;
+
+    else if ( DateTime.parse( deadline_val ).isBefore( DateUtil.tomorrow ) )
+      return true;
+
+    else
+      return false;
+
+  }
 
   get hashCode =>  this.id;
 

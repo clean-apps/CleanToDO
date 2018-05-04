@@ -25,7 +25,7 @@ class _AppSidebarState extends State<AppSidebar> {
   ListTile getAsSystemListTile( Category categoryData ){
 
     return new ListTile(
-        leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).accentColor,  ),
+        leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).primaryColor,  ),
         title: new SidebarText( textContent : categoryData.text ),
         onTap: () {
           widget.filter( categoryData.text );
@@ -37,7 +37,7 @@ class _AppSidebarState extends State<AppSidebar> {
   ListTile getAsListTile( Category categoryData ){
 
     return new ListTile(
-      leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).accentColor,  ),
+      leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).primaryColor,  ),
       title: new SidebarText( textContent : categoryData.text ),
       trailing: new Text( categoryData.count == null ? "0" : categoryData.count.toString() ),
       onTap: () {
@@ -69,8 +69,8 @@ class _AppSidebarState extends State<AppSidebar> {
 
                   new ListTile(
                       leading: new CircleAvatar(
-                                      child: new Text( widget.userData.abbr ),
-                                      backgroundColor: Theme.of(context).accentColor,
+                                      child: new Text( widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
+                                      backgroundColor: Theme.of(context).primaryColor,
                                     ),
                       title: new SidebarText( textContent : widget.userData.userName ) ,
                   ),
@@ -84,7 +84,7 @@ class _AppSidebarState extends State<AppSidebar> {
                   new Divider(),
 
                   new ListTile(
-                    leading: new Icon( Icons.add, color: Theme.of(context).accentColor, ),
+                    leading: new Icon( Icons.add, color: Theme.of(context).primaryColor, ),
                     title: new SidebarText( textContent : 'New List' ),
                     onTap: () {   showDialog(
                                     context: context,

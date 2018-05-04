@@ -108,6 +108,7 @@ class _TasksPageState extends State<TasksPage> {
 
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: (){
           Navigator.push(
             context, 
