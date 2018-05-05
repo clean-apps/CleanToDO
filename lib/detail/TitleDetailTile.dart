@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:clean_todo/detail/TextInputDialog.dart';
 
 class TitleDetailTile extends StatelessWidget {
 
@@ -8,7 +7,7 @@ class TitleDetailTile extends StatelessWidget {
   final bool completed ;
   final ValueChanged<bool> update_completed ;
 
-  final String title ;
+  final TextEditingController titleCon ;
   final ValueChanged<String> update_title ;
 
   Widget getStatusIcon( bool completed, context ){
@@ -33,36 +32,34 @@ class TitleDetailTile extends StatelessWidget {
         },
       ),
 
-      title: new Padding(
+      title: new TextField(
 
-        padding: new EdgeInsets.only( top : 20.0, bottom: 20.0 ),
-        child: new Column(
+        controller: new TextEditingController( text: this.title ),
 
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+        onSubmitted: (value) => update_title( value ),
+        //onChanged: (value) => update_title( value ),
 
-            new Text( 'Title', style: new TextStyle( fontSize: 12.0, color: Colors.grey ), ),
-            this.title == null ?
-              new Text( 'untitled', style: new TextStyle( fontSize: 24.0, color: Colors.grey ), ) :
-              new Text( this.title, style: new TextStyle( fontSize: 24.0, ) ),
+        style: new TextStyle( fontSize: 24.0, color: Theme.of(context).primaryColor ),
 
-          ],
+        decoration: new InputDecoration(
 
-        ) ,
+          border: InputBorder.none,
+
+          hintText: 'Enter Title',
+          hintStyle: new TextStyle( fontSize: 24.0, color: Colors.grey ),
+
+          labelText: 'Title',
+          labelStyle: new TextStyle( fontSize: 18.0, color: Colors.grey ),
+
+        ),
+
       ),
 
-      onTap: (){
+      trailing: new IconButton(
+        icon:  new Icon( Icons.clear, color: this.title == null ? Colors.white : Theme.of(context).primaryColor, ),
+        onPressed: () => update_title( null ),
+      ),
 
-        showDialog(
-            context: context,
-            child: new TextInputDialog(
-            title: 'Title',
-            content: this.title,
-            updateContent: update_title,
-          ),
-        );
-
-      },
     );
   }
 

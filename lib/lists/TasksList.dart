@@ -5,9 +5,10 @@ import 'package:clean_todo/beans/Category.dart';
 
 class TasksList extends StatefulWidget {
 
-  TasksList({ this.tasks, this.categories, this.toggleTask, this.updateTask, this.deleteTask });
+  TasksList({ this.tasks, this.extraTask, this.categories, this.toggleTask, this.updateTask, this.deleteTask });
 
   List<Task> tasks ;
+  final Task extraTask ;
   final List<Category> categories ;
 
   final ValueChanged<Task> toggleTask;
@@ -31,6 +32,7 @@ class _TasksListState extends State<TasksList> {
 
             new TaskTile (  
               task : task,
+              extraTask: widget.extraTask,
               categories: widget.categories,
               updateTask : (task) => widget.updateTask(task),
               deleteTask: (task) => widget.deleteTask(task),

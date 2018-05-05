@@ -6,9 +6,11 @@ import 'package:clean_todo/beans/Category.dart';
 
 class TaskTile extends StatefulWidget {
 
-  TaskTile({ this.task , this.categories, this.toggleTask, this.updateTask, this.deleteTask });
+  TaskTile({ this.task , this.extraTask, this.categories, this.toggleTask, this.updateTask, this.deleteTask });
 
   final Task task ;
+  final Task extraTask ;
+
   final List<Category> categories ;
   final ValueChanged<Task> toggleTask;
   final ValueChanged<Task> updateTask ;
@@ -140,11 +142,14 @@ class _TasksTileState extends State<TaskTile> {
         ),
 
         onTap: (){
+
+          widget.extraTask.copy(widget.task);
+
           Navigator.push(
             context, 
             new MaterialPageRoute( builder: (context) => 
                         new TaskDetail( 
-                            task: widget.task,
+                            task: widget.extraTask,
                             categories: widget.categories,
                             updateTask: (task){
                               widget.updateTask(task);

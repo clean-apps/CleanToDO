@@ -86,9 +86,16 @@ class _TasksPageState extends State<TasksPage> {
     Widget appBody = new TasksList(
 
             tasks: cache.tasks,
+            extraTask: cache.newTask,
             categories: cache.categoryData.user,
             toggleTask: cache.toggleTask,
-            updateTask: cache.updateTask,
+
+            updateTask: ( (task){
+              this.setState( (){
+                cache.updateTask(task);
+              });
+            }),
+
             deleteTask: cache.deleteTask,
     );
 
@@ -99,6 +106,7 @@ class _TasksPageState extends State<TasksPage> {
 
             onPressed: (){
 
+              cache.newTask.clear();
               Navigator.push(
                   context,
                   new MaterialPageRoute(

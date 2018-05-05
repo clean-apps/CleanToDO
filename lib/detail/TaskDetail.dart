@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Task.dart';
-import 'package:clean_todo/detail/TextTaskDetailTile.dart';
+import 'package:clean_todo/detail/NoteDetailTile.dart';
 import 'package:clean_todo/detail/DropdownTile.dart';
 import 'package:clean_todo/detail/TitleDetailTile.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
@@ -137,6 +137,7 @@ class _TaskDetailState extends State<TaskDetail> {
          widget.task.reminder_date = DateUtil.parse_string( date_time[0].trim() );
          widget.task.reminder_time = date_time[1].trim();
        });
+
      } else {
        this.setState(() {
          widget.task.reminder_date = null;
@@ -145,13 +146,20 @@ class _TaskDetailState extends State<TaskDetail> {
      }
    }
 
+  _update_note(String content) {
+
+    this.setState( (){
+      widget.task.notes = content;
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
 
     return new Scaffold(
 
       appBar: new AppBar(
-        title: widget.task.category == null ? new Text( 'To-Do' ) : new Text( widget.task.category.text ),
+        title: widget.task.title == null ? new Text( 'Create New Task' ) : new Text( 'Update Task'  ),
       ),
 
       body: new Column(
@@ -260,15 +268,13 @@ class _TaskDetailState extends State<TaskDetail> {
               child: new Padding(
                 padding: new EdgeInsets.only(bottom: 40.0),
 
-                child: new TextTaskDetailTile(
+                child: new NoteDetailTile(
+                    title: widget.task.title,
                     text: widget.task.notes,
                     hint: 'Add a note',
                     icon: Icons.chat_bubble_outline,
-                    updateContent: (content){
-                      this.setState( (){
-                        widget.task.notes = content;
-                      });
-                    },
+                    updateContent: _update_note,
+
                   ),
 
               )
@@ -282,8 +288,19 @@ class _TaskDetailState extends State<TaskDetail> {
 
           child: new Icon(Icons.save),
           onPressed: (){
-            widget.updateTask( widget.task );
-            Navigator.pop(context);
+
+            if( widget.task.title == null ){
+              final snackBar = new SnackBar(content: new Text('please enter a title'));
+              Scaffold.of(context).showSnackBar(snackBar);
+
+            } else if ( widget.task.category == null ){
+              final snackBar = new SnackBar(content: new Text('please select a list'));
+              Scaffold.of(context).showSnackBar(snackBar);
+
+            } else {
+              widget.updateTask(widget.task);
+              Navigator.pop(context);
+            }
           },
 
       ),

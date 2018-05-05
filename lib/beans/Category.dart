@@ -8,5 +8,9 @@ class Category {
   final IconData icon ;
   int count ;
 
+  Category clone(){
+    return new Category( text: text, icon: icon, count: count );
+  }
+
   int get hashCode => text.hashCode;
 }

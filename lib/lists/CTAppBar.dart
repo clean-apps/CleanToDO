@@ -49,7 +49,7 @@ class CTAppBar {
 
       title: new TextField(
         autofocus: true,
-        style: new TextStyle(color: Colors.white, decorationColor: Colors.white),
+        style: new TextStyle(color: Colors.white),
         controller: new TextEditingController(text: searchString),
         decoration: new InputDecoration( hintText: 'Search', hintStyle: new TextStyle( color: Colors.white70 ) ),
         onSubmitted: (value) => doSearch( value ),

@@ -43,6 +43,42 @@ class Task {
 
   }
 
-  get hashCode =>  this.id;
+  copy( Task from ){
+    this.id = from.id;
+    this.title = from.title;
+    this.completed = from.completed;
+    this.category = from.category.clone();
+    this.deadline_val = from.deadline_val;
+    this.reminder_date = from.reminder_date;
+    this.reminder_time = from.reminder_time;
+    this.notes = from.notes;
+
+  }
+
+  clear(){
+    this.id = null;
+    this.title = null;
+    this.completed = false;
+    this.category = null;
+    this.deadline_val = null;
+    this.reminder_date = null;
+    this.reminder_time = null;
+    this.notes = null;
+  }
+
+  Task clone(){
+    return new Task(  id: id,
+                      title: title,
+                      completed: completed,
+                      category: category.clone(),
+                      deadline_val: deadline_val,
+                      reminder_date: reminder_date,
+                      reminder_time: reminder_time,
+                      notes: notes,
+    );
+  }
+
+  bool operator ==(o) => o.id == this.id;
+  int get hashCode =>  this.id.toString().hashCode;
 
 }
