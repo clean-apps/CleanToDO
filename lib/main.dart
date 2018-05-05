@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
 
       theme: Themes.get(null),
-      home: new TasksPage(title: 'Clean To-Do'),
+      home: new TasksPage(),
 
     ); 
   }

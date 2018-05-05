@@ -55,7 +55,7 @@ class DateUtil {
 
   static parse_string( String val ){
 
-    if( val.startsWith('Due ') ){
+    if( val != null && val.startsWith('Due ') ){
       val = val.replaceFirst( 'Due ', '');
     }
 

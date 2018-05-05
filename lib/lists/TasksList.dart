@@ -28,16 +28,14 @@ class _TasksListState extends State<TasksList> {
       widget.tasks.forEach(  (task){
 
           taskRowsList.add(
+
             new TaskTile (  
               task : task,
               categories: widget.categories,
-              updateTask : (task){
-                              widget.updateTask(task);
-                            },
-              deleteTask: (task){
-                widget.deleteTask(task);
-              },
+              updateTask : (task) => widget.updateTask(task),
+              deleteTask: (task) => widget.deleteTask(task),
             ),
+
           );
 
           taskRowsList.add( new Divider( ) ); //color : Theme.of(context).primaryColor ) );

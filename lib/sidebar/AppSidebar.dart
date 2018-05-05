@@ -4,7 +4,7 @@ import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/UserData.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
 
-class AppSidebar extends StatefulWidget {
+class AppSidebar extends StatelessWidget {
 
   AppSidebar({  Key key, this.categories, this.addCategory, this.filter, this.userData })
    : super(key: key);
@@ -15,33 +15,26 @@ class AppSidebar extends StatefulWidget {
   final ValueChanged<Category> addCategory ;
   final ValueChanged<String> filter ;
 
-  @override
-  _AppSidebarState createState() => new _AppSidebarState();
-  
-}
-
-class _AppSidebarState extends State<AppSidebar> {
-
-  ListTile getAsSystemListTile( Category categoryData ){
+  ListTile getAsSystemListTile( context, Category categoryData ){
 
     return new ListTile(
         leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).primaryColor,  ),
         title: new SidebarText( textContent : categoryData.text ),
         onTap: () {
-          widget.filter( categoryData.text );
+          this.filter( categoryData.text );
         }
     );
 
   }
 
-  ListTile getAsListTile( Category categoryData ){
+  ListTile getAsListTile( context, Category categoryData ){
 
     return new ListTile(
       leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).primaryColor,  ),
       title: new SidebarText( textContent : categoryData.text ),
       trailing: new Text( categoryData.count == null ? "0" : categoryData.count.toString() ),
       onTap: () {
-          widget.filter( categoryData.text );
+        this.filter( categoryData.text );
       }
     );
 
@@ -51,13 +44,13 @@ class _AppSidebarState extends State<AppSidebar> {
   Widget build(BuildContext context) {
 
     List<Widget> systemCategoryWdigets = [];
-    widget.categories.system.forEach( (cb) {
-      systemCategoryWdigets.add(  getAsSystemListTile(cb) );
+    this.categories.system.forEach( (cb) {
+      systemCategoryWdigets.add(  getAsSystemListTile(context, cb) );
     });
 
     List<Widget> userCategoryWdigets = [];
-    widget.categories.user.forEach( (cb) {
-      userCategoryWdigets.add(  getAsListTile(cb) );
+    this.categories.user.forEach( (cb) {
+      userCategoryWdigets.add(  getAsListTile(context, cb) );
     });
 
     return new Drawer(
@@ -69,10 +62,10 @@ class _AppSidebarState extends State<AppSidebar> {
 
                   new ListTile(
                       leading: new CircleAvatar(
-                                      child: new Text( widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
+                                      child: new Text( this.userData.abbr, style: new TextStyle( color: Colors.white ), ),
                                       backgroundColor: Theme.of(context).primaryColor,
                                     ),
-                      title: new SidebarText( textContent : widget.userData.userName ) ,
+                      title: new SidebarText( textContent : this.userData.userName ) ,
                   ),
 
                   new Divider(),
@@ -88,7 +81,7 @@ class _AppSidebarState extends State<AppSidebar> {
                     title: new SidebarText( textContent : 'New List' ),
                     onTap: () {   showDialog(
                                     context: context,
-                                    child: new NewCategoryDialog( addCategory: widget.addCategory ),
+                                    child: new NewCategoryDialog( addCategory: this.addCategory ),
                                   );
                               }
                   ),

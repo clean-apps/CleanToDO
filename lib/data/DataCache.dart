@@ -13,22 +13,54 @@ class DataCache {
 
   bool isCached = false;
 
+  bool enableSearch = false;
+  String searchString = '';
+
   DataCache(){
       newTask.id = tasksData.length + 1;
       newTask.completed = false;
   }
 
-  List<Task> get tasks {
+  List<Task> _filterCategories( List<Task> tasks, String category ){
+
     if( filterCategory == null )
-      return tasksData;
+      return tasks;
 
     else
-      return tasksData.where( (task) =>
-                ( task != null &&
+      return tasks.where( (task) =>(
+
+                  task != null &&
                   task.category != null &&
                   task.category.text == filterCategory )
 
               ).toList();
+  }
+
+  List<Task> _filterSearch( List<Task> tasks, String search ){
+
+    if( search == null )
+      return tasks;
+
+    else
+      return tasks.where( (task) => (
+
+                  task != null &&
+                  task.title != null &&
+                  task.title.toLowerCase().contains(search) )
+
+              ).toList();
+  }
+
+  List<Task> get tasks {
+
+    if( enableSearch )
+      return _filterSearch(
+                  _filterCategories( tasksData, filterCategory ),
+                  searchString == null ? searchString : searchString.toLowerCase(),
+              );
+
+    else
+      return _filterCategories( tasksData, filterCategory );
   }
 
   void addCategory( newCategoryLT ){
