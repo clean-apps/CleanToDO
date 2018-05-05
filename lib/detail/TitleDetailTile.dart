@@ -7,7 +7,7 @@ class TitleDetailTile extends StatelessWidget {
   final bool completed ;
   final ValueChanged<bool> update_completed ;
 
-  final TextEditingController titleCon ;
+  final String title ;
   final ValueChanged<String> update_title ;
 
   Widget getStatusIcon( bool completed, context ){

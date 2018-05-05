@@ -153,8 +153,11 @@ class _TaskDetailState extends State<TaskDetail> {
     });
 
   }
+
   @override
   Widget build(BuildContext context) {
+
+    BuildContext scaffoldContext;
 
     return new Scaffold(
 
@@ -162,125 +165,148 @@ class _TaskDetailState extends State<TaskDetail> {
         title: widget.task.title == null ? new Text( 'Create New Task' ) : new Text( 'Update Task'  ),
       ),
 
-      body: new Column(
+      body: new Builder(builder: (BuildContext bodyContext) {
 
-        children: <Widget>[
+          scaffoldContext = bodyContext;
+          return new Column(
 
-            new Card(
-              child: new Column(
-                children: <Widget>[
+            children: <Widget>[
 
-                  new TitleDetailTile(
+              new Card(
+                child: new Column(
+                  children: <Widget>[
 
-                        title: widget.task.title,
-                        update_title: ((content){
-                          this.setState((){
-                            widget.task.title = content;
-                          });
-                        }),
+                    new TitleDetailTile(
 
-                        completed: widget.task.completed,
-                        update_completed: ((content){
-                          this.setState((){
-                            widget.task.completed = content;
-                          });
-                        }),
+                      title: widget.task.title,
+                      update_title: ((content) {
+                        this.setState(() {
+                          widget.task.title = content;
+                        });
+                      }),
 
-                  ),
+                      completed: widget.task.completed,
+                      update_completed: ((content) {
+                        this.setState(() {
+                          widget.task.completed = content;
+                        });
+                      }),
 
-                ],
+                    ),
+
+                  ],
+                ),
               ),
-            ),
 
-            new Card(
-              child: new Column(
+              new Card(
+                child: new Column(
 
-                children: <Widget>[
+                  children: <Widget>[
 
-                  new DropdownTile(
+                    new DropdownTile(
 
-                    text: widget.task.category == null ? null : widget.task.category.text,
-                    hint: 'Add to a List',
-                    icon: Icons.list,
-                    options: widget.categories.map( (Category pCategory){
-                                                    return new DropdownMenuItem<String>(
-                                                      value: pCategory.text,
-                                                      child: new Text(pCategory.text),
-                                                    );
-                             }).toList(),
+                      text: widget.task.category == null ? null : widget.task
+                          .category.text,
+                      hint: 'Add to a List',
+                      icon: Icons.list,
+                      options: widget.categories.map((Category pCategory) {
+                        return new DropdownMenuItem<String>(
+                          value: pCategory.text,
+                          child: new Text(pCategory.text),
+                        );
+                      }).toList(),
 
-                    updateContent: (content){
-                      this.setState( (){
-                        if( content == null ) widget.task.category = null ;
-                        else widget.task.category = new Category(text: content);
-                      });
-                    },
+                      updateContent: (content) {
+                        this.setState(() {
+                          if (content == null)
+                            widget.task.category = null;
+                          else
+                            widget.task.category = new Category(text: content);
+                        });
+                      },
 
-                  ),
+                    ),
 
-                ],
+                  ],
 
+                ),
               ),
-            ),
 
-            new Card(
-              child: new Column(
-                children: <Widget>[
+              new Card(
+                child: new Column(
+                  children: <Widget>[
 
-                  new DropdownTile(
-                    text: _deadlines.contains( widget.task.deadline ) ? widget.task.deadline : widget.task.deadline_val,
-                    hint: 'Add Due Date',
-                    icon: Icons.calendar_today,
+                    new DropdownTile(
+                      text: _deadlines.contains(widget.task.deadline) ? widget
+                          .task.deadline : widget.task.deadline_val,
+                      hint: 'Add Due Date',
+                      icon: Icons.calendar_today,
 
-                    options: <DropdownMenuItem<String>>[
-                      new DropdownMenuItem<String>( value: 'Today', child: new Text( 'Today' ), ),
-                      new DropdownMenuItem<String>( value: 'Tomorrow', child: new Text( 'Tomorrow' ), ),
-                      new DropdownMenuItem<String>( value: 'Next Week', child: new Text( 'Next Week' ), ),
-                      new DropdownMenuItem<String>( value: getValueForCustom(widget.task.deadline_val),
-                        child: new Text( getTitleForCustom(widget.task.deadline)  ), ),
-                    ],
+                      options: <DropdownMenuItem<String>>[
+                        new DropdownMenuItem<String>(
+                          value: 'Today', child: new Text('Today'),),
+                        new DropdownMenuItem<String>(
+                          value: 'Tomorrow', child: new Text('Tomorrow'),),
+                        new DropdownMenuItem<String>(
+                          value: 'Next Week', child: new Text('Next Week'),),
+                        new DropdownMenuItem<String>(
+                          value: getValueForCustom(widget.task.deadline_val),
+                          child: new Text(
+                              getTitleForCustom(widget.task.deadline)),),
+                      ],
 
-                    updateContent: _update_deadline,
-                  ),
+                      updateContent: _update_deadline,
+                    ),
 
-                  new Divider(),
+                    new Divider(),
 
-                  new DropdownTile(
-                    text: widget.task.reminder,
-                    hint: 'Remind Me',
-                    icon: Icons.alarm_on,
-                    options: <DropdownMenuItem<String>>[
-                      new DropdownMenuItem<String>( value: 'Later Today @ ' + TimeUtil.reminder_time_val, child: new Text( 'Later Today @' + TimeUtil.reminder_time ), ),
-                      new DropdownMenuItem<String>( value: 'Tomorrow @ 0900', child: new Text( 'Tomorrow @9' ), ),
-                      new DropdownMenuItem<String>( value: 'Next Week @ 0900', child: new Text( 'Next Week @9' ), ),
-                      new DropdownMenuItem<String>( value: getReminderValueForCustom(widget.task.reminder),
-                        child: new Text( getReminderTitleForCustom(widget.task.reminder)  ), ),
-                    ],
+                    new DropdownTile(
+                      text: widget.task.reminder,
+                      hint: 'Remind Me',
+                      icon: Icons.alarm_on,
+                      options: <DropdownMenuItem<String>>[
+                        new DropdownMenuItem<String>(
+                          value: 'Later Today @ ' + TimeUtil.reminder_time_val,
+                          child: new Text(
+                              'Later Today @' + TimeUtil.reminder_time),),
+                        new DropdownMenuItem<String>(value: 'Tomorrow @ 0900',
+                          child: new Text('Tomorrow @9'),),
+                        new DropdownMenuItem<String>(value: 'Next Week @ 0900',
+                          child: new Text('Next Week @9'),),
+                        new DropdownMenuItem<String>(
+                          value: getReminderValueForCustom(widget.task.reminder),
+                          child: new Text(
+                              getReminderTitleForCustom(widget.task.reminder)),),
+                      ],
 
-                    updateContent: _update_reminder,
-                  ),
+                      updateContent: _update_reminder,
+                    ),
 
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            new Card(
-              child: new Padding(
-                padding: new EdgeInsets.only(bottom: 40.0),
+              new Card(
+                  child: new Padding(
+                    padding: new EdgeInsets.only(bottom: 40.0),
 
-                child: new NoteDetailTile(
-                    title: widget.task.title,
-                    text: widget.task.notes,
-                    hint: 'Add a note',
-                    icon: Icons.chat_bubble_outline,
-                    updateContent: _update_note,
+                    child: new NoteDetailTile(
+                      title: widget.task.title,
+                      text: widget.task.notes,
+                      hint: 'Add a note',
+                      icon: Icons.chat_bubble_outline,
+                      updateContent: _update_note,
 
-                  ),
+                    ),
 
-              )
-            ),
+                  )
+              ),
 
-        ],
+            ],
+
+          );
+
+        },
 
       ),
 
@@ -290,12 +316,12 @@ class _TaskDetailState extends State<TaskDetail> {
           onPressed: (){
 
             if( widget.task.title == null ){
-              final snackBar = new SnackBar(content: new Text('please enter a title'));
-              Scaffold.of(context).showSnackBar(snackBar);
+              final snackBar = new SnackBar(content: new Text('please enter a title'), backgroundColor: Colors.red,);
+              Scaffold.of(scaffoldContext).showSnackBar(snackBar);
 
             } else if ( widget.task.category == null ){
-              final snackBar = new SnackBar(content: new Text('please select a list'));
-              Scaffold.of(context).showSnackBar(snackBar);
+              final snackBar = new SnackBar(content: new Text('please select a list'), backgroundColor: Colors.red,);
+              Scaffold.of(scaffoldContext).showSnackBar(snackBar);
 
             } else {
               widget.updateTask(widget.task);
