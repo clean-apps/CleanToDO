@@ -34,12 +34,13 @@ class FakeDataGenerator implements DataProvider {
 
   List<Task> getAllTasks(){
 
+    String yesterday = '20180505';
     String today = DateUtil.parse( DateToString.today );
     String tomorrow = DateUtil.parse( DateToString.tomorrow );
     String next_week = DateUtil.parse( DateToString.next_week );
 
     return [
-      new Task( id : 0, completed : true, title: 'fix the lightbulb', category: new Category( text: 'Home' ) , deadline_val: tomorrow, reminder_date: '20190519', reminder_time: '0900', notes:  'yes' ),
+      new Task( id : 0, completed : false, title: 'fix the lightbulb', category: new Category( text: 'Home' ) , deadline_val: yesterday, reminder_date: '20190519', reminder_time: '0900', notes:  'yes' ),
       new Task( id : 1, completed : false, title: 'clean the garden', category: new Category( text: 'Home' ) ),
       new Task( id : 2, completed : false, title: 'fix the fire hose', category: new Category( text: 'Home' ), deadline_val: next_week, reminder_date: '20190520', reminder_time: '0900', ),
       new Task( id : 3, completed : true, title: 'finish the annual reports', category: new Category( text: 'Work' ) ),

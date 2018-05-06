@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CTAppBar {
 
   CTAppBar({ this.filterCategory, this.deleteCategory,
-             this.isSearch, this.toggleSearch,
+             this.isSearch, this.isMyDay, this.toggleSearch,
              this.searchString, this.doSearch,
   });
 
@@ -13,6 +13,7 @@ class CTAppBar {
   final ValueChanged<String> deleteCategory ;
 
   final bool isSearch ;
+  final bool isMyDay ;
   final ValueChanged<bool> toggleSearch ;
 
   final String searchString ;
@@ -21,7 +22,7 @@ class CTAppBar {
   AppBar homeAppBar(){
 
     return new AppBar(
-      title: new Text(appDefaultTitle),
+      title: new Text( isMyDay ? 'My Day' : appDefaultTitle),
       actions: [
 
         new IconButton(

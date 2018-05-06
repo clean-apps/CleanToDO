@@ -6,6 +6,7 @@ import 'package:clean_todo/data/FakeDataGenerator.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/lists/CTAppBar.dart';
+import 'package:clean_todo/lists/MyDayTasksList.dart';
 
 class TasksPage extends StatefulWidget {
 
@@ -31,11 +32,18 @@ class _TasksPageState extends State<TasksPage> {
   filter( String categoryName ){
     this.setState( (){
 
-      if( categoryName == 'To-Do' )
+      if( categoryName == 'To-Do' ) {
         cache.filterCategory = null;
+        cache.showMyDay = false;
 
-      else
+      } else if ( categoryName == 'My Day' ) {
+        cache.filterCategory = null;
+        cache.showMyDay = true;
+
+      } else {
         cache.filterCategory = categoryName;
+        cache.showMyDay = false;
+      }
 
     });
 
@@ -54,6 +62,7 @@ class _TasksPageState extends State<TasksPage> {
                 })
             ),
 
+            isMyDay: cache.showMyDay,
             isSearch: cache.enableSearch,
             toggleSearch: ( (isSearch) =>
                 this.setState( (){
@@ -83,7 +92,25 @@ class _TasksPageState extends State<TasksPage> {
             userData : cache.userData
     );
 
-    Widget appBody = new TasksList(
+    Widget myDayAppBody = new MyDayTasksList(
+
+            todayTasks: cache.todayTasks,
+            dueTasks: cache.dueTasks,
+            pendingTasks: cache.pendingTasks,
+            extraTask: cache.newTask,
+            categories: cache.categoryData.user,
+            toggleTask: cache.toggleTask,
+
+            updateTask: ( (task){
+              this.setState( (){
+                cache.updateTask(task);
+              });
+            }),
+
+            deleteTask: cache.deleteTask,
+    );
+
+    Widget listAppBody = new TasksList(
 
             tasks: cache.tasks,
             extraTask: cache.newTask,
@@ -98,6 +125,8 @@ class _TasksPageState extends State<TasksPage> {
 
             deleteTask: cache.deleteTask,
     );
+
+    Widget appBody = cache.showMyDay ? myDayAppBody : listAppBody ;
 
     FloatingActionButton appFab = new FloatingActionButton(
 

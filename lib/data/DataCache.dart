@@ -2,6 +2,7 @@ import 'package:clean_todo/beans/UserData.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/Task.dart';
+import 'package:clean_todo/calender/DateUtil.dart';
 
 class DataCache {
 
@@ -15,6 +16,8 @@ class DataCache {
 
   bool enableSearch = false;
   String searchString = '';
+
+  bool showMyDay = false;
 
   DataCache(){
       newTask.id = tasksData.length + 1;
@@ -151,4 +154,27 @@ class DataCache {
     _update_category_count( task, -1 );
 
   }
+
+  List<Task> get todayTasks {
+    return tasksData
+        .where( (task) => task.deadline_val == DateUtil.parse( DateUtil.today ) )
+        .toList();
+
+  }
+
+  List<Task> get dueTasks {
+    return tasksData
+              .where( (task) => task.isDue && task.deadline_val != DateUtil.parse( DateUtil.today ) )
+              .toList();
+
+  }
+
+  List<Task> get pendingTasks {
+
+    return tasksData
+              .where( (task) => !task.isDue && !task.completed )
+              .toList();
+
+  }
+
 }
