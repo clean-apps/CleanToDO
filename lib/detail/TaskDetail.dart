@@ -162,7 +162,9 @@ class _TaskDetailState extends State<TaskDetail> {
     return new Scaffold(
 
       appBar: new AppBar(
-        title: widget.task.title == null ? new Text( 'Create New Task' ) : new Text( 'Update Task'  ),
+        title: widget.task.title == null ?
+                    new Text( 'Create New Task' ) :
+                    new Text( 'Update Task' ),
       ),
 
       body: new Builder(builder: (BuildContext bodyContext) {

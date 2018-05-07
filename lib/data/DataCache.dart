@@ -18,6 +18,7 @@ class DataCache {
   String searchString = '';
 
   bool showMyDay = false;
+  bool enableQuickAdd = false;
 
   DataCache(){
       newTask.id = tasksData.length + 1;

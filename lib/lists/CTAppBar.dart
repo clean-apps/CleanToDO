@@ -19,10 +19,19 @@ class CTAppBar {
   final String searchString ;
   final ValueChanged<String> doSearch ;
 
+  AppBar mydayAppBar(){
+
+    return new AppBar(
+      title: new Text( 'My Day' ),
+      elevation: 0.0,
+    );
+
+  }
+
   AppBar homeAppBar(){
 
     return new AppBar(
-      title: new Text( isMyDay ? 'My Day' : appDefaultTitle),
+      title: new Text( appDefaultTitle),
       actions: [
 
         new IconButton(
@@ -107,6 +116,9 @@ class CTAppBar {
   }
 
   AppBar build() {
+
+    if( isMyDay )
+      return mydayAppBar();
 
     if( isSearch )
       return searchAppBar();

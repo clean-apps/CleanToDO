@@ -7,6 +7,8 @@ import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/lists/CTAppBar.dart';
 import 'package:clean_todo/lists/MyDayTasksList.dart';
+import 'package:clean_todo/beans/Category.dart';
+
 
 class TasksPage extends StatefulWidget {
 
@@ -136,6 +138,8 @@ class _TasksPageState extends State<TasksPage> {
             onPressed: (){
 
               cache.newTask.clear();
+              cache.newTask.category = new Category( text: cache.filterCategory );
+
               Navigator.push(
                   context,
                   new MaterialPageRoute(
@@ -156,7 +160,7 @@ class _TasksPageState extends State<TasksPage> {
       appBar: appBar,
       drawer: appSidebar,
       body: appBody,
-      floatingActionButton: appFab,
+      floatingActionButton: cache.filterCategory == null ? null : appFab,
     );
   }
 }

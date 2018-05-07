@@ -125,10 +125,13 @@ class _MyDayTasksListState extends State<MyDayTasksList> {
 
       ];
 
-      return new ListView(
-        children: _items. map( (panel){
-                     return panel.build(context);
-                 }).toList(),
-      );
+      return new Container(
+        color: Theme.of(context).primaryColor,
+        child: new ListView(
+          children: _items. map( (panel){
+            return panel.build(context);
+          }).toList(),
+        )
+      ) ;
     }
 }
