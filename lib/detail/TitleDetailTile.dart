@@ -34,6 +34,7 @@ class TitleDetailTile extends StatelessWidget {
 
       title: new TextField(
 
+        autofocus: true,
         controller: new TextEditingController( text: this.title ),
 
         onSubmitted: (value) => update_title( value ),

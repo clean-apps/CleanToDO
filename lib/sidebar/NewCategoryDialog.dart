@@ -33,9 +33,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
   
     Widget build(BuildContext context) {
     
-      return new _SystemPadding (
-
-        child: new SimpleDialog(
+      return new SimpleDialog(
 
         title: new Text('New List'),
         contentPadding: new EdgeInsets.all(10.0),
@@ -87,8 +85,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
           ],
 
-        )
-      );
+        );
     
     }
 }

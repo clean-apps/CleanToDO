@@ -4,6 +4,7 @@ import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/lists/LeaveBehindView.dart';
 import 'package:clean_todo/beans/Category.dart';
 
+
 class TaskTile extends StatefulWidget {
 
   TaskTile({ this.task , this.extraTask, this.categories, this.toggleTask, this.updateTask, this.deleteTask });

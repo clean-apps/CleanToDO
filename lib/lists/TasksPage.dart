@@ -8,7 +8,23 @@ import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/lists/CTAppBar.dart';
 import 'package:clean_todo/lists/MyDayTasksList.dart';
 import 'package:clean_todo/beans/Category.dart';
+import 'package:clean_todo/sidebar/NewCategoryDialog.dart';
 
+class _SystemPadding extends StatelessWidget {
+
+  final Widget child;
+
+  _SystemPadding({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
+    return new AnimatedContainer(
+        padding: mediaQuery.viewInsets,
+        duration: const Duration(milliseconds: 300),
+        child: child);
+  }
+}
 
 class TasksPage extends StatefulWidget {
 
@@ -137,18 +153,65 @@ class _TasksPageState extends State<TasksPage> {
 
             onPressed: (){
 
-              cache.newTask.clear();
-              cache.newTask.category = new Category( text: cache.filterCategory );
+              TextEditingController tecNewTask = new TextEditingController();
+              showModalBottomSheet<void>(
 
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new TaskDetail(
-                                                task: cache.newTask,
-                                                updateTask: cache.updateTask,
-                                                categories: cache.categoryData.user,
-                                            )
-                  )
+                  context: context,
+                  builder: (BuildContext context){
+                      return new _SystemPadding(
+                        child: new Container(
+                          child: new Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: new ListTile(
+                                leading: new Icon( Icons.radio_button_unchecked, size: 28.0, color: Theme.of(context).primaryColor, ),
+                                title: new TextField(
+                                  autofocus: true,
+                                  controller: tecNewTask,
+                                  decoration: new InputDecoration(
+                                    hintText: 'Add a to-do',
+                                    hintStyle: new TextStyle( color: Colors.grey ),
+                                    border: InputBorder.none,
+                                  ),
+                                  onSubmitted: (value){
+                                    if( value != null && value.length > 0 ) {
+                                      this.setState(() {
+                                        cache.newTask.id =
+                                            cache.tasksData.length + 1;
+                                        cache.newTask.title = value;
+                                        cache.newTask.category = new Category(
+                                            text: cache.filterCategory);
+                                        cache.updateTask(cache.newTask);
+                                        Navigator.pop(context);
+                                      });
+                                    }
+                                  },
+                                ),
+                                trailing: new IconButton(
+                                    icon: new CircleAvatar(
+                                      backgroundColor: Theme.of(context).primaryColor,
+                                      child: new Icon( Icons.keyboard_arrow_right),
+                                    ),
+                                    onPressed: (){
+
+                                      if( tecNewTask.text != null && tecNewTask.text.length > 0 ) {
+                                        this.setState(() {
+                                          cache.newTask.id =
+                                              cache.tasksData.length + 1;
+                                          cache.newTask.title = tecNewTask.text;
+                                          cache.newTask.category = new Category(
+                                              text: cache.filterCategory);
+                                          cache.updateTask(cache.newTask);
+                                          Navigator.pop(context);
+                                        });
+                                      }
+                                    }
+                                ),
+                              )
+                          )
+
+                        )
+                      );
+                  },
               );
 
             }
@@ -161,6 +224,7 @@ class _TasksPageState extends State<TasksPage> {
       drawer: appSidebar,
       body: appBody,
       floatingActionButton: cache.filterCategory == null ? null : appFab,
+
     );
   }
 }
