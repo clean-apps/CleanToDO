@@ -14,8 +14,8 @@ class FakeDataGenerator implements DataProvider {
     return new CategoryData(
 
       system: [
-          new Category( text: 'My Day', icon: Icons.lightbulb_outline ),
-          new Category( text: 'To-Do', icon: Icons.check ),
+          new Category( id: -1, text: 'My Day', icon: Icons.lightbulb_outline ),
+          new Category( id: -2, text: 'To-Do', icon: Icons.check ),
       ],
 
       user: [

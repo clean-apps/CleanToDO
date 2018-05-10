@@ -1,8 +1,10 @@
 import 'package:clean_todo/beans/UserData.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
-import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
+import 'package:clean_todo/data/CategoryProvider.dart';
+import 'package:clean_todo/data/TaskProvider.dart';
+import 'package:clean_todo/beans/Category.dart';
 
 class DataCache {
 
@@ -20,9 +22,15 @@ class DataCache {
   bool showMyDay = false;
   bool enableQuickAdd = false;
 
+  final String dbName = "CleanToDoDB.db";
+  TaskProvider taskProvider = new TaskProvider();
+  CategoryProvider categoryProvider = new CategoryProvider();
+
+
   DataCache(){
-      newTask.id = tasksData.length + 1;
-      newTask.completed = false;
+
+    newTask.id = tasksData.length + 1;
+    newTask.completed = false;
   }
 
   List<Task> _filterCategories( List<Task> tasks, String category ){
@@ -67,8 +75,12 @@ class DataCache {
       return _filterCategories( tasksData, filterCategory );
   }
 
-  void addCategory( newCategoryLT ){
-      this.categoryData.user.add( newCategoryLT );
+  void addCategory( Category newCategoryLT ){
+    categoryProvider
+        .insert( newCategoryLT )
+        .then( (category) =>
+          this.categoryData.user.add( newCategoryLT )
+        );
   }
 
   void deleteCategory( categoryTitle ){
@@ -93,6 +105,8 @@ class DataCache {
         if( cat.text == categoryTitle ) indexToDelete = i;
       });
 
+      categoryProvider.delete( this.categoryData.user[indexToDelete].id );
+
       this.categoryData.user.removeAt(indexToDelete);
       filterCategory = null;
     }
@@ -101,13 +115,16 @@ class DataCache {
 
   void toggleTask( Task task ){
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
+      taskProvider.update(task);
   }
 
   void updateTask( Task task ) {
 
     if (tasksData.indexOf(task) < 0) {
 
-      tasksData.add(task.clone());
+      Task newTask = task.clone();
+      taskProvider.insert(newTask);
+      tasksData.add(newTask);
       _update_category_count(task, 1);
 
       newTask = new Task();
@@ -137,6 +154,8 @@ class DataCache {
       dirtyData.reminder_time = task.reminder_time;
       dirtyData.completed = task.completed;
       dirtyData.notes = task.notes;
+
+      taskProvider.update(task);
     }
 
   }
@@ -144,14 +163,18 @@ class DataCache {
   void _update_category_count( Task task, int change ){
 
     categoryData.user.forEach(  (category){
-      if( category.text == task.category.text )
+      if( category.text == task.category.text ) {
         category.count += change;
+        categoryProvider.update(category);
+      }
     });
+
 
   }
 
   void deleteTask(Task task){
     tasksData.remove( task );
+    taskProvider.delete( task.id );
     _update_category_count( task, -1 );
 
   }

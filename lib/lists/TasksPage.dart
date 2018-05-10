@@ -3,6 +3,7 @@ import 'package:clean_todo/sidebar/AppSidebar.dart';
 import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/lists/TasksList.dart';
 import 'package:clean_todo/data/FakeDataGenerator.dart';
+import 'package:clean_todo/data/DefaultDataGenerator.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/lists/CTAppBar.dart';
@@ -37,7 +38,8 @@ class _TasksPageState extends State<TasksPage> {
   DataCache cache = new DataCache();
 
   _TasksPageState(){
-    DataProvider dataProvider = new FakeDataGenerator();
+    //DataProvider dataProvider = new FakeDataGenerator();
+    DataProvider dataProvider = new DefaultDataGenerator();
 
     if( !cache.isCached ) {
       cache.categoryData = dataProvider.getSidebarData();
@@ -175,11 +177,10 @@ class _TasksPageState extends State<TasksPage> {
                                   onSubmitted: (value){
                                     if( value != null && value.length > 0 ) {
                                       this.setState(() {
-                                        cache.newTask.id =
-                                            cache.tasksData.length + 1;
+                                        cache.newTask.clear();
+                                        cache.newTask.id = cache.tasksData.length + 1;
                                         cache.newTask.title = value;
-                                        cache.newTask.category = new Category(
-                                            text: cache.filterCategory);
+                                        cache.newTask.category = new Category(text: cache.filterCategory);
                                         cache.updateTask(cache.newTask);
                                         Navigator.pop(context);
                                       });
@@ -195,11 +196,10 @@ class _TasksPageState extends State<TasksPage> {
 
                                       if( tecNewTask.text != null && tecNewTask.text.length > 0 ) {
                                         this.setState(() {
-                                          cache.newTask.id =
-                                              cache.tasksData.length + 1;
+                                          cache.newTask.clear();
+                                          cache.newTask.id = cache.tasksData.length + 1;
                                           cache.newTask.title = tecNewTask.text;
-                                          cache.newTask.category = new Category(
-                                              text: cache.filterCategory);
+                                          cache.newTask.category = new Category(text: cache.filterCategory);
                                           cache.updateTask(cache.newTask);
                                           Navigator.pop(context);
                                         });

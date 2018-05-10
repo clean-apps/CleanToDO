@@ -1,6 +1,7 @@
 
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
+import 'package:clean_todo/data/TaskProvider.dart';
 
 class Task {
 
@@ -80,5 +81,35 @@ class Task {
 
   bool operator ==(o) => o.id == this.id;
   int get hashCode =>  this.id.toString().hashCode;
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {
+        //TaskProvider.columnId: id,
+        TaskProvider.columnTitle: title,
+        TaskProvider.columnCompleted: completed == true ? 1 : 0,
+        TaskProvider.columnCategoryText: category.text,
+        TaskProvider.columnDeadlineVal: deadline_val,
+        TaskProvider.columnReminderDate: reminder_date,
+        TaskProvider.columnReminderTime: reminder_time
+    };
+
+    if (id != null) {
+      map[TaskProvider.columnId] = id;
+    }
+
+    //print( "map => " + map.type.reflectedType.toString() );
+    return map;
+  }
+
+  Task.fromMap(Map map) {
+
+      id = map[TaskProvider.columnId];
+      title = map[TaskProvider.columnTitle];
+      completed = map[TaskProvider.columnCompleted] == 1;
+      category = new Category( text: map[TaskProvider.columnCategoryText] );
+      deadline_val = map[TaskProvider.columnDeadlineVal];
+      reminder_date = map[TaskProvider.columnReminderDate];
+      reminder_time = map[TaskProvider.columnReminderTime];
+  }
 
 }
