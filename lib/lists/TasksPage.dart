@@ -71,12 +71,15 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
 
+    cache.initNotifications(context);
+
     AppBar appBar = new CTAppBar(
 
             filterCategory: cache.filterCategory,
             deleteCategory: ((category) =>
                 this.setState( (){
                   cache.deleteCategory(category);
+                  cache.filterCategory = null;
                 })
             ),
 

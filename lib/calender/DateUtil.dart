@@ -59,7 +59,10 @@ class DateUtil {
       val = val.replaceFirst( 'Due ', '');
     }
 
-    if( 'Today' == val ){
+    if( 'Later Today' == val ) {
+      return parse(today);
+
+    }else if( 'Today' == val ){
       return parse( today );
 
     } else if( 'Tomorrow' == val ) {

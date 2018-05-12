@@ -22,7 +22,7 @@ class TaskDetail extends StatefulWidget {
 class _TaskDetailState extends State<TaskDetail> {
 
   final List<String> _deadlines = ['Today', 'Tomorrow', 'Next Week'];
-  final List<String> _reminders = ['Later Today @ 0900', 'Later Today @ 2100', 'Tomorrow @ 0900', 'Next Week @ 0900'];
+  final List<String> _reminders = ['Later Today @ 09:00', 'Later Today @ 21:00', 'Tomorrow @ 09:00', 'Next Week @ 09:00'];
 
   String getValueForCustom( deadline ){
     if( deadline == null ){
@@ -117,8 +117,7 @@ class _TaskDetailState extends State<TaskDetail> {
 
          Future<TimeOfDay> pickedTime = showTimePicker(
            context: context,
-           initialTime: content == 'Custom' ? TimeUtil.now : TimeUtil.parse_back(
-               widget.task.reminder_time),
+           initialTime: content == 'Custom' ? TimeUtil.now : TimeUtil.parse_back(widget.task.reminder_time),
          );
 
          pickedTime.then((pickedTimeValue) {

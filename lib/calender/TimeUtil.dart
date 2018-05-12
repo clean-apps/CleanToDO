@@ -9,9 +9,9 @@ class TimeUtil {
 
   static get reminder_time_val{
     if( (new TimeOfDay.now()).hour > 9 ){
-      return '2100';
+      return '21:00';
     } else {
-      return '0900';
+      return '09:00';
     }
   }
 
@@ -30,8 +30,9 @@ class TimeUtil {
   }
 
   static TimeOfDay parse_string( String val ){
-    return new TimeOfDay( hour:   int.parse(val.substring(0,1)),
-                          minute: int.parse(val.substring(2,3))
+    print( "parsing -" + val  + " ~ part1:" + val.substring(0,2) + " ~ part2:" + val.substring(3,5) );
+    return new TimeOfDay( hour:   int.parse(val.substring(0,2)),
+                          minute: int.parse(val.substring(3,5))
             );
   }
 

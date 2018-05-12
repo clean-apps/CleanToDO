@@ -7,6 +7,7 @@ import 'package:clean_todo/data/TaskProvider.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:clean_todo/data/NotificationManager.dart';
 
 class DataCache {
 
@@ -28,10 +29,15 @@ class DataCache {
   TaskProvider taskProvider = new TaskProvider();
   CategoryProvider categoryProvider = new CategoryProvider();
 
+  NotificationManager notifications = new NotificationManager();
 
   DataCache() {
     newTask.id = tasksData.length + 1;
     newTask.completed = false;
+  }
+
+  initNotifications( context ){
+    notifications.init(context);
   }
 
   Future<bool> initDb() async {
@@ -159,6 +165,7 @@ class DataCache {
       Task newTask = task.clone();
       taskProvider.insert(newTask);
       tasksData.add(newTask);
+      notifications.addReminder( newTask );
       _update_category_count(task.clone(), 1);
 
       newTask = new Task();
@@ -190,6 +197,7 @@ class DataCache {
       dirtyData.notes = task.notes;
 
       taskProvider.update(task.clone());
+      notifications.updateReminder( newTask );
     }
 
   }
@@ -209,6 +217,7 @@ class DataCache {
   deleteTask(Task task) {
     tasksData.remove( task );
     taskProvider.delete( task.id );
+    notifications.cancelReminder( newTask );
     _update_category_count( task.clone(), -1 );
 
   }
