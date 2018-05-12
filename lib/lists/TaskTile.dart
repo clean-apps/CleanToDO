@@ -155,7 +155,8 @@ class _TasksTileState extends State<TaskTile> {
                             updateTask: (task){
                               widget.updateTask(task);
                             },
-                        ) )
+                        )
+            )
           );
 
         },

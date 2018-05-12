@@ -7,6 +7,7 @@ import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/lists/CTAppBar.dart';
 import 'package:clean_todo/lists/MyDayTasksList.dart';
 import 'package:clean_todo/beans/Category.dart';
+import 'package:clean_todo/detail/TaskDetail.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -145,7 +146,7 @@ class _TasksPageState extends State<TasksPage> {
 
     Widget appBody = cache.showMyDay ? myDayAppBody : listAppBody ;
 
-    FloatingActionButton appFab = new FloatingActionButton(
+    FloatingActionButton appFabFilter = new FloatingActionButton(
 
             child: new Icon(Icons.add),
             backgroundColor: Theme.of(context).primaryColor,
@@ -215,12 +216,41 @@ class _TasksPageState extends State<TasksPage> {
 
     );
 
+    FloatingActionButton appFabGeneric = new FloatingActionButton(
+
+        child: new Icon(Icons.add),
+        backgroundColor: Theme.of(context).primaryColor,
+
+        onPressed: (){
+
+          cache.newTask.clear();
+          cache.newTask.id = cache.tasksData.length + 1;
+
+          Navigator.push(
+              context,
+              new MaterialPageRoute( builder: (context) =>
+                  new TaskDetail(
+                    task: cache.newTask,
+                    categories: cache.categoryData.user,
+                    updateTask: (task){
+                      cache.updateTask(task);
+                    },
+                  )
+              )
+          );
+
+        }
+
+    );
+
+    FloatingActionButton appFab = cache.filterCategory == null ? appFabGeneric : appFabFilter ;
+
     return new Scaffold(
 
       appBar: cache.isCached ? appBar : null,
       drawer: cache.isCached ? appSidebar : null,
       body: appBody,
-      floatingActionButton: cache.showFab ? appFab : null,
+      floatingActionButton: cache.isCached ? appFab : null,
 
     );
   }
