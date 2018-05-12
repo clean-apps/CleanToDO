@@ -4,7 +4,7 @@ class CategoryData {
 
   CategoryData({ this.system, this.user });
 
-  final List<Category> system ;
-  final List<Category> user ;
+  List<Category> system = [];
+  List<Category> user = [];
 
 }

@@ -4,8 +4,6 @@ import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/UserData.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/data/DataProvider.dart';
-import 'package:clean_todo/calender/DateUtil.dart';
-import 'package:clean_todo/calender/DateToString.dart';
 
 class DefaultDataGenerator implements DataProvider {
 
@@ -19,9 +17,9 @@ class DefaultDataGenerator implements DataProvider {
       ],
 
       user: [
-        new Category( text: 'Home', count: 0 ),
-        new Category( text: 'Work', count: 0 ),
-        new Category( text: 'Shopping', count: 0 ),
+        new Category( text: 'Home' ),
+        new Category( text: 'Work' ),
+        new Category( text: 'Shopping' ),
       ],
 
     );
@@ -32,7 +30,7 @@ class DefaultDataGenerator implements DataProvider {
     return new UserData( userName: 'Sandra Smith', abbr: 'SS' );
   }
 
-  List<Task> getAllTasks(){
+  List<Task> getAllTasks() {
     return [];
   }
 

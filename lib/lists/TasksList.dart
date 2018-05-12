@@ -7,7 +7,7 @@ class TasksList extends StatefulWidget {
 
   TasksList({ this.tasks, this.extraTask, this.categories, this.toggleTask, this.updateTask, this.deleteTask });
 
-  List<Task> tasks ;
+  final List<Task> tasks ;
   final Task extraTask ;
   final List<Category> categories ;
 

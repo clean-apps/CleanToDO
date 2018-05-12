@@ -44,14 +44,16 @@ class AppSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     List<Widget> systemCategoryWdigets = [];
-    this.categories.system.forEach( (cb) {
-      systemCategoryWdigets.add(  getAsSystemListTile(context, cb) );
-    });
+    if( this.categories.system != null )
+      this.categories.system.forEach( (cb) {
+        systemCategoryWdigets.add(  getAsSystemListTile(context, cb) );
+      });
 
     List<Widget> userCategoryWdigets = [];
-    this.categories.user.forEach( (cb) {
-      userCategoryWdigets.add(  getAsListTile(context, cb) );
-    });
+    if( this.categories.user != null )
+      this.categories.user.forEach( (cb) {
+        userCategoryWdigets.add(  getAsListTile(context, cb) );
+      });
 
     return new Drawer(
 
@@ -79,11 +81,10 @@ class AppSidebar extends StatelessWidget {
                   new ListTile(
                     leading: new Icon( Icons.add, color: Theme.of(context).primaryColor, ),
                     title: new SidebarText( textContent : 'New List' ),
-                    onTap: () {   showDialog(
+                    onTap: () =>  showDialog(
                                     context: context,
-                                    child: new NewCategoryDialog( addCategory: this.addCategory ),
-                                  );
-                              }
+                                    builder: (_) => new NewCategoryDialog( addCategory: this.addCategory ),
+                                  ),
                   ),
 
                   new Column(

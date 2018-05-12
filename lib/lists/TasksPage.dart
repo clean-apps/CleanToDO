@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:clean_todo/sidebar/AppSidebar.dart';
 import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/lists/TasksList.dart';
-import 'package:clean_todo/data/FakeDataGenerator.dart';
 import 'package:clean_todo/data/DefaultDataGenerator.dart';
-import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/lists/CTAppBar.dart';
 import 'package:clean_todo/lists/MyDayTasksList.dart';
 import 'package:clean_todo/beans/Category.dart';
-import 'package:clean_todo/sidebar/NewCategoryDialog.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -38,15 +35,15 @@ class _TasksPageState extends State<TasksPage> {
   DataCache cache = new DataCache();
 
   _TasksPageState(){
-    //DataProvider dataProvider = new FakeDataGenerator();
     DataProvider dataProvider = new DefaultDataGenerator();
 
-    if( !cache.isCached ) {
-      cache.categoryData = dataProvider.getSidebarData();
-      cache.userData = dataProvider.getUserData();
-      cache.tasksData = dataProvider.getAllTasks();
-      cache.isCached = true;
-    }
+    cache.initDb().then((finished){
+      this.setState((){
+        cache.userData = dataProvider.getUserData();
+        cache.isCached = true;
+      });
+    });
+
   }
 
   filter( String categoryName ){
@@ -220,10 +217,10 @@ class _TasksPageState extends State<TasksPage> {
 
     return new Scaffold(
 
-      appBar: appBar,
-      drawer: appSidebar,
+      appBar: cache.isCached ? appBar : null,
+      drawer: cache.isCached ? appSidebar : null,
       body: appBody,
-      floatingActionButton: cache.filterCategory == null ? null : appFab,
+      floatingActionButton: cache.showFab ? appFab : null,
 
     );
   }

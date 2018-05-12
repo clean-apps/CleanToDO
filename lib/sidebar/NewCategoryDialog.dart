@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Category.dart';
 
-class _SystemPadding extends StatelessWidget {
-
-  final Widget child;
-
-  _SystemPadding({Key key, this.child}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    return new AnimatedContainer(
-        padding: mediaQuery.viewInsets,
-        duration: const Duration(milliseconds: 300),
-        child: child);
-  }
-}
-
 class NewCategoryDialog extends StatefulWidget {
 
   NewCategoryDialog({Key key, this.addCategory }) : super(key: key);
@@ -29,7 +13,7 @@ class NewCategoryDialog extends StatefulWidget {
 
 class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
-  final TextEditingController _new_cat_cont = new TextEditingController();
+  final TextEditingController _newCatCont = new TextEditingController();
   
     Widget build(BuildContext context) {
     
@@ -43,7 +27,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
               padding: new EdgeInsets.only( left: 10.0, right: 10.0 ),
               child : new TextField(
-                controller: _new_cat_cont,
+                controller: _newCatCont,
                 decoration: new InputDecoration(
                   hintText: 'untitled'
                 ),
@@ -68,7 +52,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
                       this.setState((){
                         widget.addCategory(
                           new Category (
-                            text : _new_cat_cont.text,
+                            text : _newCatCont.text,
                             icon: Icons.list,
                             count: 0,
                           )

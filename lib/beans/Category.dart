@@ -11,7 +11,7 @@ class Category {
   int count ;
 
   Category clone(){
-    return new Category( text: text, icon: icon, count: count );
+    return new Category( id: id, text: text, icon: icon, count: count );
   }
 
   int get hashCode => text.hashCode;

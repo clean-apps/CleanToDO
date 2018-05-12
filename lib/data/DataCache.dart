@@ -5,6 +5,8 @@ import 'package:clean_todo/calender/DateUtil.dart';
 import 'package:clean_todo/data/CategoryProvider.dart';
 import 'package:clean_todo/data/TaskProvider.dart';
 import 'package:clean_todo/beans/Category.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
 
 class DataCache {
 
@@ -27,10 +29,35 @@ class DataCache {
   CategoryProvider categoryProvider = new CategoryProvider();
 
 
-  DataCache(){
-
+  DataCache() {
     newTask.id = tasksData.length + 1;
     newTask.completed = false;
+  }
+
+  Future<bool> initDb() async {
+
+    tasksData = await taskProvider.allTasks();
+    categoryData.user = await categoryProvider.allCategories();
+
+    if( categoryData.user == null || categoryData.user.length == 0 ){
+
+      categoryData.user = [];
+      await addCategories(
+          [
+            new Category( id: 1, text: 'Home', count: 0 ),
+            new Category( id: 2, text: 'Work', count: 0 ),
+            new Category( id: 3, text: 'Shopping', count: 0 ),
+          ]
+      );
+
+    }
+
+    categoryData.system = [
+      new Category( id: -1, text: 'My Day', icon: Icons.lightbulb_outline ),
+      new Category( id: -2, text: 'To-Do', icon: Icons.check )
+    ];
+
+    return true;
   }
 
   List<Task> _filterCategories( List<Task> tasks, String category ){
@@ -75,15 +102,22 @@ class DataCache {
       return _filterCategories( tasksData, filterCategory );
   }
 
-  void addCategory( Category newCategoryLT ){
-    categoryProvider
-        .insert( newCategoryLT )
-        .then( (category) =>
-          this.categoryData.user.add( newCategoryLT )
-        );
+  Future<bool> addCategories( List<Category> newCategories ) async {
+    await categoryProvider.insertAll(newCategories);
+    newCategories.forEach( (newCategory){
+      this.categoryData.user.add( newCategory );
+    });
+
+    return true;
   }
 
-  void deleteCategory( categoryTitle ){
+  addCategory( Category newCategoryLT ) {
+    newCategoryLT.id = categoryData.user.last.id + 1;
+    this.categoryData.user.add( newCategoryLT );
+    categoryProvider.insert( newCategoryLT.clone() );
+  }
+
+  deleteCategory( categoryTitle ) {
 
     if( categoryTitle != null ) {
 
@@ -105,27 +139,27 @@ class DataCache {
         if( cat.text == categoryTitle ) indexToDelete = i;
       });
 
-      categoryProvider.delete( this.categoryData.user[indexToDelete].id );
-
       this.categoryData.user.removeAt(indexToDelete);
       filterCategory = null;
+
+      categoryProvider.delete( this.categoryData.user[indexToDelete].id );
     }
 
   }
 
-  void toggleTask( Task task ){
+  toggleTask( Task task ) {
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
-      taskProvider.update(task);
+      taskProvider.update(task.clone());
   }
 
-  void updateTask( Task task ) {
+  updateTask( Task task ) {
 
     if (tasksData.indexOf(task) < 0) {
 
       Task newTask = task.clone();
       taskProvider.insert(newTask);
       tasksData.add(newTask);
-      _update_category_count(task, 1);
+      _update_category_count(task.clone(), 1);
 
       newTask = new Task();
       newTask.id = tasksData.length + 1;
@@ -155,27 +189,27 @@ class DataCache {
       dirtyData.completed = task.completed;
       dirtyData.notes = task.notes;
 
-      taskProvider.update(task);
+      taskProvider.update(task.clone());
     }
 
   }
 
-  void _update_category_count( Task task, int change ){
+  _update_category_count( Task task, int change ) {
 
-    categoryData.user.forEach(  (category){
+    categoryData.user.forEach(  (category) {
       if( category.text == task.category.text ) {
-        category.count += change;
-        categoryProvider.update(category);
+          category.count += change;
+          categoryProvider.update(category.clone());
+        }
       }
-    });
-
+    );
 
   }
 
-  void deleteTask(Task task){
+  deleteTask(Task task) {
     tasksData.remove( task );
     taskProvider.delete( task.id );
-    _update_category_count( task, -1 );
+    _update_category_count( task.clone(), -1 );
 
   }
 
@@ -199,6 +233,10 @@ class DataCache {
               .where( (task) => !task.isDue && !task.completed )
               .toList();
 
+  }
+
+  bool get showFab {
+    return isCached && filterCategory != null ;
   }
 
 }
