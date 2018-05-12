@@ -243,7 +243,7 @@ class _TasksPageState extends State<TasksPage> {
 
     );
 
-    FloatingActionButton appFab = cache.filterCategory == null ? appFabGeneric : appFabFilter ;
+    FloatingActionButton appFab = cache.showMyDay ? null : ( cache.filterCategory == null ? appFabGeneric : appFabFilter );
 
     return new Scaffold(
 
