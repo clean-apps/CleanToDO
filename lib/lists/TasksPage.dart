@@ -8,6 +8,9 @@ import 'package:clean_todo/lists/CTAppBar.dart';
 import 'package:clean_todo/lists/MyDayTasksList.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/detail/TaskDetail.dart';
+import 'package:clean_todo/settings/SettingsManager.dart';
+import 'package:clean_todo/settings/Themes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -27,40 +30,31 @@ class _SystemPadding extends StatelessWidget {
 
 class TasksPage extends StatefulWidget {
 
+  SettingsManager settings;
+  DataCache cache;
+
+  TasksPage({this.settings, this.cache});
+
   @override
   _TasksPageState createState() => new _TasksPageState();
 }
 
 class _TasksPageState extends State<TasksPage> {
 
-  DataCache cache = new DataCache();
-
-  _TasksPageState(){
-    DataProvider dataProvider = new DefaultDataGenerator();
-
-    cache.initDb().then((finished){
-      this.setState((){
-        cache.userData = dataProvider.getUserData();
-        cache.isCached = true;
-      });
-    });
-
-  }
-
   filter( String categoryName ){
     this.setState( (){
 
       if( categoryName == 'To-Do' ) {
-        cache.filterCategory = null;
-        cache.showMyDay = false;
+        widget.cache.filterCategory = null;
+        widget.cache.showMyDay = false;
 
       } else if ( categoryName == 'My Day' ) {
-        cache.filterCategory = null;
-        cache.showMyDay = true;
+        widget.cache.filterCategory = null;
+        widget.cache.showMyDay = true;
 
       } else {
-        cache.filterCategory = categoryName;
-        cache.showMyDay = false;
+        widget.cache.filterCategory = categoryName;
+        widget.cache.showMyDay = false;
       }
 
     });
@@ -71,83 +65,90 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
 
-    cache.initNotifications(context);
+    widget.cache.initNotifications(context);
 
     AppBar appBar = new CTAppBar(
 
-            filterCategory: cache.filterCategory,
+            filterCategory: widget.cache.filterCategory,
             deleteCategory: ((category) =>
                 this.setState( (){
-                  cache.deleteCategory(category);
-                  cache.filterCategory = null;
+                  widget.cache.deleteCategory(category);
+                  widget.cache.filterCategory = null;
                 })
             ),
 
-            isMyDay: cache.showMyDay,
-            isSearch: cache.enableSearch,
+            isMyDay: widget.cache.showMyDay,
+            isSearch: widget.cache.enableSearch,
             toggleSearch: ( (isSearch) =>
                 this.setState( (){
-                  cache.enableSearch = isSearch;
-                  cache.searchString = null;
+                  widget.cache.enableSearch = isSearch;
+                  widget.cache.searchString = null;
                 })
             ),
 
-            searchString: cache.searchString,
+            searchString: widget.cache.searchString,
             doSearch: ( (value) =>
                 this.setState( (){
-                  cache.searchString = value;
+                  widget.cache.searchString = value;
                 })
-            )
+            ),
 
-    ).build();
+            themeColor: widget.settings.theme == null ? 'blue' : widget.settings.theme,
+            updateColor: ( (value) =>
+                this.setState( (){
+                  widget.settings.theme = value;
+                })
+            ),
+
+    ).build(context);
 
     AppSidebar appSidebar = new AppSidebar(
 
-            categories : cache.categoryData,
+            categories : widget.cache.categoryData,
             addCategory : ((newCategory) =>
                 this.setState( (){
-                  cache.addCategory(newCategory);
+                  widget.cache.addCategory(newCategory);
                 })
             ),
             filter : filter,
-            userData : cache.userData
+            userData : widget.cache.userData
     );
 
     Widget myDayAppBody = new MyDayTasksList(
 
-            todayTasks: cache.todayTasks,
-            dueTasks: cache.dueTasks,
-            pendingTasks: cache.pendingTasks,
-            extraTask: cache.newTask,
-            categories: cache.categoryData.user,
-            toggleTask: cache.toggleTask,
+            todayTasks: widget.cache.todayTasks,
+            dueTasks: widget.cache.dueTasks,
+            pendingTasks: widget.cache.pendingTasks,
+            extraTask: widget.cache.newTask,
+            categories: widget.cache.categoryData.user,
+            toggleTask: widget.cache.toggleTask,
 
             updateTask: ( (task){
               this.setState( (){
-                cache.updateTask(task);
+                widget.cache.updateTask(task);
               });
             }),
 
-            deleteTask: cache.deleteTask,
+            deleteTask: widget.cache.deleteTask,
     );
 
     Widget listAppBody = new TasksList(
 
-            tasks: cache.tasks,
-            extraTask: cache.newTask,
-            categories: cache.categoryData.user,
-            toggleTask: cache.toggleTask,
+            tasks: widget.cache.tasks,
+            extraTask: widget.cache.newTask,
+            categories: widget.cache.categoryData.user,
+            toggleTask: widget.cache.toggleTask,
 
             updateTask: ( (task){
               this.setState( (){
-                cache.updateTask(task);
+                widget.cache.updateTask(task);
               });
             }),
 
-            deleteTask: cache.deleteTask,
+            deleteTask: widget.cache.deleteTask,
     );
 
-    Widget appBody = cache.showMyDay ? myDayAppBody : listAppBody ;
+    Widget appBody = widget.cache.showMyDay ? myDayAppBody : listAppBody ;
 
     FloatingActionButton appFabFilter = new FloatingActionButton(
 
@@ -178,11 +179,11 @@ class _TasksPageState extends State<TasksPage> {
                                   onSubmitted: (value){
                                     if( value != null && value.length > 0 ) {
                                       this.setState(() {
-                                        cache.newTask.clear();
-                                        cache.newTask.id = cache.tasksData.length + 1;
-                                        cache.newTask.title = value;
-                                        cache.newTask.category = new Category(text: cache.filterCategory);
-                                        cache.updateTask(cache.newTask);
+                                        widget.cache.newTask.clear();
+                                        widget.cache.newTask.id = widget.cache.tasksData.length + 1;
+                                        widget.cache.newTask.title = value;
+                                        widget.cache.newTask.category = new Category(text: widget.cache.filterCategory);
+                                        widget.cache.updateTask(widget.cache.newTask);
                                         Navigator.pop(context);
                                       });
                                     }
@@ -197,11 +198,11 @@ class _TasksPageState extends State<TasksPage> {
 
                                       if( tecNewTask.text != null && tecNewTask.text.length > 0 ) {
                                         this.setState(() {
-                                          cache.newTask.clear();
-                                          cache.newTask.id = cache.tasksData.length + 1;
-                                          cache.newTask.title = tecNewTask.text;
-                                          cache.newTask.category = new Category(text: cache.filterCategory);
-                                          cache.updateTask(cache.newTask);
+                                          widget.cache.newTask.clear();
+                                          widget.cache.newTask.id = widget.cache.tasksData.length + 1;
+                                          widget.cache.newTask.title = tecNewTask.text;
+                                          widget.cache.newTask.category = new Category(text: widget.cache.filterCategory);
+                                          widget.cache.updateTask(widget.cache.newTask);
                                           Navigator.pop(context);
                                         });
                                       }
@@ -226,17 +227,17 @@ class _TasksPageState extends State<TasksPage> {
 
         onPressed: (){
 
-          cache.newTask.clear();
-          cache.newTask.id = cache.tasksData.length + 1;
+          widget.cache.newTask.clear();
+          widget.cache.newTask.id = widget.cache.tasksData.length + 1;
 
           Navigator.push(
               context,
               new MaterialPageRoute( builder: (context) =>
                   new TaskDetail(
-                    task: cache.newTask,
-                    categories: cache.categoryData.user,
+                    task: widget.cache.newTask,
+                    categories: widget.cache.categoryData.user,
                     updateTask: (task){
-                      cache.updateTask(task);
+                      widget.cache.updateTask(task);
                     },
                   )
               )
@@ -246,15 +247,13 @@ class _TasksPageState extends State<TasksPage> {
 
     );
 
-    FloatingActionButton appFab = cache.showMyDay ? null : ( cache.filterCategory == null ? appFabGeneric : appFabFilter );
+    FloatingActionButton appFab = widget.cache.showMyDay ? null : ( widget.cache.filterCategory == null ? appFabGeneric : appFabFilter );
 
     return new Scaffold(
-
-      appBar: cache.isCached ? appBar : null,
-      drawer: cache.isCached ? appSidebar : null,
+      appBar: appBar,
+      drawer: appSidebar,
       body: appBody,
-      floatingActionButton: cache.isCached ? appFab : null,
-
+      floatingActionButton: appFab,
     );
   }
 }

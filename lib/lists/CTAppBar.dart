@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+//import 'package:color/color.dart';
 
 class CTAppBar {
 
   CTAppBar({ this.filterCategory, this.deleteCategory,
              this.isSearch, this.isMyDay, this.toggleSearch,
              this.searchString, this.doSearch,
+             this.themeColor, this.updateColor,
   });
 
   final String appDefaultTitle = 'To-Do';
@@ -18,6 +20,85 @@ class CTAppBar {
 
   final String searchString ;
   final ValueChanged<String> doSearch ;
+
+  final String themeColor ;
+  final ValueChanged<String> updateColor ;
+
+  IconButton colorIcon( Color btnColor, String colorName, context ){
+    return new IconButton(
+      icon: new CircleAvatar( backgroundColor: btnColor, minRadius: 40.0,),
+      iconSize: 75.0,
+      onPressed: (() {
+        updateColor(colorName);
+        
+        Navigator.pop(context);
+      }),
+    );
+  }
+
+  _appBarActions( int actionId, BuildContext context ) {
+    switch (actionId) {
+
+      case 0: deleteCategory(filterCategory);
+              break;
+
+      case 1: showModalBottomSheet<void>(
+          context: context,
+          builder: (BuildContext context){
+
+            return new ListView (
+
+                    children: <Widget>[
+
+                      new ListTile(
+                        leading: new Icon( Icons.color_lens ),
+                        title: new Text( 'Select New Color', style: new TextStyle( fontSize: 20.0 ), ),
+                      ),
+
+                      new ListTile(
+                        title: new Row(
+                          children: <Widget>[
+                            colorIcon(Colors.blue, 'blue', context),
+                            colorIcon(Colors.indigo, 'indigo', context),
+                            colorIcon(Colors.cyan, 'cyan', context),
+                            colorIcon(Colors.teal, 'teal', context),
+                          ],
+                        ),
+                      ),
+
+                      new ListTile(
+                        title: new Row(
+                          children: <Widget>[
+                            colorIcon(Colors.brown, 'brown', context),
+                            colorIcon(Colors.purple, 'purple', context),
+                            colorIcon(Colors.deepPurple, 'deepPurple', context),
+                            colorIcon(Colors.amber, 'amber', context),
+                          ],
+                        ),
+                      ),
+
+                      new ListTile(
+                        title: new Row(
+                          children: <Widget>[
+                            colorIcon(Colors.red, 'red', context),
+                            colorIcon(Colors.pink, 'pink', context),
+                            colorIcon(Colors.grey, 'grey', context),
+                            colorIcon(Colors.blueGrey, 'blueGrey', context),
+                          ],
+                        ),
+                      ),
+
+                    ],
+
+                  );
+
+            //return ;
+
+          }
+      );
+      break;
+    }
+  }
 
   AppBar mydayAppBar(){
 
@@ -80,7 +161,7 @@ class CTAppBar {
 
   }
 
-  AppBar filterAppBar(){
+  AppBar filterAppBar(context){
 
     return new AppBar(
       title: new Text(filterCategory),
@@ -93,16 +174,21 @@ class CTAppBar {
           },
         ),
 
-        new PopupMenuButton<String>(
+        new PopupMenuButton<int>(
 
-            onSelected: (value) =>  deleteCategory(value),
+            onSelected: (value) =>  _appBarActions(value, context),
             itemBuilder: (BuildContext context) {
 
-              return <PopupMenuEntry<String>>[
+              return <PopupMenuEntry<int>>[
 
-                new PopupMenuItem<String>(
-                  value: filterCategory,
-                  child: new Text('Delete Category'),
+                new PopupMenuItem<int>(
+                  value: 1,
+                  child: new Text('Change Color'),
+                ),
+
+                new PopupMenuItem<int>(
+                  value: 0,
+                  child: new Text('Delete List'),
                 ),
 
               ];
@@ -115,7 +201,7 @@ class CTAppBar {
 
   }
 
-  AppBar build() {
+  AppBar build(context) {
 
     if( isMyDay )
       return mydayAppBar();
@@ -127,7 +213,7 @@ class CTAppBar {
       return  homeAppBar();
 
     else
-      return filterAppBar();
+      return filterAppBar(context);
   }
 
 }

@@ -21,6 +21,11 @@ class Themes {
         errorColor: Colors.red,
       ),
 
+      'cyan' :  new ThemeData (
+        primaryColor: Colors.cyan,
+        errorColor: Colors.red,
+      ),
+
       'teal' :  new ThemeData (
         primaryColor: Colors.teal,
         errorColor: Colors.red,
@@ -36,6 +41,16 @@ class Themes {
         errorColor: Colors.red,
       ),
 
+      'deepPurple' :  new ThemeData (
+        primaryColor: Colors.deepPurple,
+        errorColor: Colors.red,
+      ),
+
+      'amber' :  new ThemeData (
+        primaryColor: Colors.amber,
+        errorColor: Colors.red,
+      ),
+
       'red' :  new ThemeData (
         primaryColor: Colors.red,
         errorColor: Colors.red,
@@ -48,6 +63,11 @@ class Themes {
 
       'grey' :  new ThemeData (
         primaryColor: Colors.grey,
+        errorColor: Colors.red,
+      ),
+
+      'blueGrey' :  new ThemeData (
+        primaryColor: Colors.blueGrey,
         errorColor: Colors.red,
       ),
 

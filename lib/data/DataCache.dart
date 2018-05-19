@@ -31,6 +31,12 @@ class DataCache {
 
   NotificationManager notifications = new NotificationManager();
 
+  static Future<DataCache> getInstance() async {
+    DataCache cache = new DataCache();
+    await cache.initDb();
+    return cache;
+  }
+
   DataCache() {
     newTask.id = tasksData.length + 1;
     newTask.completed = false;
