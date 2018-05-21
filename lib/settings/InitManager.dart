@@ -2,6 +2,7 @@ import 'package:clean_todo/settings/SettingsManager.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/data/DefaultDataGenerator.dart';
 import 'package:clean_todo/data/DataProvider.dart';
+import 'package:clean_todo/beans/UserData.dart';
 import 'dart:async';
 
 class InitManager {
@@ -17,12 +18,21 @@ class InitManager {
     await init.settings.init();
     await init.cache.initDb();
 
-    DataProvider dataProvider = new DefaultDataGenerator();
+    if( init.isSignedIn ) {
+      init.cache.userData = new UserData(userName: init.settings.username, abbr: 'SS');
 
-    init.cache.userData = dataProvider.getUserData();
+    } else {
+      DataProvider provider = new DefaultDataGenerator();
+      init.cache.userData = provider.getUserData();
+    }
+
     init.cache..isCached = true;
 
     return init;
+  }
+
+  bool get isSignedIn {
+    return ( settings.username != null && settings.username.length > 0 );
   }
 
 }

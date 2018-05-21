@@ -4,6 +4,7 @@ import 'package:clean_todo/settings/Themes.dart';
 import 'package:clean_todo/settings/SettingsManager.dart';
 import 'package:clean_todo/settings/InitManager.dart';
 import 'package:clean_todo/data/DataCache.dart';
+import 'package:clean_todo/settings/LoadingScreen.dart';
 
 void main() => runApp(
 
@@ -13,7 +14,11 @@ void main() => runApp(
 
       builder: (_, snapshot) {
         return snapshot.hasData ?
-          new MyApp( settings: snapshot.data.settings, cache: snapshot.data.cache ) :
+          (
+              snapshot.data.isSignedIn ?
+                new CleanToDoApp( settings: snapshot.data.settings, cache: snapshot.data.cache ) :
+                new LoadingScreen( settings: snapshot.data.settings, cache: snapshot.data.cache )
+          ) :
           new Container(width: 0.0, height: 0.0) ;
       }
 
@@ -21,12 +26,12 @@ void main() => runApp(
 
 );
 
-class MyApp extends StatelessWidget {
+class CleanToDoApp extends StatelessWidget {
 
   DataCache cache;
   SettingsManager settings;
 
-  MyApp({this.settings, this.cache});
+  CleanToDoApp({this.settings, this.cache});
 
   @override
   Widget build(BuildContext context) {
@@ -39,3 +44,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+

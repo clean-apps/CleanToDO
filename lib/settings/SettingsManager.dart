@@ -23,4 +23,13 @@ class SettingsManager {
   set theme ( String pTheme ){
     prefs.setString( "theme" , pTheme );
   }
+
+  String get username {
+    return prefs.get( "username" );
+  }
+
+  set username ( String pTheme ){
+    prefs.setString( "username" , pTheme );
+  }
+
 }

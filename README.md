@@ -4,7 +4,7 @@
 ![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/logo.png?raw=true "Clean To-Do")
 # Clean To-Do
 
-A Cleaner To-Do manager for Android made with Flutter and ❤️
+A Cleaner To-Do manager for Android, made with Flutter and ❤️
 
 # Features
 
@@ -30,7 +30,7 @@ limitations under the License.
 
 # Credits
 
-* [This](https://www.youtube.com/watch?v=iflV0D0d1zQ) talk by Emily Fortuna and Matt Sullivan that inspired me to learn flutter
+* [This Talk](https://www.youtube.com/watch?v=iflV0D0d1zQ) by Emily Fortuna and Matt Sullivan that inspired me to learn flutter
 * [Microsoft To-Do](https://todo.microsoft.com/en-us) app for their awesome material design UI/UX
 * [Flutter Team](https://github.com/flutter/)
 * [Launcher Icons Plugin](https://github.com/franzsilva/flutter_launcher_icons)

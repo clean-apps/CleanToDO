@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "665606402620",
+    "firebase_url": "https://clean-to-do.firebaseio.com",
+    "project_id": "clean-to-do",
+    "storage_bucket": "clean-to-do.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665606402620:android:e71103e50a41aa3c",
+        "android_client_info": {
+          "package_name": "com.babanomania.cleantodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665606402620-3ful0i220ggmuo6fte1vf1llos29klid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.babanomania.cleantodo",
+            "certificate_hash": "db2234dee3a1c40d5a488a09247c68b29f75541b"
+          }
+        },
+        {
+          "client_id": "665606402620-og3g2ve8m8qj2j9qksdl82s97sa331m2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6FLfsCQd8zIv1iElbJTlT3lwDoiRav4Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665606402620-og3g2ve8m8qj2j9qksdl82s97sa331m2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

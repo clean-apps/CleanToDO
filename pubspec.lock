@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.0"
+  firebase_auth:
+    dependency: "direct main"
+    description:
+      name: firebase_auth
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.10"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -131,7 +138,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.2.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -151,6 +158,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.5"
+  google_sign_in:
+    dependency: "direct main"
+    description:
+      name: google_sign_in
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
   html:
     dependency: transitive
     description:
@@ -185,7 +199,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.32"
+    version: "1.1.33"
   intl:
     dependency: "direct dev"
     description:
