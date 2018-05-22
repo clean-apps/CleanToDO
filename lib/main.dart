@@ -19,7 +19,11 @@ void main() => runApp(
                 new CleanToDoApp( settings: snapshot.data.settings, cache: snapshot.data.cache ) :
                 new LoadingScreen( settings: snapshot.data.settings, cache: snapshot.data.cache )
           ) :
-          new Container(width: 0.0, height: 0.0) ;
+          new Container(
+            width: 0.0,
+            height: 0.0,
+            color: Colors.white,
+          ) ;
       }
 
   )

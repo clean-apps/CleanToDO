@@ -23,7 +23,7 @@ class LoadingScreen extends StatelessWidget {
 
           print( "google user1 -" + value.displayName ) ;
           settings.username = value.displayName;
-          cache.userData = new UserData(userName: value.displayName, abbr: 'SS');
+          cache.userData = new UserData(value.displayName);
 
           Navigator.of(context).push(
             new MaterialPageRoute(

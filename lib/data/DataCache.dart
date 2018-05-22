@@ -12,7 +12,7 @@ import 'package:clean_todo/data/NotificationManager.dart';
 class DataCache {
 
   CategoryData categoryData = new CategoryData();
-  UserData userData = new UserData();
+  UserData userData = null;
   List<Task> tasksData = [];
   Task newTask = new Task();
   String filterCategory ;

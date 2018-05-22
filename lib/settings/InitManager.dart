@@ -19,14 +19,14 @@ class InitManager {
     await init.cache.initDb();
 
     if( init.isSignedIn ) {
-      init.cache.userData = new UserData(userName: init.settings.username, abbr: 'SS');
+      init.cache.userData = new UserData(init.settings.username);
 
     } else {
       DataProvider provider = new DefaultDataGenerator();
       init.cache.userData = provider.getUserData();
     }
 
-    init.cache..isCached = true;
+    init.cache.isCached = true;
 
     return init;
   }

@@ -27,7 +27,7 @@ class DefaultDataGenerator implements DataProvider {
   }
 
   UserData getUserData(){
-    return new UserData( userName: 'Sandra Smith', abbr: 'SS' );
+    return new UserData( 'Sandra Smith' );
   }
 
   List<Task> getAllTasks() {
