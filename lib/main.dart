@@ -4,8 +4,26 @@ import 'package:clean_todo/settings/Themes.dart';
 import 'package:clean_todo/settings/SettingsManager.dart';
 import 'package:clean_todo/settings/InitManager.dart';
 import 'package:clean_todo/data/DataCache.dart';
-import 'package:clean_todo/settings/LoadingScreen.dart';
+import 'package:clean_todo/settings/LoginScreen.dart';
+import 'package:clean_todo/settings/SplashScreen.dart';
 
+void main() => runApp(
+
+    new FutureBuilder(
+
+        future: InitManager.getInstance(),
+
+        builder: (_, snapshot) {
+          return snapshot.hasData ?
+            new LoginScreen( settings: snapshot.data.settings, cache: snapshot.data.cache ) :
+            new SplashScreen() ;
+        }
+
+    )
+
+);
+
+/*
 void main() => runApp(
 
   new FutureBuilder(
@@ -17,18 +35,13 @@ void main() => runApp(
           (
               snapshot.data.isSignedIn ?
                 new CleanToDoApp( settings: snapshot.data.settings, cache: snapshot.data.cache ) :
-                new LoadingScreen( settings: snapshot.data.settings, cache: snapshot.data.cache )
+                new LoginScreen( settings: snapshot.data.settings, cache: snapshot.data.cache )
           ) :
-          new Container(
-            width: 0.0,
-            height: 0.0,
-            color: Colors.white,
-          ) ;
+          new SplashScreen() ;
       }
-
   )
-
 );
+*/
 
 class CleanToDoApp extends StatelessWidget {
 

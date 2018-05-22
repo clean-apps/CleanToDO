@@ -7,13 +7,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:clean_todo/lists/TasksPage.dart';
 import 'package:clean_todo/beans/UserData.dart';
 
-class LoadingScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
 
   DataCache cache;
   SettingsManager settings;
   GoogleSignIn _googleSignIn = new GoogleSignIn();
 
-  LoadingScreen({this.settings, this.cache});
+  LoginScreen({this.settings, this.cache});
 
   _handleLogin(context) {
 
@@ -21,7 +21,7 @@ class LoadingScreen extends StatelessWidget {
           .signIn()
           .then((GoogleSignInAccount value){
 
-          print( "google user1 -" + value.displayName ) ;
+          print( "google user photoUrl -" + value.photoUrl ) ;
           settings.username = value.displayName;
           cache.userData = new UserData(value.displayName);
 
@@ -52,20 +52,39 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return new MaterialApp(
-      home: new Scaffold(
-        body: new Builder(builder: (BuildContext bodyContext) {
-          return new Center(
+        home: new Builder(builder: (BuildContext bodyContext) {
 
-            child: new RaisedButton(
+          return new Container(
 
-              child: new Text('Sign-In'),
-              onPressed: _handleLogin(bodyContext),
+              color: Colors.white,
+              child: new Column(
 
-            ),
-          );
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+
+                children: <Widget>[
+
+                  new Image.asset('images/logo.png'),
+
+                  //new Text( 'Login to Clean To-Do', style: new TextStyle( fontSize: 20.0, color: Colors.blue ) ),
+
+                  new Padding(
+                    padding: new EdgeInsets.only( top: 50.0 ),
+                    child: new RaisedButton(
+                      child: new Text('Sign in', style: new TextStyle( fontSize: 20.0, color: Colors.white ),),
+                      elevation: 5.0,
+                      color: Colors.blue,
+                      padding: new EdgeInsets.only( top: 10.0, bottom: 10.0, left: 40.0, right: 40.0 ),
+                      onPressed: () => _handleLogin(bodyContext),
+                    ),
+                  )
+
+                ],
+              ),
+
+         );
 
         }),
-      ),
-    );
+      );
   }
 }
