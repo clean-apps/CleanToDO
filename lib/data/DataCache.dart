@@ -24,6 +24,7 @@ class DataCache {
 
   bool showMyDay = false;
   bool enableQuickAdd = false;
+  bool showCompletedTasks = false;
 
   final String dbName = "CleanToDoDB.db";
   TaskProvider taskProvider = new TaskProvider();

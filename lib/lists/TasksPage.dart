@@ -100,6 +100,13 @@ class _TasksPageState extends State<TasksPage> {
                 })
             ),
 
+            isShowCompletedTasks: widget.cache.showCompletedTasks,
+            updateShowCompletedTasks: ((value) =>
+                this.setState( (){
+                  widget.cache.showCompletedTasks = value;
+                })
+            )
+
     ).build(context);
 
     AppSidebar appSidebar = new AppSidebar(

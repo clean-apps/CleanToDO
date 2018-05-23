@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:color/color.dart';
+import 'package:clean_todo/lists/IconText.dart';
 
 class CTAppBar {
 
@@ -7,6 +8,8 @@ class CTAppBar {
              this.isSearch, this.isMyDay, this.toggleSearch,
              this.searchString, this.doSearch,
              this.themeColor, this.updateColor,
+             this.isShowCompletedTasks, this.updateShowCompletedTasks,
+
   });
 
   final String appDefaultTitle = 'To-Do';
@@ -23,6 +26,9 @@ class CTAppBar {
 
   final String themeColor ;
   final ValueChanged<String> updateColor ;
+
+  final bool isShowCompletedTasks ;
+  final ValueChanged<bool> updateShowCompletedTasks ;
 
   IconButton colorIcon( Color btnColor, String colorName, context ){
     return new IconButton(
@@ -53,7 +59,32 @@ class CTAppBar {
   _appBarActions( int actionId, BuildContext context ) {
     switch (actionId) {
 
-      case 0: deleteCategory(filterCategory);
+      case 0: showDialog(
+                context: context,
+                builder: (_) => new AlertDialog(
+                  title: new Row(
+                    children: <Widget>[
+                      new Icon( Icons.delete, color: Colors.black45, ),
+                      new Padding(
+                        padding: new EdgeInsets.only(left: 10.0),
+                        child: new Text('Delete List ' + filterCategory, style: new TextStyle(color: Colors.black45), ),
+                      )
+                    ],
+                  ),
+                  content: new Text('Are You Sure ?'),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new Text( 'CANCEL' ),
+                      onPressed: () => Navigator.pop( context ),
+                    ),
+                    new FlatButton(
+                      child: new Text( 'OK' ),
+                      onPressed: () => deleteCategory(filterCategory),
+                    ),
+                  ],
+                ),
+              );
+
               break;
 
       case 1: showModalBottomSheet<void>(
@@ -110,6 +141,9 @@ class CTAppBar {
 
           }
       );
+      break;
+
+      case 2: updateShowCompletedTasks( !isShowCompletedTasks );
       break;
     }
   }
@@ -196,13 +230,31 @@ class CTAppBar {
               return <PopupMenuEntry<int>>[
 
                 new PopupMenuItem<int>(
+                  value: 4,
+                  child: new IconText( icon: Icons.edit, label: 'Rename List'),
+                ),
+
+                new PopupMenuItem<int>(
+                  value: 3,
+                  child: new IconText( icon: Icons.sort, label: 'Sort'),
+                ),
+
+                new PopupMenuItem<int>(
+                  value: 2,
+                  child: new IconText(
+                      icon: isShowCompletedTasks ? Icons.check_box : Icons.check_box_outline_blank,
+                      label: isShowCompletedTasks ? 'Hide Completed Tasks' : 'Show Completed Tasks'
+                  ),
+                ),
+
+                new PopupMenuItem<int>(
                   value: 1,
-                  child: new Text('Change Color'),
+                  child: new IconText( icon: Icons.color_lens, label: 'Change Color'),
                 ),
 
                 new PopupMenuItem<int>(
                   value: 0,
-                  child: new Text('Delete List'),
+                  child: new IconText( icon: Icons.delete, label: 'Delete List'),
                 ),
 
               ];

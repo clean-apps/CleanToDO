@@ -138,7 +138,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.2.9"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -164,7 +164,7 @@ packages:
       name: google_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.3"
+    version: "3.0.3+1"
   html:
     dependency: transitive
     description:

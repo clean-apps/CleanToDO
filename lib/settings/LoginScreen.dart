@@ -21,15 +21,19 @@ class LoginScreen extends StatelessWidget {
           .signIn()
           .then((GoogleSignInAccount value){
 
-          print( "google user photoUrl -" + value.photoUrl ) ;
-          settings.username = value.displayName;
-          cache.userData = new UserData(value.displayName);
+            if( value != null ) {
 
-          Navigator.of(context).push(
-            new MaterialPageRoute(
-              builder: (_) => new TasksPage( cache: cache, settings: settings, ),
-            ),
-          );
+              settings.username = value.displayName;
+              cache.userData = new UserData(value.displayName);
+
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                  builder: (_) =>
+                  new TasksPage(cache: cache, settings: settings,),
+                ),
+              );
+              
+            }
 
       });
 
