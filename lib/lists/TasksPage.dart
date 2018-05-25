@@ -104,15 +104,18 @@ class _TasksPageState extends State<TasksPage> {
             updateShowCompletedTasks: ((value) =>
                 this.setState( (){
                   widget.cache.showCompletedTasks = value;
+                  widget.settings.showCompleted = value;
                 })
             ),
 
             updateSortTasks: ((value) =>
                 this.setState((){
                   widget.cache.sortTasks = value;
+                  widget.settings.sortString = value;
                 })
             ),
 
+            sortString: widget.cache.sortTasks,
             updateCategoryName: ((newValue) =>
                 this.setState((){
                   widget.cache.updateCategoryName(newValue);

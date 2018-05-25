@@ -32,4 +32,20 @@ class SettingsManager {
     prefs.setString( "username" , pTheme );
   }
 
+  bool get showCompleted {
+    return prefs.get( "showCompleted" );
+  }
+
+  set showCompleted ( bool showCompleted ){
+    prefs.setBool( "showCompleted" , showCompleted );
+  }
+
+  String get sortString {
+    return prefs.get( "sortString" );
+  }
+
+  set sortString ( String pSortString ){
+    prefs.setString( "sortString" , pSortString );
+  }
+
 }

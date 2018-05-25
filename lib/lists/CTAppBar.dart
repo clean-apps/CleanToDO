@@ -4,12 +4,12 @@ import 'package:clean_todo/lists/IconText.dart';
 
 class CTAppBar {
 
-  CTAppBar({ this.filterCategory, this.deleteCategory,
-             this.isSearch, this.isMyDay, this.toggleSearch,
-             this.searchString, this.doSearch,
-             this.themeColor, this.updateColor,
-             this.isShowCompletedTasks, this.updateShowCompletedTasks,
-             this.updateSortTasks, this.updateCategoryName,
+  CTAppBar({  this.filterCategory, this.deleteCategory, this.updateCategoryName,
+              this.isSearch, this.isMyDay, this.toggleSearch,
+              this.searchString, this.doSearch,
+              this.themeColor, this.updateColor,
+              this.isShowCompletedTasks, this.updateShowCompletedTasks,
+              this.sortString, this.updateSortTasks,
   });
 
   final String appDefaultTitle = 'To-Do';
@@ -30,13 +30,19 @@ class CTAppBar {
   final bool isShowCompletedTasks ;
   final ValueChanged<bool> updateShowCompletedTasks ;
 
+  final String sortString;
   final ValueChanged<String> updateSortTasks ;
 
   final ValueChanged<String> updateCategoryName;
 
   IconButton colorIcon( Color btnColor, String colorName, context ){
     return new IconButton(
-      icon: new CircleAvatar( backgroundColor: btnColor, minRadius: 40.0,),
+      icon: new CircleAvatar(
+        backgroundColor: btnColor,
+        minRadius: 40.0,
+        child: colorName == themeColor ? new Icon( Icons.check, size: 30.0,) : null,
+      ),
+
       iconSize: 75.0,
       onPressed: (() {
         updateColor(colorName);
@@ -170,24 +176,27 @@ class CTAppBar {
                      this.updateSortTasks('SORT_BY_ALPHA');
                      Navigator.pop(context);
                   }),
+                  trailing: sortString == 'SORT_BY_ALPHA' ? new Icon( Icons.check ) : null,
                 ),
 
                 new ListTile(
-                leading: new Icon( Icons.date_range ),
-                title: new Text( 'Due Date' ),
-                onTap: ((){
+                  leading: new Icon( Icons.date_range ),
+                  title: new Text( 'Due Date' ),
+                  onTap: ((){
                     this.updateSortTasks('SORT_BY_DUE');
                     Navigator.pop(context);
                   }),
+                  trailing: sortString == 'SORT_BY_DUE' ? new Icon( Icons.check ) : null,
                 ),
 
                 new ListTile(
-                leading: new Icon( Icons.add_circle_outline ),
-                title: new Text( 'Creation Date' ),
-                onTap: ((){
+                  leading: new Icon( Icons.add_circle_outline ),
+                  title: new Text( 'Creation Date' ),
+                  onTap: ((){
                     this.updateSortTasks('SORT_BY_CREA');
                     Navigator.pop(context);
                   }),
+                  trailing: sortString == 'SORT_BY_CREA' ? new Icon( Icons.check ) : null,
                 ),
 
                 new ListTile(
@@ -197,6 +206,7 @@ class CTAppBar {
                     this.updateSortTasks('SORT_BY_COMPLETED');
                     Navigator.pop(context);
                   }),
+                  trailing: sortString == 'SORT_BY_COMPLETED' ? new Icon( Icons.check ) : null,
                 ),
 
               ],

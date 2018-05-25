@@ -26,7 +26,7 @@ class DataCache {
   bool enableQuickAdd = false;
 
   //TODO
-  bool showCompletedTasks = false;
+  bool showCompletedTasks = true;
 
   //TODO
   String sortTasks = "";
@@ -93,6 +93,53 @@ class DataCache {
               ).toList();
   }
 
+  List<Task> _filterCompleted( List<Task> tasks ){
+
+    if( showCompletedTasks == true )
+      return tasks;
+
+    else
+      return tasks.where( (task) =>(
+
+              task != null &&
+              task.completed != null &&
+              task.completed == false )
+
+      ).toList();
+  }
+
+  List<Task> _sortTasks( List<Task> tasks ){
+
+    tasks.sort( (task1, task2){
+
+        if( sortTasks == "SORT_BY_CREA" ){
+          return task1.id.compareTo(task2.id);
+
+        } else if( sortTasks == "SORT_BY_DUE" ){
+
+          var task1Deadline = "";
+          if( task1.deadline_val != null ) task1Deadline = task1.deadline_val;
+
+          var task2Deadline = "";
+          if( task2.deadline_val != null ) task2Deadline = task2.deadline_val;
+
+          return task1Deadline.compareTo(task2Deadline);
+
+        } else if( sortTasks == "SORT_BY_ALPHA" ){
+          return task1.title.compareTo(task2.title);
+
+        }else if( sortTasks == "SORT_BY_COMPLETED" ){
+          return task2.completed.toString().compareTo(task1.completed.toString());
+
+        } else {
+          return task1.id.compareTo(task2.id);
+        }
+
+      });
+
+    return tasks;
+  }
+
   List<Task> _filterSearch( List<Task> tasks, String search ){
 
     if( search == null )
@@ -117,7 +164,11 @@ class DataCache {
               );
 
     else
-      return _filterCategories( tasksData, filterCategory );
+      return _sortTasks(
+                _filterCompleted(
+                  _filterCategories( tasksData, filterCategory )
+                )
+      );
   }
 
   Future<bool> addCategories( List<Category> newCategories ) async {

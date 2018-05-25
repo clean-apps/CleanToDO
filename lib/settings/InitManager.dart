@@ -18,6 +18,22 @@ class InitManager {
     await init.settings.init();
     await init.cache.initDb();
 
+    if( init.settings.showCompleted != null ) {
+      init.cache.showCompletedTasks = init.settings.showCompleted;
+
+    } else {
+      init.cache.showCompletedTasks = true;
+
+    }
+
+    if( init.settings.sortString != null ) {
+      init.cache.sortTasks = init.settings.sortString;
+
+    } else {
+      init.cache.sortTasks = 'SORT_BY_CREA';
+
+    }
+
     if( init.isSignedIn ) {
       init.cache.userData = new UserData(init.settings.username);
 
