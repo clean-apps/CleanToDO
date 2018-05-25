@@ -125,7 +125,7 @@ class _TasksTileState extends State<TaskTile> {
         leading: new IconButton(
             icon:  getStatusIcon( widget.task.completed ),
             onPressed: (){
-              
+
               this.setState((){
                 widget.task.completed ? widget.task.completed = false : widget.task.completed = true ;
               });

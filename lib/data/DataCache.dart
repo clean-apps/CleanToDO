@@ -28,7 +28,6 @@ class DataCache {
   //TODO
   bool showCompletedTasks = true;
 
-  //TODO
   String sortTasks = "";
 
   final String dbName = "CleanToDoDB.db";
@@ -241,6 +240,7 @@ class DataCache {
   toggleTask( Task task ) {
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
       taskProvider.update(task.clone());
+      task.completed ? _update_category_count(task, -1) : _update_category_count(task, 1);
   }
 
   updateTask( Task task ) {
@@ -261,16 +261,27 @@ class DataCache {
 
       Task dirtyData = tasksData.elementAt(tasksData.indexOf(task));
 
-      if (dirtyData.category == null && task.category != null) {
-        _update_category_count(task, 1);
+      if( dirtyData.completed != task.completed ) {
 
-      } else if (dirtyData.category == null && task.category == null) {
-        _update_category_count(dirtyData, -1);
+        if( dirtyData.category.text == task.category.text ) {
 
-      } else if (dirtyData.category.text != task.category.text) {
-        _update_category_count(dirtyData, -1);
-        _update_category_count(task, 1);
+          if (task.completed)
+            _update_category_count(task, -1);
+          else
+            _update_category_count(task, 1);
 
+        } else {
+
+          if (task.completed) {
+            _update_category_count(task, -1);
+            _update_category_count(dirtyData, 1);
+
+          } else {
+            _update_category_count(task, 1);
+            _update_category_count(dirtyData, -1);
+          }
+
+        }
       }
 
       dirtyData.title = task.title;
@@ -289,6 +300,7 @@ class DataCache {
 
   _update_category_count( Task task, int change ) {
 
+    print( "category:" + task.category.text + ", change:" + change.toString() );
     categoryData.user.forEach(  (category) {
       if( category.text == task.category.text ) {
           category.count += change;

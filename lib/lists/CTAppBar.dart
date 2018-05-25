@@ -51,16 +51,15 @@ class CTAppBar {
         showDialog(
             context: context,
             builder: (_) => new AlertDialog(
-              title: new Row(
-                children: <Widget>[
-                  new Icon( Icons.refresh ),
-                  new Padding(padding: new EdgeInsets.only(left: 10.0), child: new Text('Information'),)
-                ],
-              ),
               content: new Text('please restart the app for new color scheme'),
+              actions: <Widget>[
+                new FlatButton(
+                    onPressed: () => Navigator.pop(_),
+                    child: new Text( "OK" )
+                )
+              ],
             ),
         );
-
 
       }),
     );
