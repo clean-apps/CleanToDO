@@ -24,7 +24,12 @@ class DataCache {
 
   bool showMyDay = false;
   bool enableQuickAdd = false;
+
+  //TODO
   bool showCompletedTasks = false;
+
+  //TODO
+  String sortTasks = "";
 
   final String dbName = "CleanToDoDB.db";
   TaskProvider taskProvider = new TaskProvider();
@@ -158,6 +163,28 @@ class DataCache {
       categoryProvider.delete( this.categoryData.user[indexToDelete].id );
     }
 
+  }
+
+  updateCategoryName( newValue ){
+    var oldValue = filterCategory;
+
+    this.categoryData.user.asMap().forEach( (i, cat){
+      if( cat.text == oldValue ) {
+        cat.text = newValue;
+        categoryProvider.update(cat);
+      }
+    });
+
+    this.tasksData.forEach((task) {
+      if (task != null &&
+          task.category != null &&
+          task.category.text == oldValue)
+
+        task.category.text = newValue;
+        taskProvider.update(task);
+    });
+
+    filterCategory = newValue;
   }
 
   toggleTask( Task task ) {

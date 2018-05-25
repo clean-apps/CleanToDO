@@ -9,7 +9,7 @@ class CTAppBar {
              this.searchString, this.doSearch,
              this.themeColor, this.updateColor,
              this.isShowCompletedTasks, this.updateShowCompletedTasks,
-
+             this.updateSortTasks, this.updateCategoryName,
   });
 
   final String appDefaultTitle = 'To-Do';
@@ -29,6 +29,10 @@ class CTAppBar {
 
   final bool isShowCompletedTasks ;
   final ValueChanged<bool> updateShowCompletedTasks ;
+
+  final ValueChanged<String> updateSortTasks ;
+
+  final ValueChanged<String> updateCategoryName;
 
   IconButton colorIcon( Color btnColor, String colorName, context ){
     return new IconButton(
@@ -64,7 +68,6 @@ class CTAppBar {
                 builder: (_) => new AlertDialog(
                   title: new Row(
                     children: <Widget>[
-                      new Icon( Icons.delete, color: Colors.black45, ),
                       new Padding(
                         padding: new EdgeInsets.only(left: 10.0),
                         child: new Text('Delete List ' + filterCategory, style: new TextStyle(color: Colors.black45), ),
@@ -79,7 +82,10 @@ class CTAppBar {
                     ),
                     new FlatButton(
                       child: new Text( 'OK' ),
-                      onPressed: () => deleteCategory(filterCategory),
+                      onPressed: ((){
+                        this.deleteCategory(filterCategory);
+                        Navigator.pop(context);
+                      }),
                     ),
                   ],
                 ),
@@ -96,7 +102,6 @@ class CTAppBar {
                     children: <Widget>[
 
                       new ListTile(
-                        leading: new Icon( Icons.color_lens ),
                         title: new Text( 'Select New Color', style: new TextStyle( fontSize: 20.0 ), ),
                       ),
 
@@ -144,6 +149,91 @@ class CTAppBar {
       break;
 
       case 2: updateShowCompletedTasks( !isShowCompletedTasks );
+      break;
+
+      case 3: showModalBottomSheet<void>(
+          context: context,
+          builder: (BuildContext context){
+
+            return new ListView (
+
+              children: <Widget>[
+
+                new ListTile(
+                  title: new Text( 'Sort Tasks', style: new TextStyle( fontSize: 20.0 ), ),
+                ),
+
+                new ListTile(
+                  leading: new Icon( Icons.sort_by_alpha ),
+                  title: new Text( 'Albhabetically' ),
+                  onTap: ((){
+                     this.updateSortTasks('SORT_BY_ALPHA');
+                     Navigator.pop(context);
+                  }),
+                ),
+
+                new ListTile(
+                leading: new Icon( Icons.date_range ),
+                title: new Text( 'Due Date' ),
+                onTap: ((){
+                    this.updateSortTasks('SORT_BY_DUE');
+                    Navigator.pop(context);
+                  }),
+                ),
+
+                new ListTile(
+                leading: new Icon( Icons.add_circle_outline ),
+                title: new Text( 'Creation Date' ),
+                onTap: ((){
+                    this.updateSortTasks('SORT_BY_CREA');
+                    Navigator.pop(context);
+                  }),
+                ),
+
+                new ListTile(
+                  leading: new Icon( Icons.check ),
+                  title: new Text( 'Completed' ),
+                  onTap: ((){
+                    this.updateSortTasks('SORT_BY_COMPLETED');
+                    Navigator.pop(context);
+                  }),
+                ),
+
+              ],
+
+            );
+
+            //return ;
+
+          }
+      );
+      break;
+
+      case 4:
+        TextEditingController tecRenameList = new TextEditingController( text: this.filterCategory );
+        showDialog(
+          context: context,
+          builder: (_) => new AlertDialog(
+            title: new Text( 'Rename List', style: new TextStyle(color: Colors.black45), ),
+            content: new TextField(
+              controller: tecRenameList,
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text( 'CANCEL' ),
+                onPressed: () => Navigator.pop( context ),
+              ),
+              new FlatButton(
+                child: new Text( 'OK' ),
+                onPressed: ((){
+                  this.updateCategoryName (tecRenameList.text);
+                  Navigator.pop(context);
+                }),
+              ),
+            ],
+          ),
+        );
+
       break;
     }
   }
