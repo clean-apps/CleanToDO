@@ -25,27 +25,22 @@ class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
 
-      List<Widget> taskRowsList = [];
-      widget.tasks.forEach(  (task){
-
-          taskRowsList.add(
-
-            new TaskTile (  
-              task : task,
-              extraTask: widget.extraTask,
-              categories: widget.categories,
-              toggleTask: (task) => widget.toggleTask(task),
-              updateTask : (task) => widget.updateTask(task),
-              deleteTask: (task) => widget.deleteTask(task),
-            ),
-
-          );
-
-          taskRowsList.add( new Divider( ) ); //color : Theme.of(context).primaryColor ) );
-      });
-
       return new ListView(
-          children: taskRowsList,
+          children: ListTile.divideTiles(
+              tiles: widget.tasks.map(
+                      (task) => new TaskTile (
+                                  task : task,
+                                  extraTask: widget.extraTask,
+                                  categories: widget.categories,
+                                  toggleTask: (task) => widget.toggleTask(task),
+                                  updateTask : (task) => widget.updateTask(task),
+                                  deleteTask: (task) => widget.deleteTask(task),
+                                )
+
+              ).toList(),
+              color: Colors.grey,
+
+          ).toList(),
       );
     }
 }
