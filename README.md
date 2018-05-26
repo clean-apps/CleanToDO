@@ -12,12 +12,8 @@ A Cleaner To-Do manager for Android, made with Flutter and ❤️
 * Plan for work, home and others with lists 
 * Add Reminders and Notes to tasks
 
-![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/logo.png?raw=true "Clean To-Do")
-![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_myday.png?raw=true "My Day")
-![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_listview.png?raw=true "List view")
-![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_lists.png?raw=true "Lists")
-![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_quickadd.png?raw=true "Quick Add")
-![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true "Colors")
+![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_myday.png?raw=true "My Day") ![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_listview.png?raw=true "List view") ![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_lists.png?raw=true "Lists")
+![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_quickadd.png?raw=true "Quick Add") ![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true "Colors")
 
 # License
 
