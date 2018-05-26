@@ -300,7 +300,7 @@ class DataCache {
 
   _update_category_count( Task task, int change ) {
 
-    print( "category:" + task.category.text + ", change:" + change.toString() );
+    //print( "category:" + task.category.text + ", change:" + change.toString() );
     categoryData.user.forEach(  (category) {
       if( category.text == task.category.text ) {
           category.count += change;

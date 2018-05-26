@@ -156,18 +156,23 @@ class _TasksPageState extends State<TasksPage> {
 
     Widget listAppBody = new TasksList(
 
-            tasks: widget.cache.tasks,
-            extraTask: widget.cache.newTask,
-            categories: widget.cache.categoryData.user,
-            toggleTask: widget.cache.toggleTask,
+        tasks: widget.cache.tasks,
+        extraTask: widget.cache.newTask,
+        categories: widget.cache.categoryData.user,
 
-            updateTask: ( (task){
-              this.setState( (){
-                widget.cache.updateTask(task);
-              });
-            }),
+        toggleTask: ( (task){
+          this.setState( (){
+            widget.cache.toggleTask(task);
+          });
+        }),
 
-            deleteTask: widget.cache.deleteTask,
+        updateTask: ( (task){
+          this.setState( (){
+            widget.cache.updateTask(task);
+          });
+        }),
+
+        deleteTask: widget.cache.deleteTask,
     );
 
     Widget appBody = widget.cache.showMyDay ? myDayAppBody : listAppBody ;

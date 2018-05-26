@@ -34,6 +34,7 @@ class _TasksListState extends State<TasksList> {
               task : task,
               extraTask: widget.extraTask,
               categories: widget.categories,
+              toggleTask: (task) => widget.toggleTask(task),
               updateTask : (task) => widget.updateTask(task),
               deleteTask: (task) => widget.deleteTask(task),
             ),
