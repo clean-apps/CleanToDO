@@ -12,6 +12,12 @@ A Cleaner To-Do manager for Android, made with Flutter and ❤️
 * Plan for work, home and others with lists 
 * Add Reminders and Notes to tasks
 
+![My Day](hhttps://github.com/babanomania/CleanToDO/tree/master/images/graphics/mockup_myday.png)
+![List View](https://github.com/babanomania/CleanToDO/tree/master/images/graphics/mockup_listview.png)
+![Lists](https://github.com/babanomania/CleanToDO/tree/master/images/graphics/mockup_lists.png)
+![Quick Add](https://github.com/babanomania/CleanToDO/tree/master/images/graphics/mockup_quickadd.png)
+![Colors](https://github.com/babanomania/CleanToDO/tree/master/images/graphics/mockup_colors.png)
+
 # License
 
 Copyright 2018 Shouvik Basu
