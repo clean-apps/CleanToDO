@@ -90,6 +90,9 @@ class CTAppBar {
                       onPressed: ((){
                         this.deleteCategory(filterCategory);
                         Navigator.pop(context);
+
+                        //final snackBar = new SnackBar(content: new Text('List Deleted'));
+                        //Scaffold.of(_).showSnackBar(snackBar);
                       }),
                     ),
                   ],

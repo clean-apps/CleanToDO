@@ -119,7 +119,15 @@ class _TasksTileState extends State<TaskTile> {
       secondaryBackground: new LeaveBehindViewRight(),
       direction: DismissDirection.horizontal,
       dismissThresholds: _dismissThresholds(),
-      onDismissed: (disDir) =>  widget.deleteTask(widget.task),
+
+      onDismissed: ((disDir) {
+        widget.deleteTask(widget.task);
+
+        final snackBar = new SnackBar( content: new Text("Task Deleted") );
+        Scaffold.of(context).showSnackBar(snackBar);
+
+      }),
+
       child: new ListTile(
 
         leading: new IconButton(

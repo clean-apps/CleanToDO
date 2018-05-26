@@ -207,10 +207,11 @@ class DataCache {
         if( cat.text == categoryTitle ) indexToDelete = i;
       });
 
+      int deleteId = this.categoryData.user[indexToDelete].id;
       this.categoryData.user.removeAt(indexToDelete);
       filterCategory = null;
 
-      categoryProvider.delete( this.categoryData.user[indexToDelete].id );
+      categoryProvider.delete( deleteId );
     }
 
   }
