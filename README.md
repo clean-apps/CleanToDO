@@ -43,5 +43,6 @@ limitations under the License.
 * [Local Notifications Plugin](https://github.com/MaikuB/flutter_local_notifications)
 * [Shared Notifications Plugin](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 * [Color Plugin](http://github.com/MichaelFenwick/Color)
+* [Google Sign-In Plugin](https://github.com/flutter/plugins/tree/master/packages/google_sign_in)
 
 
