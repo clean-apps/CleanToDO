@@ -4,6 +4,7 @@ import 'package:clean_todo/data/DefaultDataGenerator.dart';
 import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/beans/UserData.dart';
 import 'dart:async';
+import 'package:clean_todo/data/FakeDataGenerator.dart';
 
 class InitManager {
 
@@ -43,6 +44,14 @@ class InitManager {
     }
 
     init.cache.isCached = true;
+    bool mockup = false;
+
+    if( mockup ) {
+      DataProvider mockProvider = new FakeDataGenerator();
+      init.cache.tasksData = mockProvider.getAllTasks();
+      init.cache.userData = mockProvider.getUserData();
+      init.cache.categoryData = mockProvider.getSidebarData();
+    }
 
     return init;
   }

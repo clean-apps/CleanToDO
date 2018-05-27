@@ -25,7 +25,6 @@ class DataCache {
   bool showMyDay = false;
   bool enableQuickAdd = false;
 
-  //TODO
   bool showCompletedTasks = true;
 
   String sortTasks = "";
