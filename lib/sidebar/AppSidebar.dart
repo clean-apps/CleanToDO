@@ -3,14 +3,21 @@ import 'package:clean_todo/sidebar/NewCategoryDialog.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/UserData.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
+import 'package:clean_todo/settings/SettingsManager.dart';
+import 'package:clean_todo/data/DataCache.dart';
+import 'package:clean_todo/lists/AboutView.dart';
 
 class AppSidebar extends StatelessWidget {
 
-  AppSidebar({  Key key, this.categories, this.addCategory, this.filter, this.userData })
+  AppSidebar({  Key key, this.categories, this.addCategory, this.filter, this.userData,
+                this.cache, this.settings })
    : super(key: key);
 
   final UserData userData ;
   final CategoryData categories ;
+
+  final DataCache cache;
+  final SettingsManager settings ;
 
   final ValueChanged<Category> addCategory ;
   final ValueChanged<String> filter ;
@@ -68,6 +75,14 @@ class AppSidebar extends StatelessWidget {
                                       backgroundColor: Theme.of(context).primaryColor,
                                     ),
                       title: new SidebarText( textContent : this.userData.userName ) ,
+                      onTap: () => Navigator.of(context).push(
+                        new MaterialPageRoute(
+                            builder: (context) => new AboutView(
+                              cache: cache,
+                              settings: settings,
+                            )
+                        ),
+                      ),
                   ),
 
                   new Divider(),
