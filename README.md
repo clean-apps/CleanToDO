@@ -13,8 +13,12 @@ A Cleaner To-Do manager for Android, made with Flutter and ❤️
 * Add Reminders and Notes to tasks
 
 <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_myday.png?raw=true" width="300"> | <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_listview.png?raw=true" width="300"> 
-<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_lists.png?raw=true" width="280" style="padding-left:10px; padding-right:10px;"> | <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_quickadd.png?raw=true" width="300">
-| <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true" width="300">
+
+<br/>
+&nbsp; <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_lists.png?raw=true" width="280"> | <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_quickadd.png?raw=true" width="300">
+
+<br/>
+<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true" width="300">
 
 
 
