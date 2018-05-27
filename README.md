@@ -8,13 +8,13 @@ A Cleaner To-Do manager for Android, made with Flutter and ❤️
 
 # Features
 
-<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_myday.png?raw=true" width="300"> <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_listview.png?raw=true" width="300"> 
+<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_myday.png?raw=true" width="300">|<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_listview.png?raw=true" width="300"> 
 
 </br>
-<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_lists.png?raw=true" width="280" hspace="20"> <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_quickadd.png?raw=true" width="300">
+<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_lists.png?raw=true" width="280" hspace="20">|<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_quickadd.png?raw=true" width="300">
 
 </br>
-<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_tasks.png?raw=true" width="300"> <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true" width="300">
+<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_tasks.png?raw=true" width="300">|<img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true" width="300">
 
 
 # License
