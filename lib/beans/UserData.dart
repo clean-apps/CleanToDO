@@ -2,11 +2,14 @@
 class UserData {
 
   String userName;
+  String email;
   String abbr;
 
-  UserData( String pUsername ){
+  UserData( String pUsername, String pEmail ){
 
     this.userName = pUsername;
+    this.email = pEmail;
+
     List<String> userNameLst = userName.split(" ");
     if( userNameLst.length == 1 ){
       abbr = userName.substring(0,1).toUpperCase();

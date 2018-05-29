@@ -14,8 +14,31 @@ class LoginScreen extends StatelessWidget {
   GoogleSignIn _googleSignIn = new GoogleSignIn();
 
   LoginScreen({this.settings, this.cache});
+  bool autoValidate = false;
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  _handleLogin(context) {
+  _handleEmailLogin(context, name, email) {
+
+    final FormState form = _formKey.currentState;
+    if( form.validate() ){
+
+      settings.username = name;
+      settings.email = email;
+
+      cache.userData = new UserData(name, email);
+
+      Navigator.of(context).push(
+        new MaterialPageRoute(
+          builder: (_) =>
+          new TasksPage(cache: cache, settings: settings,),
+        ),
+      );
+
+    }
+
+  }
+
+  _handleGoogleLogin(context) {
 
       _googleSignIn
           .signIn()
@@ -24,7 +47,9 @@ class LoginScreen extends StatelessWidget {
             if( value != null ) {
 
               settings.username = value.displayName;
-              cache.userData = new UserData(value.displayName);
+              settings.email = value.email;
+
+              cache.userData = new UserData(value.displayName, value.email);
 
               Navigator.of(context).push(
                 new MaterialPageRoute(
@@ -36,55 +61,99 @@ class LoginScreen extends StatelessWidget {
             }
 
       });
-
-      /*
-      FirebaseAuth
-          .instance
-          .signInAnonymously()
-          .then((user) {
-
-            print( "google user2 -" + user.displayName ) ;
-            settings.username = user.displayName;
-            cache.userData = new UserData(userName: user.displayName, abbr: 'SS');
-
-
-      });
-      */
   }
 
   @override
   Widget build(BuildContext context) {
 
+    TextEditingController tecEmail = new TextEditingController();
+    TextEditingController tecName = new TextEditingController();
+
     return new MaterialApp(
+
         home: new Builder(builder: (BuildContext bodyContext) {
 
-          return new Container(
+          return new Scaffold(
 
-              color: Colors.white,
-              child: new Column(
+              body: new Form(
+                key: _formKey,
+                child: new Column(
 
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
 
                 children: <Widget>[
 
-                  new Image.asset('images/logo.png'),
+                  new Text('Welcome to', style: new TextStyle( color: Colors.blue, fontSize: 38.0, fontWeight: FontWeight.w200),),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Image.asset('images/logo.png', height: 30.0,),
+                      new Padding(
+                        padding: new EdgeInsets.only(left: 10.0),
+                        child: new Text( 'Clean To-Do', style: new TextStyle( color: Colors.blue, fontSize: 30.0, fontWeight: FontWeight.normal ), ),
+                      ),
+                    ],
+                  ),
 
                   //new Text( 'Login to Clean To-Do', style: new TextStyle( fontSize: 20.0, color: Colors.blue ) ),
 
                   new Padding(
-                    padding: new EdgeInsets.only( top: 50.0 ),
-                    child: new RaisedButton(
-                      child: new Text('Sign in', style: new TextStyle( fontSize: 20.0, color: Colors.white ),),
+                      padding: new EdgeInsets.only( top: 20.0, left: 50.0, right: 50.0, ),
+                      child: new TextFormField(
+                        decoration: new InputDecoration(
+                          labelText: 'Email',
+                        ),
+                        controller: tecEmail,
+                        autovalidate: autoValidate,
+                        validator: (valueEmail){
+                          if( valueEmail.isEmpty ){
+                            return 'please enter your email';
+                          }
+                        },
+                      ),
+                  ),
+
+                  new Padding(
+                      padding: new EdgeInsets.only( top: 20.0, bottom: 75.0, left: 50.0, right: 50.0, ),
+                      child: new TextFormField(
+                        decoration: new InputDecoration(
+                          labelText: 'Name',
+                        ),
+                        controller: tecName,
+                        autovalidate: autoValidate,
+                        validator: (valueName){
+                          if( valueName.isEmpty ){
+                            return 'please enter your name';
+                          }
+                        },
+                      )
+                  ),
+
+                  new RaisedButton(
+                      child: new Text('Login With Email', style: new TextStyle( fontSize: 20.0, color: Colors.white ),),
                       elevation: 5.0,
                       color: Colors.blue,
-                      padding: new EdgeInsets.only( top: 10.0, bottom: 10.0, left: 40.0, right: 40.0 ),
-                      onPressed: () => _handleLogin(bodyContext),
-                    ),
+                      padding: new EdgeInsets.only( top: 18.0, bottom: 18.0, left: 80.0, right: 80.0 ),
+                      onPressed: () => _handleEmailLogin(bodyContext, tecName.text, tecEmail.text),
+                  ),
+
+                  new Padding(
+                    padding: new EdgeInsets.only( top: 20.0, bottom: 20.0 ),
+                    child: new Text( 'or', style: new TextStyle( color: Colors.grey, decoration: TextDecoration.none, fontSize: 20.0 ), ),
+                  ),
+
+                  new RaisedButton(
+                      child: new Text('Login With Google', style: new TextStyle( fontSize: 20.0, color: Colors.white ),),
+                      elevation: 5.0,
+                      color: Colors.blue,
+                      padding: new EdgeInsets.only( top: 18.0, bottom: 18.0, left: 75.0, right: 75.0 ),
+                      onPressed: () => _handleGoogleLogin(bodyContext),
                   )
 
                 ],
               ),
+              )
 
          );
 

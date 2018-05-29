@@ -75,6 +75,7 @@ class AppSidebar extends StatelessWidget {
                                       backgroundColor: Theme.of(context).primaryColor,
                                     ),
                       title: new SidebarText( textContent : this.userData.userName ) ,
+                      subtitle: new Text( this.userData.email ),
                       onTap: () => Navigator.of(context).push(
                         new MaterialPageRoute(
                             builder: (context) => new AboutView(

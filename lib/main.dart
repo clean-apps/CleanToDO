@@ -7,7 +7,6 @@ import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/settings/LoginScreen.dart';
 import 'package:clean_todo/settings/SplashScreen.dart';
 
-/*
 void main() => runApp(
 
     new FutureBuilder(
@@ -23,8 +22,8 @@ void main() => runApp(
     )
 
 );
-*/
 
+/*
 void main() => runApp(
 
   new FutureBuilder(
@@ -42,6 +41,7 @@ void main() => runApp(
       }
   )
 );
+*/
 
 class CleanToDoApp extends StatelessWidget {
 

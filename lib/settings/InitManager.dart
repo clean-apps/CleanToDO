@@ -36,7 +36,7 @@ class InitManager {
     }
 
     if( init.isSignedIn ) {
-      init.cache.userData = new UserData(init.settings.username);
+      init.cache.userData = new UserData(init.settings.username, init.settings.email);
 
     } else {
       DataProvider provider = new DefaultDataGenerator();

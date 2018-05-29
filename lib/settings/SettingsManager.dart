@@ -24,6 +24,14 @@ class SettingsManager {
     prefs.setString( "theme" , pTheme );
   }
 
+  String get email {
+    return prefs.get( "email" );
+  }
+
+  set email ( String pTheme ){
+    prefs.setString( "email" , pTheme );
+  }
+
   String get username {
     return prefs.get( "username" );
   }

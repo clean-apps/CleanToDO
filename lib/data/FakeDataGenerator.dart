@@ -29,7 +29,7 @@ class FakeDataGenerator implements DataProvider {
   }
 
   UserData getUserData(){
-    return new UserData( 'Sandra Smith' );
+    return new UserData( 'Sandra Smith', 'Sandra.Smith@example.com' );
   }
 
   List<Task> getAllTasks(){
