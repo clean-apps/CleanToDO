@@ -2,6 +2,7 @@
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
 import 'package:clean_todo/data/TaskProvider.dart';
+import 'package:clean_todo/beans/CategoryData.dart';
 
 class Task {
 
@@ -87,7 +88,7 @@ class Task {
         //TaskProvider.columnId: id,
         TaskProvider.columnTitle: title,
         TaskProvider.columnCompleted: completed == true ? 1 : 0,
-        TaskProvider.columnCategoryText: category.text,
+        TaskProvider.columnCategoryId: category.id,
         TaskProvider.columnDeadlineVal: deadline_val,
         TaskProvider.columnReminderDate: reminder_date,
         TaskProvider.columnReminderTime: reminder_time
@@ -101,12 +102,12 @@ class Task {
     return map;
   }
 
-  Task.fromMap(Map map) {
+  Task.fromMap( Map map, CategoryData categoryData ) {
 
       id = map[TaskProvider.columnId];
       title = map[TaskProvider.columnTitle];
       completed = map[TaskProvider.columnCompleted] == 1;
-      category = new Category( text: map[TaskProvider.columnCategoryText] );
+      category = categoryData.getCategory( map[TaskProvider.columnCategoryId] );
       deadline_val = map[TaskProvider.columnDeadlineVal];
       reminder_date = map[TaskProvider.columnReminderDate];
       reminder_time = map[TaskProvider.columnReminderTime];

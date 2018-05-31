@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
+import 'package:clean_todo/beans/CategoryGroup.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/UserData.dart';
 import 'package:clean_todo/beans/Task.dart';
@@ -16,10 +17,15 @@ class DefaultDataGenerator implements DataProvider {
           new Category( id: -2, text: 'To-Do', icon: Icons.check ),
       ],
 
+      userGroups: [
+        new CategoryGroup( id: 1, text: 'Personal' ),
+        new CategoryGroup( id: 2, text: 'Work' ),
+      ],
+
       user: [
-        new Category( text: 'Home' ),
-        new Category( text: 'Work' ),
-        new Category( text: 'Shopping' ),
+        new Category( id: 1, groupId: 1, text: 'Home', count: 3 ),
+        new Category( id: 2, groupId: 1, text: 'Shopping', count: 2 ),
+        new Category( id: 3, groupId: 2, text: 'Work', count: 2 ),
       ],
 
     );

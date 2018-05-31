@@ -42,19 +42,24 @@ class TasksPage extends StatefulWidget {
 
 class _TasksPageState extends State<TasksPage> {
 
-  filter( String categoryName ){
+  filter( int categoryId ){
     this.setState( (){
 
-      if( categoryName == 'To-Do' ) {
+      if( categoryId == -1 ) {
         widget.cache.filterCategory = null;
         widget.cache.showMyDay = false;
 
-      } else if ( categoryName == 'My Day' ) {
+      } else if ( categoryId == -2 ) {
         widget.cache.filterCategory = null;
         widget.cache.showMyDay = true;
 
       } else {
-        widget.cache.filterCategory = categoryName;
+        widget.cache.filterCategoryId = categoryId;
+        widget.cache.filterCategory =
+            widget.cache.categoryData.getCategoryGroup( categoryId ).text +
+                ' / ' +
+            widget.cache.categoryData.getCategory( categoryId ).text;
+
         widget.cache.showMyDay = false;
       }
 
@@ -146,7 +151,7 @@ class _TasksPageState extends State<TasksPage> {
             dueTasks: widget.cache.dueTasks,
             pendingTasks: widget.cache.pendingTasks,
             extraTask: widget.cache.newTask,
-            categories: widget.cache.categoryData.user,
+            categoryData: widget.cache.categoryData,
             toggleTask: widget.cache.toggleTask,
 
             updateTask: ( (task){
@@ -162,7 +167,7 @@ class _TasksPageState extends State<TasksPage> {
 
         tasks: widget.cache.tasks,
         extraTask: widget.cache.newTask,
-        categories: widget.cache.categoryData.user,
+        categoryData: widget.cache.categoryData,
 
         toggleTask: ( (task){
           this.setState( (){
@@ -213,7 +218,7 @@ class _TasksPageState extends State<TasksPage> {
                                         widget.cache.newTask.clear();
                                         widget.cache.newTask.id = widget.cache.tasksData.length + 1;
                                         widget.cache.newTask.title = value;
-                                        widget.cache.newTask.category = new Category(text: widget.cache.filterCategory);
+                                        widget.cache.newTask.category = widget.cache.categoryData.getCategory( widget.cache.filterCategoryId );
                                         widget.cache.updateTask(widget.cache.newTask);
                                         Navigator.pop(context);
                                       });
@@ -232,7 +237,7 @@ class _TasksPageState extends State<TasksPage> {
                                           widget.cache.newTask.clear();
                                           widget.cache.newTask.id = widget.cache.tasksData.length + 1;
                                           widget.cache.newTask.title = tecNewTask.text;
-                                          widget.cache.newTask.category = new Category(text: widget.cache.filterCategory);
+                                          widget.cache.newTask.category = widget.cache.categoryData.getCategory( widget.cache.filterCategoryId );
                                           widget.cache.updateTask(widget.cache.newTask);
                                           Navigator.pop(context);
                                         });
@@ -266,7 +271,7 @@ class _TasksPageState extends State<TasksPage> {
               new MaterialPageRoute( builder: (context) =>
                   new TaskDetail(
                     task: widget.cache.newTask,
-                    categories: widget.cache.categoryData.user,
+                    categoryData: widget.cache.categoryData,
                     updateTask: (task){
                       widget.cache.updateTask(task);
                     },

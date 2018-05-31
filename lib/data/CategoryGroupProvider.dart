@@ -3,16 +3,14 @@ import 'dart:io' as io;
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:clean_todo/beans/Category.dart';
+import 'package:clean_todo/beans/CategoryGroup.dart';
 
 
-class CategoryProvider {
+class CategoryGroupProvider {
 
-  static final String table = "catagory";
+  static final String table = "categoryGroup";
   static final String columnId = "_id";
-  static final String columnGroupId = "groupId";
   static final String columnText = "text";
-  static final String columnCount = "count";
 
   Database _db;
 
@@ -29,7 +27,7 @@ class CategoryProvider {
   initDb() async {
 
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "CleanToDoCategories.db");
+    String path = join(documentsDirectory.path, "CleanToDoCategoryGroup.db");
     await documentsDirectory.create(recursive: true);
 
     var theDb = await openDatabase(
@@ -39,9 +37,7 @@ class CategoryProvider {
             await db.execute('''
             create table $table ( 
               $columnId integer primary key autoincrement, 
-              $columnGroupId integer, 
-              $columnText text not null,
-              $columnCount integer not null
+              $columnText text not null
             )
             ''');
         }
@@ -50,61 +46,61 @@ class CategoryProvider {
     return theDb;
   }
 
-  insertAll(List<Category> categories) {
-    categories.forEach( (category) => insert( category.clone() ) );
+  insertAll(List<CategoryGroup> categoryGroups) {
+    categoryGroups.forEach( (categoryGroup) => insert( categoryGroup.clone() ) );
   }
 
-  insert(Category category) async {
+  insert(CategoryGroup categoryGroup) async {
 
     var dbClient = await db;
-    await dbClient.insert(table, category.toMap());
+    await dbClient.insert(table, categoryGroup.toMap());
   }
 
-  Future<Category> getCategory(int id) async {
+  Future<CategoryGroup> getCategoryGroup(int id) async {
 
     var dbClient = await db;
     List<Map> maps = await dbClient.query(
         table,
-        columns: [columnId, columnGroupId, columnText, columnCount],
+        columns: [columnId, columnText],
         where: "$columnId = ?",
         whereArgs: [id]
     );
 
     if (maps.length > 0) {
-      return new Category.fromMap(maps.first);
+      return new CategoryGroup.fromMap(maps.first);
     }
 
     return null;
   }
 
-  Future<List<Category>> allCategories() async {
+  Future<List<CategoryGroup>> allCategoryGroups() async {
 
     var dbClient = await db;
     List<Map> maps = await dbClient.query(
         table,
-        columns: [columnId, columnGroupId, columnText, columnCount]
+        columns: [columnId, columnText]
     );
 
-    List<Category> allCategories = [];
+    List<CategoryGroup> allCategoryGroups = [];
     maps.forEach(
-            (mapItem) => allCategories.add( Category.fromMap(mapItem) )
+            (mapItem) => allCategoryGroups.add( CategoryGroup.fromMap(mapItem) )
     );
 
-    return allCategories;
+    return allCategoryGroups;
   }
 
-  Future<Category> getCategoryByText(String text) async {
+  Future<CategoryGroup> getCategoryByText(String text) async {
 
     var dbClient = await db;
     List<Map> maps = await dbClient.query(
         table,
-        columns: [columnId, columnGroupId, columnText, columnCount],
+        columns: [columnId, columnText],
         where: "$columnText = ?",
         whereArgs: [text]
     );
 
     if (maps.length > 0) {
-      return new Category.fromMap(maps.first);
+      return new CategoryGroup.fromMap(maps.first);
     }
 
     return null;
@@ -115,12 +111,12 @@ class CategoryProvider {
     await dbClient.delete(table, where: "$columnId = ?", whereArgs: [id]);
   }
 
-  update(Category category) async {
+  update(CategoryGroup categoryGroup) async {
     var dbClient = await db;
     await dbClient.update(
             table,
-            category.toMap(),
-            where: "$columnId = ?", whereArgs: [category.id]
+            categoryGroup.toMap(),
+            where: "$columnId = ?", whereArgs: [categoryGroup.id]
     );
   }
 

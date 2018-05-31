@@ -4,6 +4,7 @@ import 'dart:io' as io;
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:clean_todo/beans/CategoryData.dart';
 
 class TaskProvider {
 
@@ -11,7 +12,7 @@ class TaskProvider {
   static final String columnId = "_id";
   static final String columnTitle = "title";
   static final String columnCompleted = "completed";
-  static final String columnCategoryText = "categoryText";
+  static final String columnCategoryId = "categoryId";
   static final String columnDeadlineVal = "deadlineVal";
   static final String columnReminderDate = "reminderData";
   static final String columnReminderTime = "reminderTime";
@@ -44,7 +45,7 @@ class TaskProvider {
               $columnId integer primary key autoincrement, 
               $columnTitle text not null,
               $columnCompleted integer not null,
-              $columnCategoryText text not null,
+              $columnCategoryId integer not null,
               $columnDeadlineVal text,
               $columnReminderDate text,
               $columnReminderTime text
@@ -65,36 +66,36 @@ class TaskProvider {
     return true;
   }
 
-  Future<List<Task>> allTasks() async {
+  Future<List<Task>> allTasks( CategoryData categoryData ) async {
 
     var dbClient = await db;
     List<Map> maps = await dbClient.query(
         table,
-        columns: [columnId, columnTitle, columnCompleted, columnCategoryText,
+        columns: [columnId, columnTitle, columnCompleted, columnCategoryId,
         columnDeadlineVal, columnReminderDate, columnReminderTime]
     );
 
     List<Task> allTasks = [];
     maps.forEach(
-            (mapItem) => allTasks.add( Task.fromMap(mapItem) )
+            (mapItem) => allTasks.add( Task.fromMap(mapItem, categoryData ) )
     );
 
     return allTasks;
   }
 
-  Future<Task> getTask(int id) async {
+  Future<Task> getTask(int id,  CategoryData categoryData ) async {
 
     var dbClient = await db;
     List<Map> maps = await dbClient.query(
         table,
-        columns: [columnId, columnTitle, columnCompleted, columnCategoryText,
+        columns: [columnId, columnTitle, columnCompleted, columnCategoryId,
                   columnDeadlineVal, columnReminderDate, columnReminderTime],
         where: "$columnId = ?",
         whereArgs: [id]
     );
 
     if (maps.length > 0) {
-      return new Task.fromMap(maps.first);
+      return new Task.fromMap(maps.first, categoryData);
     }
 
     return null;

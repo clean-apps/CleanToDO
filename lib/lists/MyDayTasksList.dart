@@ -3,11 +3,12 @@ import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/lists/TaskTile.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/lists/CTExpansionPanel.dart';
+import 'package:clean_todo/beans/CategoryData.dart';
 
 class MyDayTasksList extends StatefulWidget {
 
   MyDayTasksList({  this.todayTasks, this.dueTasks,  this.pendingTasks,
-                    this.extraTask, this.categories, this.toggleTask,
+                    this.extraTask, this.categoryData, this.toggleTask,
                     this.updateTask, this.deleteTask });
 
 
@@ -16,7 +17,7 @@ class MyDayTasksList extends StatefulWidget {
   List<Task> pendingTasks ;
 
   final Task extraTask ;
-  final List<Category> categories ;
+  final CategoryData categoryData ;
 
   final ValueChanged<Task> toggleTask;
   final ValueChanged<Task> updateTask ;
@@ -42,7 +43,7 @@ class _MyDayTasksListState extends State<MyDayTasksList> {
         new TaskTile (
           task : task,
           extraTask: widget.extraTask,
-          categories: widget.categories,
+          categoryData: widget.categoryData,
           updateTask : (task) => widget.updateTask(task),
           deleteTask: (task) => widget.deleteTask(task),
         ),
@@ -62,7 +63,7 @@ class _MyDayTasksListState extends State<MyDayTasksList> {
             new TaskTile (  
               task : task,
               extraTask: widget.extraTask,
-              categories: widget.categories,
+              categoryData: widget.categoryData,
               updateTask : (task) => widget.updateTask(task),
               deleteTask: (task) => widget.deleteTask(task),
             ),
@@ -82,7 +83,7 @@ class _MyDayTasksListState extends State<MyDayTasksList> {
           new TaskTile (
             task : task,
             extraTask: widget.extraTask,
-            categories: widget.categories,
+            categoryData: widget.categoryData,
             updateTask : (task) => widget.updateTask(task),
             deleteTask: (task) => widget.deleteTask(task),
           ),

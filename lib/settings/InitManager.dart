@@ -44,9 +44,9 @@ class InitManager {
     }
 
     init.cache.isCached = true;
-    bool mockup = false;
+    bool demoMode = true;
 
-    if( mockup ) {
+    if( demoMode ) {
       DataProvider mockProvider = new FakeDataGenerator();
       init.cache.tasksData = mockProvider.getAllTasks();
       init.cache.userData = mockProvider.getUserData();

@@ -3,6 +3,7 @@ import 'package:clean_todo/beans/CategoryData.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
 import 'package:clean_todo/data/CategoryProvider.dart';
+import 'package:clean_todo/data/CategoryGroupProvider.dart';
 import 'package:clean_todo/data/TaskProvider.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class DataCache {
   List<Task> tasksData = [];
   Task newTask = new Task();
   String filterCategory ;
+  int filterCategoryId ;
 
   bool isCached = false;
 
@@ -32,6 +34,7 @@ class DataCache {
   final String dbName = "CleanToDoDB.db";
   TaskProvider taskProvider = new TaskProvider();
   CategoryProvider categoryProvider = new CategoryProvider();
+  CategoryGroupProvider categoryGroupProvider = new CategoryGroupProvider();
 
   NotificationManager notifications = new NotificationManager();
 
@@ -52,8 +55,9 @@ class DataCache {
 
   Future<bool> initDb() async {
 
-    tasksData = await taskProvider.allTasks();
     categoryData.user = await categoryProvider.allCategories();
+    categoryData.userGroups = await categoryGroupProvider.allCategoryGroups();
+    tasksData = await taskProvider.allTasks( categoryData );
 
     if( categoryData.user == null || categoryData.user.length == 0 ){
 
@@ -76,9 +80,9 @@ class DataCache {
     return true;
   }
 
-  List<Task> _filterCategories( List<Task> tasks, String category ){
+  List<Task> _filterCategories( List<Task> tasks, int categoryId ){
 
-    if( filterCategory == null )
+    if( categoryId == null )
       return tasks;
 
     else
@@ -86,7 +90,7 @@ class DataCache {
 
                   task != null &&
                   task.category != null &&
-                  task.category.text == filterCategory )
+                  task.category.id == categoryId )
 
               ).toList();
   }
@@ -157,14 +161,14 @@ class DataCache {
 
     if( enableSearch )
       return _filterSearch(
-                  _filterCategories( tasksData, filterCategory ),
+                  _filterCategories( tasksData, filterCategoryId ),
                   searchString == null ? searchString : searchString.toLowerCase(),
               );
 
     else
       return _sortTasks(
                 _filterCompleted(
-                  _filterCategories( tasksData, filterCategory )
+                  _filterCategories( tasksData, filterCategoryId )
                 )
       );
   }

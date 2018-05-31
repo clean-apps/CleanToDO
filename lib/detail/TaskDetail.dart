@@ -6,15 +6,17 @@ import 'package:clean_todo/detail/TitleDetailTile.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
 import 'package:clean_todo/calender/TimeUtil.dart';
 import 'package:clean_todo/beans/Category.dart';
+import 'package:clean_todo/beans/CategoryGroup.dart';
+import 'package:clean_todo/beans/CategoryData.dart';
 import 'dart:async';
 
 class TaskDetail extends StatefulWidget {
 
-  TaskDetail({ this.task, this.updateTask, this.categories });
+  TaskDetail({ this.task, this.updateTask, this.categoryData });
 
   final Task task ;
   final ValueChanged<Task> updateTask ;
-  final List<Category> categories ;
+  final CategoryData categoryData ;
 
   _TaskDetailState createState() => new _TaskDetailState();
 }
@@ -206,15 +208,19 @@ class _TaskDetailState extends State<TaskDetail> {
 
                     new DropdownTile(
 
-                      text: widget.task.category == null ? null : widget.task
-                          .category.text,
+                      text: widget.task.category == null ? null : widget.task.category.id.toString(),
                       hint: 'Add to a List',
                       icon: Icons.list,
-                      options: widget.categories.map((Category pCategory) {
+                      options: widget.categoryData.user.map((Category pCategory) {
+
+                        Category category = widget.categoryData.getCategory( pCategory.id );
+                        CategoryGroup categoryGroup = widget.categoryData.getCategoryGroup( pCategory.id );
+
                         return new DropdownMenuItem<String>(
-                          value: pCategory.text,
-                          child: new Text(pCategory.text),
+                          value: pCategory.id.toString(),
+                          child: new Text(categoryGroup.text + " / " + category.text ),
                         );
+
                       }).toList(),
 
                       updateContent: (content) {
@@ -222,7 +228,7 @@ class _TaskDetailState extends State<TaskDetail> {
                           if (content == null)
                             widget.task.category = null;
                           else
-                            widget.task.category = new Category(text: content);
+                            widget.task.category = widget.categoryData.getCategory( int.parse( content ) );
                         });
                       },
 
