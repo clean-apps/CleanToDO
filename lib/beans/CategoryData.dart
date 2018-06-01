@@ -9,6 +9,9 @@ class CategoryData {
   List<CategoryGroup> userGroups = [];
   List<Category> user = [];
 
+  CategoryGroup newCategoryGroup = new CategoryGroup( id: -1 );
+  bool newGroup = false;
+
   List<Category> getGroupMembers ( CategoryGroup group ){
 
     List<Category> groupCategories =  user.map( (userCategory) {
@@ -19,6 +22,11 @@ class CategoryData {
 
     groupCategories.removeWhere( (category) => category == null );
     return groupCategories;
+  }
+
+  CategoryGroup getCategoryGroupReal( int groupId ){
+    return userGroups.where( (categoryGroup) => categoryGroup.id == groupId ).first;
+
   }
 
   Category getCategory( int categoryId ){

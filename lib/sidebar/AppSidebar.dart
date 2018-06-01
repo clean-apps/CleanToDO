@@ -11,8 +11,8 @@ import 'package:clean_todo/lists/AboutView.dart';
 class AppSidebar extends StatefulWidget {
 
   AppSidebar(
-      { Key key, this.categories, this.addCategory, this.filter, this.userData,
-        this.cache, this.settings })
+      { Key key, this.categories, this.addCategory, this.addCategoryGroup,
+        this.filter, this.userData, this.cache, this.settings })
       : super(key: key);
 
   final UserData userData;
@@ -23,6 +23,7 @@ class AppSidebar extends StatefulWidget {
   final SettingsManager settings;
 
   final ValueChanged<Category> addCategory;
+  final ValueChanged<CategoryGroup> addCategoryGroup;
 
   final ValueChanged<int> filter;
 
@@ -66,7 +67,7 @@ class _AppSidebarState extends State<AppSidebar> {
           new Divider(),
           new ListTile(
             leading: new Icon( categoryGroup.isExpanded ? Icons.folder_open : Icons.folder, color: Theme.of(context).primaryColor, ),
-            title: new SidebarText( textContent: categoryGroup.text ),
+            title: new SidebarTextBold( textContent: categoryGroup.text ),
             trailing: new Icon( categoryGroup.isExpanded ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor, ),
               onTap: () {
                 this.setState( (){
@@ -129,10 +130,25 @@ class _AppSidebarState extends State<AppSidebar> {
                   new ListTile(
                     leading: new Icon( Icons.add, color: Theme.of(context).primaryColor, ),
                     title: new SidebarText( textContent : 'New List' ),
-                    onTap: () =>  showDialog(
-                      context: context,
-                      builder: (_) => new NewCategoryDialog( addCategory: this.widget.addCategory ),
-                    ),
+                    onTap: (){
+
+                        widget.cache.categoryData.newCategoryGroup.id = -1;
+                        widget.cache.categoryData.newGroup = false;
+
+                        Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (context) =>
+                                  new NewCategoryDialog(
+                                    categoryData: widget.cache.categoryData,
+                                    addCategory: widget.addCategory,
+                                    addCategoryGroup: widget.addCategoryGroup,
+                                  ),
+
+                              maintainState: true,
+                              fullscreenDialog: true,
+                            )
+                        );
+                      },
                   ),
 
                   new Padding(
@@ -165,6 +181,23 @@ class SidebarText extends StatelessWidget {
     return new Text( 
       this.textContent,
       style: new TextStyle( fontSize: 18.0, fontStyle: FontStyle.normal, fontWeight: FontWeight.w300 ),
+    );
+  }
+
+}
+
+class SidebarTextBold extends StatelessWidget {
+
+  SidebarTextBold({this.textContent});
+
+  final String textContent;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Text(
+      this.textContent,
+      style: new TextStyle( fontSize: 18.0, fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor ),
     );
   }
 

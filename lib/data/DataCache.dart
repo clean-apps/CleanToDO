@@ -9,6 +9,7 @@ import 'package:clean_todo/beans/Category.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:clean_todo/data/NotificationManager.dart';
+import 'package:clean_todo/beans/CategoryGroup.dart';
 
 class DataCache {
 
@@ -180,6 +181,11 @@ class DataCache {
     });
 
     return true;
+  }
+
+  addCategoryGroup( CategoryGroup newCategoryGroup ) {
+    this.categoryData.userGroups.add( newCategoryGroup );
+    categoryGroupProvider.insert( newCategoryGroup );
   }
 
   addCategory( Category newCategoryLT ) {

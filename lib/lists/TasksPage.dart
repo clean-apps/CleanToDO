@@ -138,6 +138,12 @@ class _TasksPageState extends State<TasksPage> {
                   widget.cache.addCategory(newCategory);
                 })
             ),
+            addCategoryGroup : ((newGroup) =>
+                this.setState( (){
+                  widget.cache.addCategoryGroup(newGroup);
+                })
+            ),
+
             filter : filter,
             userData : widget.cache.userData,
 
