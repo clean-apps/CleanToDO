@@ -4,8 +4,11 @@ import 'package:clean_todo/lists/IconText.dart';
 
 class CTAppBar {
 
-  CTAppBar({  this.filterCategory, this.deleteCategory, this.updateCategoryName,
-              this.isSearch, this.isMyDay, this.toggleSearch,
+  CTAppBar({  this.filterCategoryId, this.filterCategory,
+              this.groupId, this.groupName,
+              this.deleteCategory, this.deleteCategoryGroup,
+              this.updateCategoryName, this.isSearch,
+              this.isMyDay, this.toggleSearch,
               this.searchString, this.doSearch,
               this.themeColor, this.updateColor,
               this.isShowCompletedTasks, this.updateShowCompletedTasks,
@@ -14,8 +17,14 @@ class CTAppBar {
 
   final String appDefaultTitle = 'To-Do';
 
+  final int filterCategoryId;
   final String filterCategory ;
-  final ValueChanged<String> deleteCategory ;
+
+  final int groupId;
+  final String groupName ;
+
+  final ValueChanged<int> deleteCategory ;
+  final ValueChanged<int> deleteCategoryGroup ;
 
   final bool isSearch ;
   final bool isMyDay ;
@@ -71,15 +80,7 @@ class CTAppBar {
       case 0: showDialog(
                 context: context,
                 builder: (_) => new AlertDialog(
-                  title: new Row(
-                    children: <Widget>[
-                      new Padding(
-                        padding: new EdgeInsets.only(left: 10.0),
-                        child: new Text('Delete List ' + filterCategory, style: new TextStyle(color: Colors.black45), ),
-                      )
-                    ],
-                  ),
-                  content: new Text('Are You Sure ?'),
+                  content: new Text('delete list ' + filterCategory + ' ?'),
                   actions: <Widget>[
                     new FlatButton(
                       child: new Text( 'CANCEL' ),
@@ -88,7 +89,7 @@ class CTAppBar {
                     new FlatButton(
                       child: new Text( 'OK' ),
                       onPressed: ((){
-                        this.deleteCategory(filterCategory);
+                        this.deleteCategory(filterCategoryId);
                         Navigator.pop(context);
 
                         //final snackBar = new SnackBar(content: new Text('List Deleted'));
@@ -247,6 +248,30 @@ class CTAppBar {
         );
 
       break;
+
+      case 5: showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+          content: new Text('delete list group ' + groupName + ' and all lists and tasks ?'),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text( 'CANCEL' ),
+              onPressed: () => Navigator.pop( context ),
+            ),
+            new FlatButton(
+              child: new Text( 'OK' ),
+              onPressed: ((){
+                this.deleteCategoryGroup(groupId);
+                Navigator.pop(context);
+
+                //final snackBar = new SnackBar(content: new Text('List Deleted'));
+                //Scaffold.of(_).showSnackBar(snackBar);
+              }),
+            ),
+          ],
+        ),
+      );
+        break;
     }
   }
 
@@ -356,7 +381,12 @@ class CTAppBar {
 
                 new PopupMenuItem<int>(
                   value: 0,
-                  child: new IconText( icon: Icons.delete, label: 'Delete List'),
+                  child: new IconText( icon: Icons.delete_sweep, label: 'Delete List'),
+                ),
+
+                new PopupMenuItem<int>(
+                  value: 5,
+                  child: new IconText( icon: Icons.delete_forever, label: 'Delete Group'),
                 ),
 
               ];

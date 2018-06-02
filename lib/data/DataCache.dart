@@ -194,15 +194,15 @@ class DataCache {
     categoryProvider.insert( newCategoryLT.clone() );
   }
 
-  deleteCategory( categoryTitle ) {
+  deleteCategory( categoryId ) {
 
-    if( categoryTitle != null ) {
+    if( categoryId != null ) {
 
       List<Task> toDelete = [];
       this.tasksData.forEach((task) {
         if (task != null &&
             task.category != null &&
-            task.category.text == categoryTitle)
+            task.category.id == categoryId)
 
           toDelete.add(task);
       });
@@ -213,7 +213,7 @@ class DataCache {
 
       int indexToDelete = -1;
       this.categoryData.user.asMap().forEach( (i, cat){
-        if( cat.text == categoryTitle ) indexToDelete = i;
+        if( cat.id == categoryId ) indexToDelete = i;
       });
 
       int deleteId = this.categoryData.user[indexToDelete].id;
@@ -221,6 +221,38 @@ class DataCache {
       filterCategory = null;
 
       categoryProvider.delete( deleteId );
+    }
+
+  }
+
+  deleteCategoryGroup( groupId ){
+
+    if( groupId != null ){
+
+      List<Category> toDelete = [];
+      this.categoryData.user.forEach( (category){
+        if( category != null &&
+            category.groupId == groupId){
+
+          toDelete.add(category);
+        }
+      });
+
+      toDelete.forEach( (category){
+        deleteCategory(category.id);
+      });
+
+      int indexToDelete = -1;
+      this.categoryData.userGroups.asMap().forEach( (i, catGr){
+        if( catGr.id == groupId ) indexToDelete = i;
+      });
+
+      int deleteId = this.categoryData.userGroups[indexToDelete].id;
+      this.categoryData.userGroups.removeAt(indexToDelete);
+      filterCategory = null;
+
+      categoryGroupProvider.delete( deleteId );
+
     }
 
   }

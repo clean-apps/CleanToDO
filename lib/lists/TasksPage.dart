@@ -75,11 +75,25 @@ class _TasksPageState extends State<TasksPage> {
 
     AppBar appBar = new CTAppBar(
 
+            filterCategoryId: widget.cache.filterCategoryId,
             filterCategory: widget.cache.filterCategory,
+
+            groupId: widget.cache.filterCategoryId == null ? null : widget.cache.categoryData.getCategoryGroup( widget.cache.filterCategoryId ).id,
+            groupName: widget.cache.filterCategoryId == null ? null : widget.cache.categoryData.getCategoryGroup( widget.cache.filterCategoryId ).text,
+
             deleteCategory: ((category) =>
                 this.setState( (){
                   widget.cache.deleteCategory(category);
                   widget.cache.filterCategory = null;
+                  widget.cache.filterCategoryId = null;
+                })
+            ),
+
+            deleteCategoryGroup: ((categoryGroup) =>
+                this.setState( (){
+                  widget.cache.deleteCategoryGroup(categoryGroup);
+                  widget.cache.filterCategory = null;
+                  widget.cache.filterCategoryId = null;
                 })
             ),
 
