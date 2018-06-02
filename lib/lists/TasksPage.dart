@@ -12,6 +12,7 @@ import 'package:clean_todo/settings/SettingsManager.dart';
 import 'package:clean_todo/settings/Themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:clean_todo/lists/TasksList.dart';
+import 'package:clean_todo/beans/CategoryData.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -47,21 +48,46 @@ class _TasksPageState extends State<TasksPage> {
 
       if( categoryId == -1 ) {
         widget.cache.filterCategory = null;
+        widget.cache.filterCategoryId = null;
+        widget.cache.filterGroupId = null;
         widget.cache.showMyDay = false;
+        widget.cache.filterGroup = false;
 
       } else if ( categoryId == -2 ) {
         widget.cache.filterCategory = null;
+        widget.cache.filterCategoryId = null;
+        widget.cache.filterGroupId = null;
         widget.cache.showMyDay = true;
+        widget.cache.filterGroup = false;
 
       } else {
+
         widget.cache.filterCategoryId = categoryId;
+        widget.cache.filterGroupId = null;
         widget.cache.filterCategory =
             widget.cache.categoryData.getCategoryGroup( categoryId ).text +
                 ' / ' +
             widget.cache.categoryData.getCategory( categoryId ).text;
 
         widget.cache.showMyDay = false;
+        widget.cache.filterGroup = false;
       }
+
+    });
+
+    Navigator.pop( context );
+  }
+
+  filterGroup( int groupId ){
+
+    this.setState( (){
+
+      widget.cache.filterCategoryId = null;
+      widget.cache.filterGroupId = groupId;
+      widget.cache.filterCategory = widget.cache.categoryData.getGroup( groupId ).text;
+
+      widget.cache.showMyDay = false;
+      widget.cache.filterGroup = true;
 
     });
 
@@ -73,19 +99,32 @@ class _TasksPageState extends State<TasksPage> {
 
     widget.cache.initNotifications(context);
 
+    int categoryId = widget.cache.filterCategoryId;
+    String categoryTxt = widget.cache.filterCategory;
+
+    CategoryData categoryData = widget.cache.categoryData;
+
+    int groupId = widget.cache.filterGroupId == null ?
+                      ( categoryId == null ? null : categoryData.getCategoryGroup(categoryId).id ) :
+                      widget.cache.filterGroupId;
+
+    String groupTxt = widget.cache.filterGroupId == null ? null : categoryData.getGroup(groupId).text;
+
     AppBar appBar = new CTAppBar(
 
-            filterCategoryId: widget.cache.filterCategoryId,
-            filterCategory: widget.cache.filterCategory,
+            filterCategoryId: categoryId,
+            filterCategory: categoryTxt,
 
-            groupId: widget.cache.filterCategoryId == null ? null : widget.cache.categoryData.getCategoryGroup( widget.cache.filterCategoryId ).id,
-            groupName: widget.cache.filterCategoryId == null ? null : widget.cache.categoryData.getCategoryGroup( widget.cache.filterCategoryId ).text,
+            groupId: groupId,
+            groupName: groupTxt,
 
             deleteCategory: ((category) =>
                 this.setState( (){
                   widget.cache.deleteCategory(category);
                   widget.cache.filterCategory = null;
                   widget.cache.filterCategoryId = null;
+                  widget.cache.filterGroupId = null;
+                  widget.cache.filterGroup = false;
                 })
             ),
 
@@ -94,11 +133,15 @@ class _TasksPageState extends State<TasksPage> {
                   widget.cache.deleteCategoryGroup(categoryGroup);
                   widget.cache.filterCategory = null;
                   widget.cache.filterCategoryId = null;
+                  widget.cache.filterGroupId = null;
+                  widget.cache.filterGroup = false;
                 })
             ),
 
             isMyDay: widget.cache.showMyDay,
             isSearch: widget.cache.enableSearch,
+            isGroup: widget.cache.filterGroup,
+
             toggleSearch: ( (isSearch) =>
                 this.setState( (){
                   widget.cache.enableSearch = isSearch;
@@ -159,6 +202,7 @@ class _TasksPageState extends State<TasksPage> {
             ),
 
             filter : filter,
+            filterGroup: filterGroup,
             userData : widget.cache.userData,
 
             cache: widget.cache,
@@ -236,10 +280,10 @@ class _TasksPageState extends State<TasksPage> {
                                     if( value != null && value.length > 0 ) {
                                       this.setState(() {
                                         widget.cache.newTask.clear();
-                                        widget.cache.newTask.id = widget.cache.tasksData.length + 1;
+                                        widget.cache.newTask.id = widget.cache.tasksData.last.id + 1;
                                         widget.cache.newTask.title = value;
                                         widget.cache.newTask.category = widget.cache.categoryData.getCategory( widget.cache.filterCategoryId );
-                                        widget.cache.updateTask(widget.cache.newTask);
+                                        widget.cache.updateTask(widget.cache.newTask.clone());
                                         Navigator.pop(context);
                                       });
                                     }

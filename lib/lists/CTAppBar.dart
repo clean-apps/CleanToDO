@@ -7,7 +7,7 @@ class CTAppBar {
   CTAppBar({  this.filterCategoryId, this.filterCategory,
               this.groupId, this.groupName,
               this.deleteCategory, this.deleteCategoryGroup,
-              this.updateCategoryName, this.isSearch,
+              this.updateCategoryName, this.isSearch, this.isGroup,
               this.isMyDay, this.toggleSearch,
               this.searchString, this.doSearch,
               this.themeColor, this.updateColor,
@@ -28,6 +28,7 @@ class CTAppBar {
 
   final bool isSearch ;
   final bool isMyDay ;
+  final bool isGroup ;
   final ValueChanged<bool> toggleSearch ;
 
   final String searchString ;
@@ -384,11 +385,6 @@ class CTAppBar {
                   child: new IconText( icon: Icons.delete_sweep, label: 'Delete List'),
                 ),
 
-                new PopupMenuItem<int>(
-                  value: 5,
-                  child: new IconText( icon: Icons.delete_forever, label: 'Delete Group'),
-                ),
-
               ];
 
             },
@@ -399,7 +395,68 @@ class CTAppBar {
 
   }
 
+  AppBar groupAppBar(context){
+
+    return new AppBar(
+      title: new Text(filterCategory),
+      actions: [
+
+        new IconButton(
+          icon: new Icon( Icons.search ),
+          onPressed: (){
+            toggleSearch(true);
+          },
+        ),
+
+        new PopupMenuButton<int>(
+
+          onSelected: (value) =>  _appBarActions(value, context),
+          itemBuilder: (BuildContext context) {
+
+            return <PopupMenuEntry<int>>[
+
+              new PopupMenuItem<int>(
+                value: 4,
+                child: new IconText( icon: Icons.edit, label: 'Rename List'),
+              ),
+
+              new PopupMenuItem<int>(
+                value: 3,
+                child: new IconText( icon: Icons.sort, label: 'Sort'),
+              ),
+
+              new PopupMenuItem<int>(
+                value: 2,
+                child: new IconText(
+                    icon: isShowCompletedTasks ? Icons.check_box : Icons.check_box_outline_blank,
+                    label: isShowCompletedTasks ? 'Hide Completed Tasks' : 'Show Completed Tasks'
+                ),
+              ),
+
+              new PopupMenuItem<int>(
+                value: 1,
+                child: new IconText( icon: Icons.color_lens, label: 'Change Color'),
+              ),
+
+              new PopupMenuItem<int>(
+                value: 5,
+                child: new IconText( icon: Icons.delete_forever, label: 'Delete Group'),
+              ),
+
+            ];
+
+          },
+        )
+
+      ],
+    );
+
+  }
+
   AppBar build(context) {
+
+    if( isGroup )
+      return groupAppBar(context);
 
     if( isMyDay )
       return mydayAppBar();

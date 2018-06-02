@@ -12,7 +12,7 @@ class AppSidebar extends StatefulWidget {
 
   AppSidebar(
       { Key key, this.categories, this.addCategory, this.addCategoryGroup,
-        this.filter, this.userData, this.cache, this.settings })
+        this.filter, this.filterGroup, this.userData, this.cache, this.settings })
       : super(key: key);
 
   final UserData userData;
@@ -26,7 +26,7 @@ class AppSidebar extends StatefulWidget {
   final ValueChanged<CategoryGroup> addCategoryGroup;
 
   final ValueChanged<int> filter;
-
+  final ValueChanged<int> filterGroup;
 
   @override
   _AppSidebarState createState() => new _AppSidebarState();
@@ -68,11 +68,18 @@ class _AppSidebarState extends State<AppSidebar> {
           new ListTile(
             leading: new Icon( categoryGroup.isExpanded ? Icons.folder_open : Icons.folder, color: Theme.of(context).primaryColor, ),
             title: new SidebarTextBold( textContent: categoryGroup.text ),
-            trailing: new Icon( categoryGroup.isExpanded ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor, ),
+            trailing: new IconButton(
+                icon: new Icon( categoryGroup.isExpanded ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down,
+                                color: Theme.of(context).primaryColor, ),
+                onPressed: () {
+                  this.setState(() {
+                    categoryGroup.isExpanded = !categoryGroup.isExpanded;
+                  });
+                }
+            ),
+
               onTap: () {
-                this.setState( (){
-                  categoryGroup.isExpanded = !categoryGroup.isExpanded;
-                });
+                this.widget.filterGroup( categoryGroup.id );
               }
           ),
           new Column(

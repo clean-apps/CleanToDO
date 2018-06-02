@@ -19,6 +19,7 @@ class DataCache {
   Task newTask = new Task();
   String filterCategory ;
   int filterCategoryId ;
+  int filterGroupId ;
 
   bool isCached = false;
 
@@ -26,6 +27,7 @@ class DataCache {
   String searchString = '';
 
   bool showMyDay = false;
+  bool filterGroup = false;
   bool enableQuickAdd = false;
 
   bool showCompletedTasks = true;
@@ -79,6 +81,21 @@ class DataCache {
     ];
 
     return true;
+  }
+
+  List<Task> _filterGroup( List<Task> tasks, int groupId ){
+
+    if( groupId == null )
+      return tasks;
+
+    else
+      return tasks.where( (task) =>(
+
+              task != null &&
+              task.category != null &&
+              task.category.groupId == groupId )
+
+      ).toList();
   }
 
   List<Task> _filterCategories( List<Task> tasks, int categoryId ){
@@ -162,14 +179,18 @@ class DataCache {
 
     if( enableSearch )
       return _filterSearch(
-                  _filterCategories( tasksData, filterCategoryId ),
+                    _filterCategories(
+                        _filterGroup( tasksData, filterGroupId ),
+                        filterCategoryId ),
                   searchString == null ? searchString : searchString.toLowerCase(),
               );
 
     else
       return _sortTasks(
                 _filterCompleted(
-                  _filterCategories( tasksData, filterCategoryId )
+                  _filterCategories(
+                      _filterGroup( tasksData, filterGroupId ),
+                      filterCategoryId )
                 )
       );
   }

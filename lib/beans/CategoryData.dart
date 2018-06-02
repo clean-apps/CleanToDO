@@ -30,13 +30,29 @@ class CategoryData {
   }
 
   Category getCategory( int categoryId ){
+
+    if( categoryId == null )
+      return null;
+
     return user.where( (category) => category.id == categoryId ).first;
 
   }
 
   CategoryGroup getCategoryGroup( int categoryId ){
+
+    if( categoryId == null )
+      return null;
+
     Category category = getCategory(categoryId);
     return userGroups.where( (categoryGroup) => categoryGroup.id == category.groupId ).first;
+  }
+
+  CategoryGroup getGroup( int groupId ){
+
+    if( groupId == null )
+      return null;
+
+    return userGroups.where( (categoryGroup) => categoryGroup.id == groupId ).first;
   }
 
 }
