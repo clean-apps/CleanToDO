@@ -9,6 +9,7 @@ import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/CategoryGroup.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
 import 'dart:async';
+import 'package:clean_todo/data/NotificationManager.dart';
 
 class TaskDetail extends StatefulWidget {
 
@@ -274,19 +275,56 @@ class _TaskDetailState extends State<TaskDetail> {
                       options: <DropdownMenuItem<String>>[
                         new DropdownMenuItem<String>(
                           value: 'Later Today @ ' + TimeUtil.reminder_time_val,
-                          child: new Text(
-                              'Later Today @' + TimeUtil.reminder_time),),
-                        new DropdownMenuItem<String>(value: 'Tomorrow @ 0900',
+                          child: new Text('Later Today @' + TimeUtil.reminder_time),),
+                        new DropdownMenuItem<String>(value: 'Tomorrow @ 09:00',
                           child: new Text('Tomorrow @9'),),
-                        new DropdownMenuItem<String>(value: 'Next Week @ 0900',
+                        new DropdownMenuItem<String>(value: 'Next Week @ 09:00',
                           child: new Text('Next Week @9'),),
                         new DropdownMenuItem<String>(
                           value: getReminderValueForCustom(widget.task.reminder),
-                          child: new Text(
-                              getReminderTitleForCustom(widget.task.reminder)),),
+                          child: new Text(getReminderTitleForCustom(widget.task.reminder)),),
                       ],
 
                       updateContent: _update_reminder,
+                    ),
+
+                    widget.task.reminder_date == null ? new Container() : new Divider(),
+
+                    widget.task.reminder_date == null ? new Container() : new DropdownTile(
+
+                      //text: RepeatInterval.DAILY.index.toString(),
+                      hint: 'Repeat',
+                      icon: Icons.repeat,
+                      options: <DropdownMenuItem<String>>[
+
+                        new DropdownMenuItem<String>(
+                          value: RepeatInterval.DAILY.index.toString(),
+                          child: new Text('daily'),
+                        ),
+
+                        new DropdownMenuItem<String>(
+                          value: RepeatInterval.WEEKLY.index.toString(),
+                          child: new Text('weekly'),
+                        ),
+
+                        new DropdownMenuItem<String>(
+                          value: RepeatInterval.WEEKDAYS.index.toString(),
+                          child: new Text('weekdays'),
+                        ),
+
+                        new DropdownMenuItem<String>(
+                          value: RepeatInterval.WEEKENDS.index.toString(),
+                          child: new Text('weekends'),
+                        ),
+
+                        new DropdownMenuItem<String>(
+                          value: RepeatInterval.MONTHLY.index.toString(),
+                          child: new Text('monthly'),
+                        ),
+
+                      ],
+
+                      updateContent: null,
                     ),
 
                   ],

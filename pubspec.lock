@@ -119,7 +119,7 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.10"
+    version: "0.5.11"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -135,9 +135,11 @@ packages:
   flutter_local_notifications:
     dependency: "direct main"
     description:
-      name: flutter_local_notifications
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "33722435b7359556e6bc7dab1baa4c0c6ef5eb07"
+      url: "https://github.com/babanomania/flutter_local_notifications.git"
+    source: git
     version: "0.2.9"
   flutter_test:
     dependency: "direct dev"
@@ -164,7 +166,7 @@ packages:
       name: google_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.3+1"
+    version: "3.0.4"
   html:
     dependency: transitive
     description:
@@ -304,7 +306,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0"
+    version: "0.4.1"
   petitparser:
     dependency: transitive
     description:
@@ -353,7 +355,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1"
+    version: "0.4.2"
   shelf:
     dependency: transitive
     description:
