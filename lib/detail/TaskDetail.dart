@@ -148,6 +148,16 @@ class _TaskDetailState extends State<TaskDetail> {
      }
    }
 
+  _update_repeat(content){
+
+    if( content != null ) {
+      this.setState(() {
+        widget.task.repeat = int.parse(content);
+      });
+    }
+
+  }
+
   _update_note(String content) {
 
     this.setState( (){
@@ -273,16 +283,23 @@ class _TaskDetailState extends State<TaskDetail> {
                       hint: 'Remind Me',
                       icon: Icons.alarm_on,
                       options: <DropdownMenuItem<String>>[
+
                         new DropdownMenuItem<String>(
                           value: 'Later Today @ ' + TimeUtil.reminder_time_val,
                           child: new Text('Later Today @' + TimeUtil.reminder_time),),
-                        new DropdownMenuItem<String>(value: 'Tomorrow @ 09:00',
+
+                        new DropdownMenuItem<String>(
+                          value: 'Tomorrow @ 09:00',
                           child: new Text('Tomorrow @9'),),
-                        new DropdownMenuItem<String>(value: 'Next Week @ 09:00',
+
+                        new DropdownMenuItem<String>(
+                          value: 'Next Week @ 09:00',
                           child: new Text('Next Week @9'),),
+
                         new DropdownMenuItem<String>(
                           value: getReminderValueForCustom(widget.task.reminder),
                           child: new Text(getReminderTitleForCustom(widget.task.reminder)),),
+
                       ],
 
                       updateContent: _update_reminder,
@@ -292,10 +309,18 @@ class _TaskDetailState extends State<TaskDetail> {
 
                     widget.task.reminder_date == null ? new Container() : new DropdownTile(
 
-                      //text: RepeatInterval.DAILY.index.toString(),
+                      text: widget.task.repeat == null ?
+                              RepeatInterval.NONE.index.toString() :
+                              widget.task.repeat.toString(),
+
                       hint: 'Repeat',
                       icon: Icons.repeat,
                       options: <DropdownMenuItem<String>>[
+
+                        new DropdownMenuItem<String>(
+                          value: RepeatInterval.NONE.index.toString(),
+                          child: new Text('none'),
+                        ),
 
                         new DropdownMenuItem<String>(
                           value: RepeatInterval.DAILY.index.toString(),
@@ -324,7 +349,7 @@ class _TaskDetailState extends State<TaskDetail> {
 
                       ],
 
-                      updateContent: null,
+                      updateContent: _update_repeat,
                     ),
 
                   ],

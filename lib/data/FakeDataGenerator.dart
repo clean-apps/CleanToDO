@@ -7,6 +7,7 @@ import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
 import 'package:clean_todo/calender/DateToString.dart';
+import 'package:clean_todo/data/NotificationManager.dart';
 
 class FakeDataGenerator implements DataProvider {
 
@@ -46,13 +47,13 @@ class FakeDataGenerator implements DataProvider {
     String next_week = DateUtil.parse( DateToString.next_week );
 
     return [
-      new Task( id : 0, completed : false, title: 'fix the lightbulb', category: new Category( id: 1, groupId: 1, text: 'Home' ) , deadline_val: yesterday, reminder_date: '20190519', reminder_time: '0900', notes:  'yes' ),
-      new Task( id : 1, completed : false, title: 'clean the garden', category: new Category( id: 1, groupId: 1, text: 'Home' ) ),
-      new Task( id : 2, completed : false, title: 'fix the fire hose', category: new Category( id: 1, groupId: 1, text: 'Home' ), deadline_val: next_week, reminder_date: '20190520', reminder_time: '0900', ),
-      new Task( id : 3, completed : true, title: 'finish the annual reports', category: new Category( id: 3, groupId: 2, text: 'Work' ) ),
-      new Task( id : 4, completed : false, title: 'come up with ideas for the pre-sales task', category: new Category( id: 3, groupId: 2, text: 'Work' ), deadline_val: next_week ),
-      new Task( id : 5, completed : false, title: 'buy ring for aniversary', category: new Category( id: 2, groupId: 1, text: 'Shopping' ) ),
-      new Task( id : 6, completed : false, title: 'buy shirts for presentation', category: new Category( id: 2, groupId: 1, text: 'Shopping' ), reminder_date: '20190522', reminder_time: '0900', ),
+      new Task( id : 0, completed : false, title: 'fix the lightbulb', category: new Category( id: 1, groupId: 1, text: 'Home' ) , deadline_val: yesterday, reminder_date: '20190519', reminder_time: '0900', notes:  'yes', repeat: RepeatInterval.WEEKLY.index ),
+      new Task( id : 1, completed : false, title: 'clean the garden', category: new Category( id: 1, groupId: 1, text: 'Home'), repeat: RepeatInterval.NONE.index  ),
+      new Task( id : 2, completed : false, title: 'fix the fire hose', category: new Category( id: 1, groupId: 1, text: 'Home' ), deadline_val: next_week, reminder_date: '20190520', reminder_time: '0900', repeat: RepeatInterval.NONE.index  ),
+      new Task( id : 3, completed : true, title: 'finish the annual reports', category: new Category( id: 3, groupId: 2, text: 'Work' ), repeat: RepeatInterval.NONE.index  ),
+      new Task( id : 4, completed : false, title: 'come up with ideas for the pre-sales task', category: new Category( id: 3, groupId: 2, text: 'Work' ), deadline_val: next_week, repeat: RepeatInterval.NONE.index  ),
+      new Task( id : 5, completed : false, title: 'buy ring for aniversary', category: new Category( id: 2, groupId: 1, text: 'Shopping' ), repeat: RepeatInterval.NONE.index  ),
+      new Task( id : 6, completed : false, title: 'buy shirts for presentation', category: new Category( id: 2, groupId: 1, text: 'Shopping' ), reminder_date: '20190522', reminder_time: '0900', repeat: RepeatInterval.NONE.index  ),
     ];
   }
 

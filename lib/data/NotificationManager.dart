@@ -12,7 +12,7 @@ import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/calender/TimeUtil.dart';
 import 'dart:typed_data';
 
-enum RepeatInterval { DAILY, WEEKLY, WEEKDAYS, WEEKENDS, MONTHLY }
+enum RepeatInterval { NONE, DAILY, WEEKLY, WEEKDAYS, WEEKENDS, MONTHLY }
 
 class NotificationManager {
 

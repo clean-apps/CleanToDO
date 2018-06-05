@@ -6,7 +6,9 @@ import 'package:clean_todo/beans/CategoryData.dart';
 
 class Task {
 
-  Task({ this.id, this.completed, this.title, this.category, this.deadline_val, this.reminder_date, this.reminder_time, this.notes });
+  Task({  this.id, this.completed, this.title, this.category,
+          this.deadline_val, this.reminder_date, this.reminder_time,
+          this.repeat, this.notes });
 
   int id;
   bool completed ;
@@ -26,6 +28,7 @@ class Task {
 
   String reminder_date ;
   String reminder_time ;
+  int repeat ;
 
   String notes ;
 
@@ -53,6 +56,7 @@ class Task {
     this.deadline_val = from.deadline_val;
     this.reminder_date = from.reminder_date;
     this.reminder_time = from.reminder_time;
+    this.repeat = from.repeat;
     this.notes = from.notes;
 
   }
@@ -65,6 +69,7 @@ class Task {
     this.deadline_val = null;
     this.reminder_date = null;
     this.reminder_time = null;
+    this.repeat = null;
     this.notes = null;
   }
 
@@ -76,6 +81,7 @@ class Task {
                       deadline_val: deadline_val,
                       reminder_date: reminder_date,
                       reminder_time: reminder_time,
+                      repeat: repeat,
                       notes: notes,
     );
   }
@@ -91,7 +97,10 @@ class Task {
         TaskProvider.columnCategoryId: category.id,
         TaskProvider.columnDeadlineVal: deadline_val,
         TaskProvider.columnReminderDate: reminder_date,
-        TaskProvider.columnReminderTime: reminder_time
+        TaskProvider.columnReminderTime: reminder_time,
+        TaskProvider.columnRepeat: repeat,
+        TaskProvider.columnNotes: notes,
+
     };
 
     if (id != null) {
@@ -111,6 +120,8 @@ class Task {
       deadline_val = map[TaskProvider.columnDeadlineVal];
       reminder_date = map[TaskProvider.columnReminderDate];
       reminder_time = map[TaskProvider.columnReminderTime];
+      repeat = map[TaskProvider.columnRepeat];
+      notes = map[TaskProvider.columnNotes];
   }
 
 }

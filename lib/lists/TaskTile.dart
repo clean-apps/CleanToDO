@@ -97,6 +97,15 @@ class _TasksTileState extends State<TaskTile> {
       );
     }
 
+    if( task.repeat != null ){
+      subtitleWidgets.add(
+          new Padding(
+              padding: lmargin,
+              child: new Icon( Icons.repeat, color: primaryColor, size: size,  )
+          )
+      );
+    }
+
     return subtitleWidgets;
   }
 

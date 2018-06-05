@@ -16,6 +16,8 @@ class TaskProvider {
   static final String columnDeadlineVal = "deadlineVal";
   static final String columnReminderDate = "reminderData";
   static final String columnReminderTime = "reminderTime";
+  static final String columnRepeat = "repeat";
+  static final String columnNotes = "notes";
 
   Database _db;
 
@@ -49,6 +51,8 @@ class TaskProvider {
               $columnDeadlineVal text,
               $columnReminderDate text,
               $columnReminderTime text
+              $columnRepeat integer,
+              $columnNotes text,
             )
             ''');
         }
@@ -72,7 +76,7 @@ class TaskProvider {
     List<Map> maps = await dbClient.query(
         table,
         columns: [columnId, columnTitle, columnCompleted, columnCategoryId,
-        columnDeadlineVal, columnReminderDate, columnReminderTime]
+        columnDeadlineVal, columnReminderDate, columnReminderTime, columnRepeat, columnNotes]
     );
 
     List<Task> allTasks = [];
@@ -89,7 +93,8 @@ class TaskProvider {
     List<Map> maps = await dbClient.query(
         table,
         columns: [columnId, columnTitle, columnCompleted, columnCategoryId,
-                  columnDeadlineVal, columnReminderDate, columnReminderTime],
+                  columnDeadlineVal, columnReminderDate, columnReminderTime,
+                  columnRepeat, columnNotes],
         where: "$columnId = ?",
         whereArgs: [id]
     );

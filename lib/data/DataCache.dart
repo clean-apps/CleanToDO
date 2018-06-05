@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:clean_todo/data/NotificationManager.dart';
 import 'package:clean_todo/beans/CategoryGroup.dart';
+import 'package:clean_todo/data/NotificationManager.dart';
 
 class DataCache {
 
@@ -313,7 +314,11 @@ class DataCache {
       Task newTask = task.clone();
       taskProvider.insert(newTask);
       tasksData.add(newTask);
-      notifications.addReminder( newTask );
+
+      if( task.repeat != null && task.repeat == RepeatInterval.NONE.index ) {
+        notifications.addReminder(newTask);
+      }
+
       _update_category_count(task.clone(), 1);
 
       newTask = new Task();
