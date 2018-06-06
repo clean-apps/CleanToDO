@@ -315,7 +315,7 @@ class DataCache {
       taskProvider.insert(newTask);
       tasksData.add(newTask);
 
-      if( task.repeat != null && task.repeat == RepeatInterval.NONE.index ) {
+      if( task.repeat != null && task.repeat != RepeatInterval.NONE.index ) {
         notifications.addReminder(newTask);
       }
 
@@ -358,10 +358,16 @@ class DataCache {
       dirtyData.reminder_date = task.reminder_date;
       dirtyData.reminder_time = task.reminder_time;
       dirtyData.completed = task.completed;
+      dirtyData.repeat = task.repeat;
       dirtyData.notes = task.notes;
 
       taskProvider.update(task.clone());
-      notifications.updateReminder( newTask );
+
+      notifications.cancelReminder(dirtyData);
+
+      if( task.repeat != null && task.repeat != RepeatInterval.NONE.index ) {
+        notifications.addReminder(task);
+      }
     }
 
   }

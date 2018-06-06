@@ -50,9 +50,9 @@ class TaskProvider {
               $columnCategoryId integer not null,
               $columnDeadlineVal text,
               $columnReminderDate text,
-              $columnReminderTime text
+              $columnReminderTime text,
               $columnRepeat integer,
-              $columnNotes text,
+              $columnNotes text
             )
             ''');
         }

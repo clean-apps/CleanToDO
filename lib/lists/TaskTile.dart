@@ -4,6 +4,7 @@ import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/lists/LeaveBehindView.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
+import 'package:clean_todo/data/NotificationManager.dart';
 
 class TaskTile extends StatefulWidget {
 
@@ -97,7 +98,7 @@ class _TasksTileState extends State<TaskTile> {
       );
     }
 
-    if( task.repeat != null ){
+    if( task.repeat != null && task.repeat != RepeatInterval.NONE.index){
       subtitleWidgets.add(
           new Padding(
               padding: lmargin,

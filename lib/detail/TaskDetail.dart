@@ -150,10 +150,16 @@ class _TaskDetailState extends State<TaskDetail> {
 
   _update_repeat(content){
 
-    if( content != null ) {
+    if( content == null ) {
+      this.setState(() {
+        widget.task.repeat = null;
+      });
+
+    } else {
       this.setState(() {
         widget.task.repeat = int.parse(content);
       });
+
     }
 
   }
@@ -310,17 +316,12 @@ class _TaskDetailState extends State<TaskDetail> {
                     widget.task.reminder_date == null ? new Container() : new DropdownTile(
 
                       text: widget.task.repeat == null ?
-                              RepeatInterval.NONE.index.toString() :
+                              null :
                               widget.task.repeat.toString(),
 
                       hint: 'Repeat',
                       icon: Icons.repeat,
                       options: <DropdownMenuItem<String>>[
-
-                        new DropdownMenuItem<String>(
-                          value: RepeatInterval.NONE.index.toString(),
-                          child: new Text('none'),
-                        ),
 
                         new DropdownMenuItem<String>(
                           value: RepeatInterval.DAILY.index.toString(),
