@@ -11,6 +11,8 @@ import 'package:clean_todo/lists/TasksPage.dart';
 import 'package:clean_todo/beans/Task.dart';
 import 'package:clean_todo/calender/TimeUtil.dart';
 import 'dart:typed_data';
+import 'package:clean_todo/data/NotificationProvider.dart';
+import 'package:clean_todo/beans/Notification.dart';
 
 enum RepeatInterval { NONE, DAILY, WEEKLY, WEEKDAYS, WEEKENDS, MONTHLY }
 
@@ -19,6 +21,13 @@ class NotificationManager {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   NotificationDetails platformChannelSpecifics;
   BuildContext context;
+
+  NotificationProvider notificationProvider = new NotificationProvider();
+  List<NotificationData> notifications = [];
+
+  initDb() async {
+    notifications = await notificationProvider.allNotifications();
+  }
 
   init( context ) {
 

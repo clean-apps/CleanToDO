@@ -59,6 +59,7 @@ class DataCache {
 
   Future<bool> initDb() async {
 
+    await notifications.initDb();
     categoryData.user = await categoryProvider.allCategories();
     categoryData.userGroups = await categoryGroupProvider.allCategoryGroups();
     tasksData = await taskProvider.allTasks( categoryData );
