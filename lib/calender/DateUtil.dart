@@ -2,7 +2,7 @@ import "package:intl/intl.dart";
 
 class DateUtil {
 
-  static get today{
+  static DateTime get today{
     DateTime timeIsNow = new DateTime.now();
     return new DateTime( timeIsNow.year, timeIsNow.month, timeIsNow.day, 0, 0, 0, 0, 0 );
   }

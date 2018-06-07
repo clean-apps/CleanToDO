@@ -315,7 +315,7 @@ class _TaskDetailState extends State<TaskDetail> {
 
                     widget.task.reminder_date == null ? new Container() : new DropdownTile(
 
-                      text: widget.task.repeat == null ?
+                      text: ( widget.task.repeat == null || widget.task.repeat == CTRepeatInterval.NONE.index ) ?
                               null :
                               widget.task.repeat.toString(),
 
@@ -324,27 +324,27 @@ class _TaskDetailState extends State<TaskDetail> {
                       options: <DropdownMenuItem<String>>[
 
                         new DropdownMenuItem<String>(
-                          value: RepeatInterval.DAILY.index.toString(),
+                          value: CTRepeatInterval.DAILY.index.toString(),
                           child: new Text('daily'),
                         ),
 
                         new DropdownMenuItem<String>(
-                          value: RepeatInterval.WEEKLY.index.toString(),
+                          value: CTRepeatInterval.WEEKLY.index.toString(),
                           child: new Text('weekly'),
                         ),
 
                         new DropdownMenuItem<String>(
-                          value: RepeatInterval.WEEKDAYS.index.toString(),
+                          value: CTRepeatInterval.WEEKDAYS.index.toString(),
                           child: new Text('weekdays'),
                         ),
 
                         new DropdownMenuItem<String>(
-                          value: RepeatInterval.WEEKENDS.index.toString(),
+                          value: CTRepeatInterval.WEEKENDS.index.toString(),
                           child: new Text('weekends'),
                         ),
 
                         new DropdownMenuItem<String>(
-                          value: RepeatInterval.MONTHLY.index.toString(),
+                          value: CTRepeatInterval.MONTHLY.index.toString(),
                           child: new Text('monthly'),
                         ),
 

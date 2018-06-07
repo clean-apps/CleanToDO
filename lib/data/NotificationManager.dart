@@ -13,8 +13,9 @@ import 'package:clean_todo/calender/TimeUtil.dart';
 import 'dart:typed_data';
 import 'package:clean_todo/data/NotificationProvider.dart';
 import 'package:clean_todo/beans/Notification.dart';
+import 'package:clean_todo/calender/DateUtil.dart';
 
-enum RepeatInterval { NONE, DAILY, WEEKLY, WEEKDAYS, WEEKENDS, MONTHLY }
+enum CTRepeatInterval { NONE, DAILY, WEEKLY, WEEKDAYS, WEEKENDS, MONTHLY }
 
 class NotificationManager {
 
@@ -23,11 +24,6 @@ class NotificationManager {
   BuildContext context;
 
   NotificationProvider notificationProvider = new NotificationProvider();
-  List<NotificationData> notifications = [];
-
-  initDb() async {
-    notifications = await notificationProvider.allNotifications();
-  }
 
   init( context ) {
 
@@ -73,34 +69,223 @@ class NotificationManager {
 
   addReminder( Task task ) async {
 
-    if( task.reminder_date != null && task.reminder_time != null ) {
+    DateTime targetDateTime = _getTargetDate(task);
+    if( targetDateTime == null ){
+      return;
+    }
 
-      DateTime targetDate = DateTime.parse(task.reminder_date);
-      TimeOfDay targetTime = TimeUtil.parse_back(task.reminder_time);
 
-      var scheduleDateTime = targetDate
-          .add(new Duration(hours: targetTime.hour))
-          .add(new Duration(minutes: targetTime.minute));
+    bool isTargetFuture = targetDateTime.isAfter( DateUtil.today );
 
-      await flutterLocalNotificationsPlugin.schedule(
-          task.id,
+    DateTime deadline = task.deadline_val == null ? null : DateTime.parse( task.deadline_val );
+
+
+    if( task.repeat == CTRepeatInterval.NONE.index ) {
+
+      if (isTargetFuture) {
+
+        int newId = await _newId();
+        await notificationProvider.insert( new NotificationData( id: newId, taskId: task.id ) );
+        await flutterLocalNotificationsPlugin.schedule(
+            newId,
+            task.title,
+            'Incomplete Task Reminder',
+            targetDateTime,
+            platformChannelSpecifics
+        );
+      }
+
+    } else if ( deadline == null ){
+      //this is absurd
+      return ;
+
+    } else if( task.repeat == CTRepeatInterval.DAILY.index ){
+
+      int newId = await _newId();
+      await notificationProvider.insert( new NotificationData( id: newId, taskId: task.id ) );
+
+      await flutterLocalNotificationsPlugin.periodicallyShowTill(
+          newId,
           task.title,
           'Incomplete Task Reminder',
-          scheduleDateTime,
+          isTargetFuture ? targetDateTime : DateUtil.today,
+          deadline,
+          RepeatInterval.Daily,
           platformChannelSpecifics
       );
+
+    } else if( task.repeat == CTRepeatInterval.WEEKLY.index ){
+
+      int newId = await _newId();
+      await notificationProvider.insert( new NotificationData( id: newId, taskId: task.id ) );
+
+      await flutterLocalNotificationsPlugin.periodicallyShowTill(
+          newId,
+          task.title,
+          'Incomplete Task Reminder',
+          isTargetFuture ? targetDateTime : DateUtil.today,
+          deadline,
+          RepeatInterval.Weekly,
+          platformChannelSpecifics
+      );
+
+    } else if( task.repeat == CTRepeatInterval.WEEKDAYS.index ){
+
+      List<DateTime> days = _getWeekdays( isTargetFuture ? targetDateTime : DateUtil.today, deadline );
+      int newId = await _newId();
+
+      days.asMap().forEach( (i, targetDT) async {
+
+        int newerId = newId + i;
+        await notificationProvider.insert( new NotificationData( id: newerId, taskId: task.id ) );
+
+        await flutterLocalNotificationsPlugin.periodicallyShowTill(
+            newerId,
+            task.title,
+            'Incomplete Task Reminder',
+            targetDT,
+            deadline,
+            RepeatInterval.Weekly,
+            platformChannelSpecifics
+        );
+
+      });
+
+    } else if( task.repeat == CTRepeatInterval.WEEKENDS.index ){
+
+      List<DateTime> days = _getWeekends( isTargetFuture ? targetDateTime : DateUtil.today, deadline );
+      int newId = await _newId();
+
+      days.asMap().forEach( (i, targetDT) async {
+
+        int newerId = newId + i;
+        await notificationProvider.insert( new NotificationData( id: newerId, taskId: task.id ) );
+
+        await flutterLocalNotificationsPlugin.periodicallyShowTill(
+            newerId,
+            task.title,
+            'Incomplete Task Reminder',
+            targetDT,
+            deadline,
+            RepeatInterval.Weekly,
+            platformChannelSpecifics
+        );
+
+      });
+
+    } else if( task.repeat == CTRepeatInterval.MONTHLY.index ){
+
+      List<DateTime> days = _getMonthDays( targetDateTime, deadline );
+      int newId = await _newId();
+
+      days.asMap().forEach( (i, targetDT)async {
+
+        int newerId = newId + i;
+        await notificationProvider.insert( new NotificationData( id: newerId, taskId: task.id ) );
+
+        await flutterLocalNotificationsPlugin.schedule(
+            newerId,
+            task.title,
+            'Incomplete Task Reminder',
+            targetDT,
+            platformChannelSpecifics
+        );
+
+      });
 
     }
 
   }
 
+  DateTime _getTargetDate( Task task ){
+
+    if( task.reminder_date != null && task.reminder_time != null ) {
+
+      DateTime targetDate = DateTime.parse(task.reminder_date);
+      TimeOfDay targetTime = TimeUtil.parse_back(task.reminder_time);
+
+      return targetDate
+              .add(new Duration(hours: targetTime.hour))
+              .add(new Duration(minutes: targetTime.minute));
+
+    } else {
+      return null;
+    }
+
+  }
+
   cancelReminder( Task task ) async {
-    await flutterLocalNotificationsPlugin.cancel( task.id );
+
+    List<NotificationData> notifications = await notificationProvider.getNotificationsForTask( task.id );
+    notifications.forEach( (notification) async {
+
+      await flutterLocalNotificationsPlugin.cancel( task.id );
+      notificationProvider.delete( notification );
+
+    });
+
   }
 
   updateReminder( Task task ) async {
     await cancelReminder( task );
     await addReminder( task );
+  }
+
+  Future<int> _newId() async {
+    int maxId = await notificationProvider.getMaxId();
+    return maxId + 1;
+  }
+
+  List<DateTime> _getWeekdays( DateTime start, DateTime end ){
+
+    List<DateTime> calculated = [];
+
+    for( int i = 0; i < 7 ; i++ ){
+
+      DateTime newDT2 = start.add( new Duration( days: i ) );
+      if( newDT2.weekday != 6 && newDT2.weekday != 7 ){
+        calculated.add( newDT2 );
+      }
+
+    }
+
+    return calculated;
+
+  }
+
+  List<DateTime> _getWeekends( DateTime start, DateTime end ){
+
+    List<DateTime> calculated = [];
+
+    for( int i = 0; i < 7 ; i++ ){
+
+      DateTime newDT2 = start.add( new Duration( days: i ) );
+      if( newDT2.weekday == 6 || newDT2.weekday == 7 ){
+        calculated.add( newDT2 );
+      }
+
+    }
+
+    return calculated;
+
+  }
+
+  List<DateTime> _getMonthDays( DateTime start, DateTime end ){
+
+    List<DateTime> calculated = [];
+
+    var idx = 0;
+
+    DateTime newDT = new DateTime( start.year, start.month, start.day, start.hour, start.minute );
+    while( newDT.isBefore( end ) || !newDT.isAtSameMomentAs( end ) ){
+
+      DateTime newDT2 = new DateTime( newDT.year, newDT.month + idx, newDT.day, newDT.hour, newDT.minute );
+      calculated.add( newDT2 );
+      idx += 1;
+    }
+
+    return calculated;
+
   }
 
 }

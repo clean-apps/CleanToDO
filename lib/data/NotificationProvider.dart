@@ -68,6 +68,31 @@ class NotificationProvider {
     await dbClient.insert(table, notification.toMap());
   }
 
+  delete(NotificationData notification) async {
+
+    var dbClient = await db;
+    await dbClient.delete(
+        table,
+        where: "$columnId = ?",
+        whereArgs: [notification.id]
+    );
+  }
+
+  Future<int> getMaxId() async {
+
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(
+        table,
+        columns: [columnId],
+        orderBy: columnId + " DESC",
+        limit: 1
+    );
+
+    return ( maps == null || maps.length == 0 )?
+            0 : maps.first[columnId];
+
+  }
+
   Future<NotificationData> getNotification(int id) async {
 
     var dbClient = await db;

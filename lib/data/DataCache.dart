@@ -59,7 +59,6 @@ class DataCache {
 
   Future<bool> initDb() async {
 
-    await notifications.initDb();
     categoryData.user = await categoryProvider.allCategories();
     categoryData.userGroups = await categoryGroupProvider.allCategoryGroups();
     tasksData = await taskProvider.allTasks( categoryData );
@@ -315,10 +314,7 @@ class DataCache {
       Task newTask = task.clone();
       taskProvider.insert(newTask);
       tasksData.add(newTask);
-
-      if( task.repeat != null && task.repeat != RepeatInterval.NONE.index ) {
-        notifications.addReminder(newTask);
-      }
+      notifications.addReminder(newTask);
 
       _update_category_count(task.clone(), 1);
 
@@ -364,11 +360,7 @@ class DataCache {
 
       taskProvider.update(task.clone());
 
-      notifications.cancelReminder(dirtyData);
-
-      if( task.repeat != null && task.repeat != RepeatInterval.NONE.index ) {
-        notifications.addReminder(task);
-      }
+      notifications.updateReminder(dirtyData);
     }
 
   }

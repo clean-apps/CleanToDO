@@ -98,7 +98,7 @@ class _TasksTileState extends State<TaskTile> {
       );
     }
 
-    if( task.repeat != null && task.repeat != RepeatInterval.NONE.index){
+    if( task.repeat != null && task.repeat != CTRepeatInterval.NONE.index){
       subtitleWidgets.add(
           new Padding(
               padding: lmargin,
