@@ -66,7 +66,7 @@ class _AppSidebarState extends State<AppSidebar> {
         children: [
           new Divider(),
           new ListTile(
-            leading: new Icon( categoryGroup.isExpanded ? Icons.folder_open : Icons.folder, color: Theme.of(context).primaryColor, ),
+            leading: new Icon( categoryGroup.isExpanded == null || categoryGroup.isExpanded ? Icons.folder_open : Icons.folder, color: Theme.of(context).primaryColor, ),
             title: new SidebarTextBold( textContent: categoryGroup.text ),
             trailing: new IconButton(
                 icon: new Icon( categoryGroup.isExpanded ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down,
@@ -102,6 +102,7 @@ class _AppSidebarState extends State<AppSidebar> {
   @override
   Widget build(BuildContext context) {
 
+    print( "this.widget.categories.userGroups - " + this.widget.categories.userGroups.toString() );
     return new Drawer(
 
         child: new ListView(

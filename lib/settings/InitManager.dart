@@ -17,7 +17,7 @@ class InitManager {
     init.cache = new DataCache();
 
     await init.settings.init();
-    await init.cache.initDb();
+    await init.cache.initDb( init.settings.showCompleted );
 
     if( init.settings.showCompleted != null ) {
       init.cache.showCompletedTasks = init.settings.showCompleted;
@@ -44,7 +44,7 @@ class InitManager {
     }
 
     init.cache.isCached = true;
-    bool demoMode = true;
+    bool demoMode = false;
 
     if( demoMode ) {
       DataProvider mockProvider = new FakeDataGenerator();

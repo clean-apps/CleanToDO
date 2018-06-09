@@ -27,5 +27,6 @@ class CategoryGroup {
 
     id = map[CategoryGroupProvider.columnId];
     text = map[CategoryGroupProvider.columnText];
+    isExpanded = true;
   }
 }

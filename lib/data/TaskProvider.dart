@@ -70,6 +70,25 @@ class TaskProvider {
     return true;
   }
 
+  Future<List<Task>> allTasksPending( CategoryData categoryData ) async {
+
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(
+        table,
+        columns: [columnId, columnTitle, columnCompleted, columnCategoryId,
+        columnDeadlineVal, columnReminderDate, columnReminderTime, columnRepeat, columnNotes],
+        where: "$columnCompleted = ?",
+        whereArgs: [0]
+    );
+
+    List<Task> allTasks = [];
+    maps.forEach(
+            (mapItem) => allTasks.add( Task.fromMap(mapItem, categoryData ) )
+    );
+
+    return allTasks;
+  }
+
   Future<List<Task>> allTasks( CategoryData categoryData ) async {
 
     var dbClient = await db;

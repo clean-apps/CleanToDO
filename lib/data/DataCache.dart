@@ -44,7 +44,7 @@ class DataCache {
 
   static Future<DataCache> getInstance() async {
     DataCache cache = new DataCache();
-    await cache.initDb();
+    await cache.initDb(false);
     return cache;
   }
 
@@ -57,23 +57,34 @@ class DataCache {
     notifications.init(context);
   }
 
-  Future<bool> initDb() async {
+  Future<bool> initDb( bool showCompleted ) async {
 
     categoryData.user = await categoryProvider.allCategories();
     categoryData.userGroups = await categoryGroupProvider.allCategoryGroups();
-    tasksData = await taskProvider.allTasks( categoryData );
+    tasksData = ( showCompleted == null || showCompleted == true ) ?
+                  await taskProvider.allTasks( categoryData ):
+                  await taskProvider.allTasksPending( categoryData );
 
-    if( categoryData.user == null || categoryData.user.length == 0 ){
+    print( "userGroups - " + categoryData.userGroups.length.toString() );
+    if( categoryData.userGroups == null || categoryData.userGroups.length == 0 ){
+
+      categoryData.userGroups = [];
+      await addCategoryGroup(
+          new CategoryGroup( id: 1, text: 'Personal' )
+      );
+
+      await addCategoryGroup(
+          new CategoryGroup( id: 2, text: 'Office' )
+      );
 
       categoryData.user = [];
       await addCategories(
           [
-            new Category( id: 1, text: 'Home', count: 0 ),
-            new Category( id: 2, text: 'Work', count: 0 ),
-            new Category( id: 3, text: 'Shopping', count: 0 ),
+            new Category( id: 1, groupId: 1, text: 'Home', count: 0 ),
+            new Category( id: 2, groupId: 2, text: 'Work', count: 0 ),
+            new Category( id: 3, groupId: 1, text: 'Shopping', count: 0 ),
           ]
       );
-
     }
 
     categoryData.system = [
@@ -410,6 +421,14 @@ class DataCache {
 
   bool get showFab {
     return isCached && filterCategory != null ;
+  }
+
+  Future<bool> updateShowCompletedTasks() async {
+    tasksData = ( showCompletedTasks == null || showCompletedTasks == true ) ?
+          await taskProvider.allTasks( categoryData ):
+          await taskProvider.allTasksPending( categoryData );
+
+    return true;
   }
 
 }
