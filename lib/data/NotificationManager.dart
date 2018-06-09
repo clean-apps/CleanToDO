@@ -214,16 +214,17 @@ class NotificationManager {
 
   }
 
-  cancelReminder( Task task ) async {
+  Future<bool> cancelReminder( Task task ) async {
 
     List<NotificationData> notifications = await notificationProvider.getNotificationsForTask( task.id );
     notifications.forEach( (notification) async {
 
       await flutterLocalNotificationsPlugin.cancel( task.id );
-      notificationProvider.delete( notification );
+      await notificationProvider.delete( notification );
 
     });
 
+    return true;
   }
 
   updateReminder( Task task ) async {

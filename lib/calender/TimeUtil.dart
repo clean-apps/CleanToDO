@@ -30,7 +30,7 @@ class TimeUtil {
   }
 
   static TimeOfDay parse_string( String val ){
-    print( "parsing -" + val  + " ~ part1:" + val.substring(0,2) + " ~ part2:" + val.substring(3,5) );
+    //print( "parsing -" + val  + " ~ part1:" + val.substring(0,2) + " ~ part2:" + val.substring(3,5) );
     return new TimeOfDay( hour:   int.parse(val.substring(0,2)),
                           minute: int.parse(val.substring(3,5))
             );

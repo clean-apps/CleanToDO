@@ -91,7 +91,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
       );
 
-      print( "listCategoryGroups :: " + listCategoryGroups.toString() );
+      //print( "listCategoryGroups :: " + listCategoryGroups.toString() );
       return listCategoryGroups;
   }
 
@@ -103,7 +103,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
       widget.selectedGroupId = widget.categoryData.newCategoryGroup.id;
       widget.newGroup = widget.categoryData.newGroup;
-      print( "new value to dpd ::" + widget.selectedGroupId.toString() );
+      //print( "new value to dpd ::" + widget.selectedGroupId.toString() );
 
       return new Scaffold(
 
