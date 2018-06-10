@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:color/color.dart';
 import 'package:clean_todo/lists/IconText.dart';
+import 'package:clean_todo/settings/Themes.dart';
 
 class CTAppBar {
 
@@ -45,17 +46,17 @@ class CTAppBar {
 
   final ValueChanged<String> updateCategoryName;
 
-  IconButton colorIcon( Color btnColor, String colorName, context ){
+  IconButton colorIcon( Color btnColor, AppColors color, context ){
     return new IconButton(
       icon: new CircleAvatar(
         backgroundColor: btnColor,
         minRadius: 40.0,
-        child: colorName == themeColor ? new Icon( Icons.check, size: 30.0,) : null,
+        child: color.index.toString() == themeColor ? new Icon( Icons.check, size: 30.0,) : null,
       ),
 
       iconSize: 75.0,
       onPressed: (() {
-        updateColor(colorName);
+        updateColor(color.index.toString());
         Navigator.pop(context);
 
         showDialog(
@@ -118,10 +119,10 @@ class CTAppBar {
                       new ListTile(
                         title: new Row(
                           children: <Widget>[
-                            colorIcon(Colors.blue, 'blue', context),
-                            colorIcon(Colors.indigo, 'indigo', context),
-                            colorIcon(Colors.cyan, 'cyan', context),
-                            colorIcon(Colors.teal, 'teal', context),
+                            colorIcon(Colors.blue, AppColors.BLUE, context),
+                            colorIcon(Colors.indigo, AppColors.INDIGO, context),
+                            colorIcon(Colors.cyan, AppColors.CYAN, context),
+                            colorIcon(Colors.teal, AppColors.TEAL, context),
                           ],
                         ),
                       ),
@@ -129,10 +130,10 @@ class CTAppBar {
                       new ListTile(
                         title: new Row(
                           children: <Widget>[
-                            colorIcon(Colors.brown, 'brown', context),
-                            colorIcon(Colors.purple, 'purple', context),
-                            colorIcon(Colors.deepPurple, 'deepPurple', context),
-                            colorIcon(Colors.amber, 'amber', context),
+                            colorIcon(Colors.brown, AppColors.BROWN, context),
+                            colorIcon(Colors.purple, AppColors.PURPLE, context),
+                            colorIcon(Colors.deepPurple, AppColors.DEEP_PURPLE, context),
+                            colorIcon(Colors.amber, AppColors.AMBER, context),
                           ],
                         ),
                       ),
@@ -140,10 +141,10 @@ class CTAppBar {
                       new ListTile(
                         title: new Row(
                           children: <Widget>[
-                            colorIcon(Colors.red, 'red', context),
-                            colorIcon(Colors.pink, 'pink', context),
-                            colorIcon(Colors.grey, 'grey', context),
-                            colorIcon(Colors.blueGrey, 'blueGrey', context),
+                            colorIcon(Colors.red, AppColors.RED, context),
+                            colorIcon(Colors.pink, AppColors.PINK, context),
+                            colorIcon(Colors.blueGrey, AppColors.BLUE_GREY, context),
+                            colorIcon(Colors.black, AppColors.BLACK, context),
                           ],
                         ),
                       ),

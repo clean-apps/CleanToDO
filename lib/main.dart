@@ -55,6 +55,7 @@ class CleanToDoApp extends StatelessWidget {
 
     return new MaterialApp(
 
+      //theme: Themes.get( AppColors.BLACK ),
       theme: Themes.get( settings.theme ),
       home: new TasksPage(settings: this.settings, cache: this.cache),
 

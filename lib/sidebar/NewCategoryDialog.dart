@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/CategoryGroup.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
+import 'package:clean_todo/styles/AppIcons.dart';
 
 class NewCategoryDialog extends StatefulWidget {
 
@@ -22,6 +23,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
   List<DropdownMenuItem<String>> getCatagoryGroups(){
 
+      var icons = new AppIcons();
       List<DropdownMenuItem<String>> listCategoryGroups = [];
 
       listCategoryGroups.add(
@@ -33,7 +35,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
               child: new ListTile(
                 leading:  new Padding(
                     padding: new EdgeInsets.only( bottom: 10.0 ),
-                    child: new Icon( Icons.folder_open, color: Theme.of(context).primaryColor, ),
+                    child: icons.groupOpenIcon(context),
                 ),
                 title:  new Padding(
                     padding: new EdgeInsets.only( bottom: 10.0 ),
@@ -56,7 +58,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
                 child: new ListTile(
                   leading:  new Padding(
                       padding: new EdgeInsets.only( bottom: 10.0 ),
-                      child: new Icon( Icons.folder, color: Theme.of(context).primaryColor, ),
+                      child: icons.groupIcon(context),
                   ),
                   title:  new Padding(
                     padding: new EdgeInsets.only( bottom: 10.0 ),
@@ -79,7 +81,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
               child: new ListTile(
                 leading:  new Padding(
                   padding: new EdgeInsets.only( bottom: 10.0 ),
-                  child: new Icon( Icons.create_new_folder, color: Theme.of(context).primaryColor, ),
+                  child: icons.newGroupIcon(context),
                 ),
                 title:  new Padding(
                   padding: new EdgeInsets.only( bottom: 10.0 ),
@@ -107,16 +109,15 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
       return new Scaffold(
 
-          backgroundColor: Colors.white,
           appBar: new AppBar(
 
             leading: new IconButton(
-              icon: new Icon( Icons.clear, color: Theme.of(context).primaryColor, ),
+              icon: new Icon( Icons.clear, color: Theme.of(context).iconTheme.color, ),
               onPressed: () => Navigator.of(context).pop(),
             ),
 
-            title: new Text( 'New List', style: new TextStyle( color: Theme.of(context).primaryColor ), ),
-            backgroundColor: Colors.white,
+            title: new Text( 'New List', style: new TextStyle( color: Theme.of(context).accentColor ), ),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             elevation: 0.0,
 
             actions: <Widget>[
@@ -188,7 +189,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
                   },
 
-                  child: new Text('SAVE', style: new TextStyle( color: Theme.of(context).primaryColor) )
+                  child: new Text('SAVE', style: new TextStyle( color: Theme.of(context).accentColor) )
 
               ),
 
@@ -208,7 +209,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
                           autofocus: true,
                           controller: _newCatCont,
-                          style: new TextStyle( fontSize: 20.0, color: Colors.black ),
+                          style: new TextStyle( fontSize: 20.0 ),
                           //maxLines: 10,
                           textAlign: TextAlign.start,
 
@@ -230,7 +231,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
                         new Padding(
                             padding: new EdgeInsets.only( top: 40.0 ),
                             child: new Text('List Group', textDirection: TextDirection.ltr,
-                                            style: new TextStyle( color: Theme.of(context).primaryColor ),
+                                            style: new TextStyle( color: Theme.of(context).accentColor ),
                             ),
                         ),
 
@@ -275,7 +276,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
                           autofocus: true,
                           controller: _newCaCGrpCont,
-                          style: new TextStyle( fontSize: 20.0, color: Colors.black ),
+                          style: new TextStyle( fontSize: 20.0 ),
                           //maxLines: 10,
                           textAlign: TextAlign.start,
 

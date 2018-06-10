@@ -17,16 +17,15 @@ class NoteDetailDialog extends StatelessWidget {
 
     return new Scaffold(
 
-      backgroundColor: Colors.white,
       appBar: new AppBar(
 
         leading: new IconButton(
-              icon: new Icon( Icons.clear, color: Theme.of(context).primaryColor, ),
+              icon: new Icon( Icons.clear, color: Theme.of(context).iconTheme.color, ),
               onPressed: () => Navigator.of(context).pop(),
         ),
 
-        title: new Text( title == null ? 'Add a note' : title, style: new TextStyle( color: Theme.of(context).primaryColor ), ),
-        backgroundColor: Colors.white,
+        title: new Text( title == null ? 'Add a note' : title, style: new TextStyle( color: Theme.of(context).accentColor ), ),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
 
         actions: <Widget>[
@@ -37,7 +36,7 @@ class NoteDetailDialog extends StatelessWidget {
                 Navigator.of(context).pop();
               },
 
-              child: new Text('SAVE', style: new TextStyle( color: Theme.of(context).primaryColor) )
+              child: new Text('SAVE', style: new TextStyle( color: Theme.of(context).accentColor) )
 
           ),
 
@@ -52,7 +51,7 @@ class NoteDetailDialog extends StatelessWidget {
 
             autofocus: true,
             controller: noteController,
-            style: new TextStyle( fontSize: 20.0, color: Colors.black ),
+            style: new TextStyle( fontSize: 20.0 ),
             maxLines: 10,
             textAlign: TextAlign.start,
 

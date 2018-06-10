@@ -11,10 +11,10 @@ class IconText extends StatelessWidget {
 
     return new Row(
       children: <Widget>[
-        new Icon( icon, color: Colors.black45 ),
+        new Icon( icon, color: Theme.of(context).iconTheme.color ),
         new Padding(
           padding: new EdgeInsets.only(left: 10.0,),
-          child: new Text(label, style: new TextStyle( color: Colors.black45 ),),
+          child: new Text(label, style: new TextStyle( color: Theme.of(context).accentColor ),),
         ),
 
       ],

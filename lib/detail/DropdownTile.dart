@@ -15,7 +15,7 @@ class DropdownTile extends StatelessWidget{
 
       return new ListTile(
 
-          leading: new Icon( icon, color: Theme.of(context).primaryColor, size: 28.0 ,),
+          leading: new Icon( icon, color: Theme.of(context).iconTheme.color, size: 28.0 ,),
 
           title : new DropdownButtonHideUnderline(
             child: new DropdownButton<String>(
@@ -24,7 +24,7 @@ class DropdownTile extends StatelessWidget{
               iconSize: 0.0,
               items: options,
 
-              style: new TextStyle( color: Theme.of(context).primaryColor ),
+              style: new TextStyle( color: Theme.of(context).accentColor ),
               onChanged: (String value){
                 this.updateContent( value );
               },
@@ -34,7 +34,7 @@ class DropdownTile extends StatelessWidget{
 
           trailing: this.text == null ? null : 
                   new IconButton(
-                    icon : new Icon( Icons.clear, color: Theme.of(context).primaryColor, ),
+                    icon : new Icon( Icons.clear, color: Theme.of(context).iconTheme.color, ),
                     onPressed: (){
                       this.updateContent( null );
                     },

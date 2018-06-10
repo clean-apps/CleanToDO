@@ -7,6 +7,7 @@ import 'package:clean_todo/beans/CategoryData.dart';
 import 'package:clean_todo/settings/SettingsManager.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/lists/AboutView.dart';
+import 'package:clean_todo/styles/AppIcons.dart';
 
 class AppSidebar extends StatefulWidget {
 
@@ -35,10 +36,12 @@ class AppSidebar extends StatefulWidget {
 
 class _AppSidebarState extends State<AppSidebar> {
 
+  var icons = new AppIcons();
+
   ListTile getAsSystemListTile( context, Category categoryData ){
 
     return new ListTile(
-        leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).primaryColor,  ),
+        leading: icons.listIcon(context),
         title: new SidebarText( textContent : categoryData.text ),
         onTap: () {
           this.widget.filter( categoryData.id );
@@ -50,7 +53,7 @@ class _AppSidebarState extends State<AppSidebar> {
   ListTile getAsListTile( context, Category categoryData ){
 
     return new ListTile(
-      leading: new Icon( categoryData.icon == null ? Icons.list : categoryData.icon, color: Theme.of(context).primaryColor,  ),
+      leading: icons.listIcon(context),
       title: new SidebarText( textContent : categoryData.text ),
       trailing: new Text( categoryData.count == null ? "0" : categoryData.count.toString() ),
       onTap: () {
@@ -66,11 +69,14 @@ class _AppSidebarState extends State<AppSidebar> {
         children: [
           new Divider(),
           new ListTile(
-            leading: new Icon( categoryGroup.isExpanded == null || categoryGroup.isExpanded ? Icons.folder_open : Icons.folder, color: Theme.of(context).primaryColor, ),
+            leading: ( categoryGroup.isExpanded == null || categoryGroup.isExpanded  ) ?
+                          icons.groupOpenIcon(context) : icons.groupIcon(context),
+
             title: new SidebarTextBold( textContent: categoryGroup.text ),
             trailing: new IconButton(
-                icon: new Icon( categoryGroup.isExpanded ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down,
-                                color: Theme.of(context).primaryColor, ),
+                icon: ( categoryGroup.isExpanded == null || categoryGroup.isExpanded  ) ?
+                        icons.groupOpenArrowIcon(context) : icons.groupArrowIcon(context),
+
                 onPressed: () {
                   this.setState(() {
                     categoryGroup.isExpanded = !categoryGroup.isExpanded;
@@ -102,7 +108,6 @@ class _AppSidebarState extends State<AppSidebar> {
   @override
   Widget build(BuildContext context) {
 
-    print( "this.widget.categories.userGroups - " + this.widget.categories.userGroups.toString() );
     return new Drawer(
 
         child: new ListView(
@@ -136,7 +141,7 @@ class _AppSidebarState extends State<AppSidebar> {
                   ),
 
                   new ListTile(
-                    leading: new Icon( Icons.add, color: Theme.of(context).primaryColor, ),
+                    leading: icons.newListIcon(context),
                     title: new SidebarText( textContent : 'New List' ),
                     onTap: (){
 
@@ -205,7 +210,7 @@ class SidebarTextBold extends StatelessWidget {
     return new Text(
       this.textContent,
       style: new TextStyle( fontSize: 18.0, fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor ),
+                            fontWeight: FontWeight.bold, color: Theme.of(context).accentColor ),
     );
   }
 

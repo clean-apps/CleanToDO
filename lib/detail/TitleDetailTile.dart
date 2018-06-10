@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:clean_todo/styles/AppIcons.dart';
 
 class TitleDetailTile extends StatelessWidget {
 
@@ -10,15 +11,7 @@ class TitleDetailTile extends StatelessWidget {
   final String title ;
   final ValueChanged<String> update_title ;
 
-  Widget getStatusIcon( bool completed, context ){
-
-    return completed ?
-    new CircleAvatar( child: new Icon( Icons.check, color: Colors.white, size: 14.0, ),
-      backgroundColor: Theme.of(context).primaryColor,
-      radius: 12.0, ) :
-    new Icon( Icons.radio_button_unchecked, size: 28.0, color: Theme.of(context).primaryColor, );
-
-  }
+  final AppIcons icons = new AppIcons();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +19,7 @@ class TitleDetailTile extends StatelessWidget {
     return new ListTile(
 
       leading: new IconButton(
-        icon:  getStatusIcon( this.completed, context ),
+        icon:  this.completed ? icons.taskCompletedIcon(context) : icons.taskPendingIcon(context),
         onPressed: (){
           this.completed ? this.update_completed( false ): this.update_completed( true );
         },
@@ -40,7 +33,7 @@ class TitleDetailTile extends StatelessWidget {
         onSubmitted: (value) => update_title( value ),
         //onChanged: (value) => update_title( value ),
 
-        style: new TextStyle( fontSize: 24.0, color: Theme.of(context).primaryColor ),
+        style: new TextStyle( fontSize: 24.0, color: Theme.of(context).accentColor ),
 
         decoration: new InputDecoration(
 
@@ -57,7 +50,7 @@ class TitleDetailTile extends StatelessWidget {
       ),
 
       trailing: new IconButton(
-        icon:  new Icon( Icons.clear, color: this.title == null ? Colors.white : Theme.of(context).primaryColor, ),
+        icon:  new Icon( Icons.clear, color: this.title == null ? Colors.white : Theme.of(context).iconTheme.color, ),
         onPressed: () => update_title( null ),
       ),
 

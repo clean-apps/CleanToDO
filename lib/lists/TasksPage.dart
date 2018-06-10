@@ -13,6 +13,7 @@ import 'package:clean_todo/settings/Themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:clean_todo/lists/TasksList.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
+import 'package:clean_todo/styles/AppIcons.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -256,10 +257,11 @@ class _TasksPageState extends State<TasksPage> {
 
     Widget appBody = widget.cache.showMyDay ? myDayAppBody : listAppBody ;
 
+    AppIcons icons = new AppIcons();
     FloatingActionButton appFabFilter = new FloatingActionButton(
 
-            child: new Icon(Icons.add),
-            backgroundColor: Theme.of(context).primaryColor,
+            child: icons.newTaskFabIcon(context),
+            //backgroundColor: Theme.of(context).primaryColor,
 
             onPressed: (){
 
@@ -273,7 +275,7 @@ class _TasksPageState extends State<TasksPage> {
                           child: new Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: new ListTile(
-                                leading: new Icon( Icons.radio_button_unchecked, size: 28.0, color: Theme.of(context).primaryColor, ),
+                                leading: icons.newTaskModal(context),
                                 title: new TextField(
                                   autofocus: true,
                                   controller: tecNewTask,
@@ -296,10 +298,7 @@ class _TasksPageState extends State<TasksPage> {
                                   },
                                 ),
                                 trailing: new IconButton(
-                                    icon: new CircleAvatar(
-                                      backgroundColor: Theme.of(context).primaryColor,
-                                      child: new Icon( Icons.keyboard_arrow_right),
-                                    ),
+                                    icon: icons.newTaskModalArrow(context),
                                     onPressed: (){
 
                                       if( tecNewTask.text != null && tecNewTask.text.length > 0 ) {
@@ -328,8 +327,8 @@ class _TasksPageState extends State<TasksPage> {
 
     FloatingActionButton appFabGeneric = new FloatingActionButton(
 
-        child: new Icon(Icons.add),
-        backgroundColor: Theme.of(context).primaryColor,
+        child: icons.newTaskFabIcon(context),
+        //backgroundColor: Theme.of(context).primaryColor,
 
         onPressed: (){
 

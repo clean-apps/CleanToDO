@@ -5,6 +5,7 @@ import 'package:clean_todo/lists/LeaveBehindView.dart';
 import 'package:clean_todo/beans/Category.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
 import 'package:clean_todo/data/NotificationManager.dart';
+import 'package:clean_todo/styles/AppIcons.dart';
 
 class TaskTile extends StatefulWidget {
 
@@ -24,29 +25,17 @@ class TaskTile extends StatefulWidget {
 
 class _TasksTileState extends State<TaskTile> {
 
-  Widget getStatusIcon( bool completed ){
-
-    return completed ?
-              new CircleAvatar( child: new Icon( Icons.check, color: Colors.white, size: 14.0, ), 
-                                backgroundColor: Theme.of(context).primaryColor,
-                                radius: 12.0, ) :
-              new Icon( Icons.radio_button_unchecked, size: 28.0, color: Theme.of(context).primaryColor, );
-
-  }
+  final AppIcons icons = new AppIcons();
 
   List<Widget> getSubtitleWidgets( Task task ){
 
     List<Widget> subtitleWidgets = [];
 
-    Color primaryColor = Theme.of(context).primaryColor;
-    Color dueColor = Theme.of(context).errorColor;
-
-    double size = 14.0;
     EdgeInsets tmargin = new EdgeInsets.only( top: 10.0, );
     EdgeInsets lmargin = new EdgeInsets.only( left: 10.0, top: 10.0, );
 
-    final TextStyle taskSubTitle = new TextStyle( color: primaryColor, fontWeight: FontWeight.w500 );
-    final TextStyle taskSubTitleDue = new TextStyle( color: dueColor, fontWeight: FontWeight.w500 );
+    final TextStyle taskSubTitle = new TextStyle( color: Theme.of(context).primaryColorLight, fontWeight: FontWeight.w500 );
+    final TextStyle taskSubTitleDue = new TextStyle( color: Theme.of(context).errorColor, fontWeight: FontWeight.w500 );
 
     if( task.category != null ) {
 
@@ -70,7 +59,7 @@ class _TasksTileState extends State<TaskTile> {
           padding: lmargin,
           child: new Row(
             children: <Widget>[
-              new Icon( Icons.calendar_today, color: task.isDue ? dueColor : primaryColor, size: size, ),
+              icons.listIconDue( context, task.isDue ),
               new Text( task.isDue ? 'Due ' + task.deadline : task.deadline,
                         style: task.isDue ? taskSubTitleDue : taskSubTitle  ),
             ],
@@ -83,8 +72,7 @@ class _TasksTileState extends State<TaskTile> {
     if( task.reminder != null ){
       subtitleWidgets.add(  
         new Padding(
-            padding: lmargin,
-            child: new Icon( Icons.alarm_on, color: primaryColor, size: size,  ) 
+            padding: lmargin, child: icons.listIconReminder(context),
         )
       );
     }
@@ -92,8 +80,7 @@ class _TasksTileState extends State<TaskTile> {
     if( task.notes != null ){
       subtitleWidgets.add(  
         new Padding(
-          padding: lmargin,
-          child : new Icon( Icons.chat_bubble_outline, color: primaryColor, size: size, ),
+          padding: lmargin, child : icons.listIconNotes(context),
         )
       );
     }
@@ -101,8 +88,7 @@ class _TasksTileState extends State<TaskTile> {
     if( task.repeat != null && task.repeat != CTRepeatInterval.NONE.index){
       subtitleWidgets.add(
           new Padding(
-              padding: lmargin,
-              child: new Icon( Icons.repeat, color: primaryColor, size: size,  )
+              padding: lmargin, child: icons.listIconRepeat(context)
           )
       );
     }
@@ -141,7 +127,9 @@ class _TasksTileState extends State<TaskTile> {
       child: new ListTile(
 
         leading: new IconButton(
-            icon:  getStatusIcon( widget.task.completed ),
+
+            icon:  widget.task.completed ? icons.taskCompletedIcon(context) : icons.taskPendingIcon(context),
+
             onPressed: (){
 
               this.setState((){
