@@ -312,6 +312,13 @@ class DataCache {
     filterCategory = newValue;
   }
 
+  updateGroupName( groupId, newGroupName ){
+
+    CategoryGroup group = this.categoryData.getGroup(groupId);
+    group.text = newGroupName;
+    categoryGroupProvider.update(group);
+  }
+
   toggleTask( Task task ) {
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
       taskProvider.update(task.clone());

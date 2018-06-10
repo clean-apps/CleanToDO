@@ -13,7 +13,7 @@ class CTAppBar {
               this.searchString, this.doSearch,
               this.themeColor, this.updateColor,
               this.isShowCompletedTasks, this.updateShowCompletedTasks,
-              this.sortString, this.updateSortTasks,
+              this.sortString, this.updateSortTasks, this.categoryName, this.updateGroupName
   });
 
   final String appDefaultTitle = 'To-Do';
@@ -44,7 +44,10 @@ class CTAppBar {
   final String sortString;
   final ValueChanged<String> updateSortTasks ;
 
+  final String categoryName ;
+
   final ValueChanged<String> updateCategoryName;
+  final ValueChanged<String> updateGroupName;
 
   IconButton colorIcon( Color btnColor, AppColors color, context ){
     return new IconButton(
@@ -82,7 +85,7 @@ class CTAppBar {
       case 0: showDialog(
                 context: context,
                 builder: (_) => new AlertDialog(
-                  content: new Text('delete list ' + filterCategory + ' ?'),
+                  content: new Text('delete list ' + categoryName + ' ?'),
                   actions: <Widget>[
                     new FlatButton(
                       child: new Text( 'CANCEL' ),
@@ -225,11 +228,11 @@ class CTAppBar {
       break;
 
       case 4:
-        TextEditingController tecRenameList = new TextEditingController( text: this.filterCategory );
+        TextEditingController tecRenameList = new TextEditingController( text: this.categoryName );
         showDialog(
           context: context,
           builder: (_) => new AlertDialog(
-            title: new Text( 'Rename List', style: new TextStyle(color: Colors.black45), ),
+            title: new Text( 'Rename List', style: new TextStyle( fontWeight: FontWeight.bold ), ),
             content: new TextField(
               controller: tecRenameList,
             ),
@@ -274,6 +277,33 @@ class CTAppBar {
         ),
       );
         break;
+
+      case 6:
+        TextEditingController tecRenameGroup = new TextEditingController( text: this.groupName );
+        showDialog(
+          context: context,
+          builder: (_) => new AlertDialog(
+            title: new Text( 'Rename Group', style: new TextStyle( fontWeight: FontWeight.bold ), ),
+            content: new TextField(
+              controller: tecRenameGroup,
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text( 'CANCEL' ),
+                onPressed: () => Navigator.pop( context ),
+              ),
+              new FlatButton(
+                child: new Text( 'OK' ),
+                onPressed: ((){
+                  this.updateGroupName (tecRenameGroup.text);
+                  Navigator.pop(context);
+                }),
+              ),
+            ],
+          ),
+        );
+
+      break;
     }
   }
 
@@ -417,8 +447,8 @@ class CTAppBar {
             return <PopupMenuEntry<int>>[
 
               new PopupMenuItem<int>(
-                value: 4,
-                child: new IconText( icon: Icons.edit, label: 'Rename List'),
+                value: 6,
+                child: new IconText( icon: Icons.edit, label: 'Rename Group'),
               ),
 
               new PopupMenuItem<int>(

@@ -53,7 +53,7 @@ class AboutView extends StatelessWidget {
               children: <Widget>[
                 new ListTile(
                   title: new Text( "Version" ),
-                  subtitle: new Text( "1.0.20180527" ),
+                  subtitle: new Text( "1.0.20180610" ),
                 ),
               ]
             ),

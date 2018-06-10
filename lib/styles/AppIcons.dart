@@ -27,6 +27,9 @@ class AppIcons {
   newListIcon( context ) =>
       new Icon( Icons.add, color: _iconColor(context), );
 
+  systemIcon( IconData icon, context ) =>
+      new Icon( icon, color: _iconColor(context), );
+
   listIcon( context ) =>
       new Icon( Icons.list, color: _iconColor(context), );
 

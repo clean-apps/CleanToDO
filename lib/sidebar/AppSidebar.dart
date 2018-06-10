@@ -41,7 +41,7 @@ class _AppSidebarState extends State<AppSidebar> {
   ListTile getAsSystemListTile( context, Category categoryData ){
 
     return new ListTile(
-        leading: icons.listIcon(context),
+        leading: icons.systemIcon( categoryData.icon, context),
         title: new SidebarText( textContent : categoryData.text ),
         onTap: () {
           this.widget.filter( categoryData.id );
@@ -55,7 +55,8 @@ class _AppSidebarState extends State<AppSidebar> {
     return new ListTile(
       leading: icons.listIcon(context),
       title: new SidebarText( textContent : categoryData.text ),
-      trailing: new Text( categoryData.count == null ? "0" : categoryData.count.toString() ),
+      trailing: new Text( categoryData.count == null ? "0" : categoryData.count.toString(),
+                          style: new TextStyle( color: Theme.of(context).accentColor ), ),
       onTap: () {
         this.widget.filter( categoryData.id );
       }
@@ -121,7 +122,7 @@ class _AppSidebarState extends State<AppSidebar> {
                                       backgroundColor: Theme.of(context).primaryColor,
                                     ),
                       title: new SidebarText( textContent : this.widget.userData.userName ) ,
-                      subtitle: new Text( this.widget.userData.email ),
+                      subtitle: new Text( this.widget.userData.email, style: new TextStyle( color: Theme.of(context).accentColor ), ),
                       onTap: () => Navigator.of(context).push(
                         new MaterialPageRoute(
                             builder: (context) => new AboutView(
@@ -193,7 +194,8 @@ class SidebarText extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Text( 
       this.textContent,
-      style: new TextStyle( fontSize: 18.0, fontStyle: FontStyle.normal, fontWeight: FontWeight.w300 ),
+      style: new TextStyle( fontSize: 18.0, fontStyle: FontStyle.normal, fontWeight: FontWeight.w300,
+                            color: Theme.of(context).accentColor ),
     );
   }
 

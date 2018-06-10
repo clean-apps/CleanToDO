@@ -186,9 +186,18 @@ class _TasksPageState extends State<TasksPage> {
             ),
 
             sortString: widget.cache.sortTasks,
+            categoryName: widget.cache.filterCategoryId == null ? null : widget.cache.categoryData.getCategory( widget.cache.filterCategoryId ).text,
+
             updateCategoryName: ((newValue) =>
                 this.setState((){
                   widget.cache.updateCategoryName(newValue);
+                })
+            ),
+
+            updateGroupName: ((newValue) =>
+                this.setState((){
+                  widget.cache.updateGroupName( groupId, newValue );
+                  groupTxt = newValue;
                 })
             ),
 
