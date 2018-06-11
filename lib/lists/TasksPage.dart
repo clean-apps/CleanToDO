@@ -51,14 +51,14 @@ class _TasksPageState extends State<TasksPage> {
         widget.cache.filterCategory = null;
         widget.cache.filterCategoryId = null;
         widget.cache.filterGroupId = null;
-        widget.cache.showMyDay = false;
+        widget.cache.showMyDay = true;
         widget.cache.filterGroup = false;
 
       } else if ( categoryId == -2 ) {
         widget.cache.filterCategory = null;
         widget.cache.filterCategoryId = null;
         widget.cache.filterGroupId = null;
-        widget.cache.showMyDay = true;
+        widget.cache.showMyDay = false;
         widget.cache.filterGroup = false;
 
       } else {

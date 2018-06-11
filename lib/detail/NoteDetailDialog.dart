@@ -51,7 +51,7 @@ class NoteDetailDialog extends StatelessWidget {
 
             autofocus: true,
             controller: noteController,
-            style: new TextStyle( fontSize: 20.0 ),
+            style: new TextStyle( fontSize: 20.0, color: Theme.of(context).accentColor ),
             maxLines: 10,
             textAlign: TextAlign.start,
 

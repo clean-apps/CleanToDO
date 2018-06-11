@@ -209,7 +209,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
                           autofocus: true,
                           controller: _newCatCont,
-                          style: new TextStyle( fontSize: 20.0 ),
+                          style: new TextStyle( fontSize: 20.0, color: Theme.of(context).accentColor ),
                           //maxLines: 10,
                           textAlign: TextAlign.start,
 
@@ -276,7 +276,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
                           autofocus: true,
                           controller: _newCaCGrpCont,
-                          style: new TextStyle( fontSize: 20.0 ),
+                          style: new TextStyle( fontSize: 20.0, color: Theme.of(context).accentColor ),
                           //maxLines: 10,
                           textAlign: TextAlign.start,
 
