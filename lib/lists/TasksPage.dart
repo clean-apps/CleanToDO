@@ -361,7 +361,8 @@ class _TasksPageState extends State<TasksPage> {
 
     );
 
-    FloatingActionButton appFab = widget.cache.showMyDay ? null : ( widget.cache.filterCategory == null ? appFabGeneric : appFabFilter );
+    FloatingActionButton appFab = widget.cache.showMyDay ? null :
+          ( ( widget.cache.filterCategory == null ) || widget.cache.filterGroup ? appFabGeneric : appFabFilter );
 
     return new Scaffold(
       appBar: appBar,
