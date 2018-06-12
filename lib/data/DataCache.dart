@@ -325,20 +325,25 @@ class DataCache {
       task.completed ? _update_category_count(task, -1) : _update_category_count(task, 1);
   }
 
+  addTask( Task task ){
+
+    Task newTask = task.clone();
+    taskProvider.insert(newTask);
+    tasksData.add(newTask);
+    notifications.addReminder(newTask);
+
+    _update_category_count(task.clone(), 1);
+
+    newTask = new Task();
+    newTask.id = tasksData.length + 1;
+    newTask.completed = false;
+
+  }
+
   updateTask( Task task ) {
 
     if (tasksData.indexOf(task) < 0) {
-
-      Task newTask = task.clone();
-      taskProvider.insert(newTask);
-      tasksData.add(newTask);
-      notifications.addReminder(newTask);
-
-      _update_category_count(task.clone(), 1);
-
-      newTask = new Task();
-      newTask.id = tasksData.length + 1;
-      newTask.completed = false;
+      addTask( task );
 
     } else {
 

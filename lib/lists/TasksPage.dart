@@ -300,7 +300,7 @@ class _TasksPageState extends State<TasksPage> {
                                         widget.cache.newTask.id = widget.cache.tasksData.last.id + 1;
                                         widget.cache.newTask.title = value;
                                         widget.cache.newTask.category = widget.cache.categoryData.getCategory( widget.cache.filterCategoryId );
-                                        widget.cache.updateTask(widget.cache.newTask.clone());
+                                        widget.cache.addTask(widget.cache.newTask.clone());
                                         Navigator.pop(context);
                                       });
                                     }
