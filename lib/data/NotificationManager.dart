@@ -80,7 +80,7 @@ class NotificationManager {
     DateTime deadline = task.deadline_val == null ? null : DateTime.parse( task.deadline_val );
 
 
-    if( task.repeat == CTRepeatInterval.NONE.index ) {
+    if( task.repeat  == null || task.repeat == CTRepeatInterval.NONE.index ) {
 
       if (isTargetFuture) {
 
