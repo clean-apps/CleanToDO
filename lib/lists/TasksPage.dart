@@ -198,6 +198,7 @@ class _TasksPageState extends State<TasksPage> {
                 this.setState((){
                   widget.cache.updateGroupName( groupId, newValue );
                   groupTxt = newValue;
+                  widget.cache.filterCategory = newValue;
                 })
             ),
 
