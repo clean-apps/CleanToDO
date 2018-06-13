@@ -191,6 +191,11 @@ class _TasksPageState extends State<TasksPage> {
             updateCategoryName: ((newValue) =>
                 this.setState((){
                   widget.cache.updateCategoryName(newValue);
+
+                  widget.cache.filterCategory =
+                      widget.cache.categoryData.getCategoryGroup( categoryId ).text +
+                      ' / ' +
+                      widget.cache.categoryData.getCategory( categoryId ).text;
                 })
             ),
 

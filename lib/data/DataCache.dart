@@ -291,25 +291,18 @@ class DataCache {
   }
 
   updateCategoryName( newValue ){
-    var oldValue = filterCategory;
 
-    this.categoryData.user.asMap().forEach( (i, cat){
-      if( cat.text == oldValue ) {
-        cat.text = newValue;
-        categoryProvider.update(cat);
-      }
-    });
+    this.categoryData.getCategory( filterCategoryId ).text = newValue;
 
     this.tasksData.forEach((task) {
       if (task != null &&
           task.category != null &&
-          task.category.text == oldValue)
+          task.category.id == filterCategoryId)
 
         task.category.text = newValue;
         taskProvider.update(task);
     });
 
-    filterCategory = newValue;
   }
 
   updateGroupName( groupId, newGroupName ){
