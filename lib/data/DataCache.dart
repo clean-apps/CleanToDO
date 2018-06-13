@@ -320,15 +320,15 @@ class DataCache {
 
   addTask( Task task ){
 
-    Task newTask = task.clone();
-    taskProvider.insert(newTask);
-    tasksData.add(newTask);
-    notifications.addReminder(newTask);
+    Task newTaskC = task.clone();
+    taskProvider.insert(newTaskC);
+    tasksData.add(newTaskC);
+    notifications.addReminder(newTaskC);
 
-    _update_category_count(task.clone(), 1);
+    _update_category_count(newTaskC, 1);
 
     newTask = new Task();
-    newTask.id = tasksData.length + 1;
+    newTask.id = tasksData.length == 0 ? 1 : tasksData.last.id + 1;
     newTask.completed = false;
 
   }

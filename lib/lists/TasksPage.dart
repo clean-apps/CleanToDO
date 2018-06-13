@@ -303,10 +303,10 @@ class _TasksPageState extends State<TasksPage> {
                                     if( value != null && value.length > 0 ) {
                                       this.setState(() {
                                         widget.cache.newTask.clear();
-                                        widget.cache.newTask.id = widget.cache.tasksData.last.id + 1;
+                                        widget.cache.newTask.id = widget.cache.tasksData.length == 0 ? 1 : widget.cache.tasksData.last.id + 1;
                                         widget.cache.newTask.title = value;
                                         widget.cache.newTask.category = widget.cache.categoryData.getCategory( widget.cache.filterCategoryId );
-                                        widget.cache.addTask(widget.cache.newTask.clone());
+                                        widget.cache.addTask(widget.cache.newTask);
                                         Navigator.pop(context);
                                       });
                                     }
@@ -319,10 +319,10 @@ class _TasksPageState extends State<TasksPage> {
                                       if( tecNewTask.text != null && tecNewTask.text.length > 0 ) {
                                         this.setState(() {
                                           widget.cache.newTask.clear();
-                                          widget.cache.newTask.id = widget.cache.tasksData.length + 1;
+                                          widget.cache.newTask.id = widget.cache.tasksData.length == 0 ? 1 : widget.cache.tasksData.last.id + 1;
                                           widget.cache.newTask.title = tecNewTask.text;
                                           widget.cache.newTask.category = widget.cache.categoryData.getCategory( widget.cache.filterCategoryId );
-                                          widget.cache.updateTask(widget.cache.newTask);
+                                          widget.cache.addTask(widget.cache.newTask);
                                           Navigator.pop(context);
                                         });
                                       }
@@ -348,7 +348,7 @@ class _TasksPageState extends State<TasksPage> {
         onPressed: (){
 
           widget.cache.newTask.clear();
-          widget.cache.newTask.id = widget.cache.tasksData.length + 1;
+          widget.cache.newTask.id = widget.cache.tasksData.length == 0 ? 1 : widget.cache.tasksData.last.id + 1;
 
           Navigator.push(
               context,
@@ -357,7 +357,7 @@ class _TasksPageState extends State<TasksPage> {
                     task: widget.cache.newTask,
                     categoryData: widget.cache.categoryData,
                     updateTask: (task){
-                      widget.cache.updateTask(task);
+                      widget.cache.addTask(task);
                     },
                   )
               )
