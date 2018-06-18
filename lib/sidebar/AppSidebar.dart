@@ -118,7 +118,7 @@ class _AppSidebarState extends State<AppSidebar> {
 
                   new ListTile(
                       leading: new CircleAvatar(
-                                      child: new Text( this.widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
+                                      child: new Text( this.widget.userData.abbr == null ? '' : this.widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
                                       backgroundColor: Theme.of(context).primaryColor,
                                     ),
                       title: new SidebarText( textContent : this.widget.userData.userName ) ,

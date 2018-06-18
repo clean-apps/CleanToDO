@@ -73,4 +73,7 @@ class AppIcons {
   newTaskFabIcon(context) =>
       new Icon(Icons.add);
 
+  reCaluclateCountsIcon(context) =>
+      new Icon( Icons.format_list_numbered );
+
 }

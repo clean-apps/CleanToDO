@@ -436,4 +436,20 @@ class DataCache {
     return true;
   }
 
+  Future<bool> reset_category_counts() async {
+
+    categoryData.user.forEach( (category) async {
+
+      var cntCate = tasksData.where( (task) => task.category.id == category.id ).length;
+      if( cntCate != category.count ){
+        category.count = cntCate;
+        await categoryProvider.update( category );
+      }
+
+    });
+
+    return true;
+
+  }
+
 }
