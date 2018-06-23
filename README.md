@@ -16,6 +16,8 @@ It is an attempt to create a cleaner, smarter and a fully featured todo manager.
 - [x] Multiple Color screens, with Material UI
 - [ ] Online task sync
 
+Download apk [here](https://github.com/babanomania/CleanToDO/releases/download/1.2.20180623/clean_todo_v1.2.20180623.apk)
+
 # Screenshots
 
 <img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/1_myday.png?raw=true" width="300"/><img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/2_todo.png?raw=true" width="300"/>
