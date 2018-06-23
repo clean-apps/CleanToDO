@@ -397,8 +397,11 @@ class DataCache {
   deleteTask(Task task) {
     tasksData.remove( task );
     taskProvider.delete( task.id );
-    notifications.cancelReminder( newTask );
-    _update_category_count( task.clone(), -1 );
+
+    if(! task.completed ) {
+      notifications.cancelReminder(newTask);
+      _update_category_count(task.clone(), -1);
+    }
 
   }
 
