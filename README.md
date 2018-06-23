@@ -14,7 +14,7 @@ A Cleaner To-Do manager for Android, made with Flutter and ❤️
 
 <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_reminders.png?raw=true" width="300"/><img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true" width="300"/>
 
-#Usage
+# Usage
 
 1. Follow the installation instructions on [www.flutter.io](www.flutter.io) to install Flutter.
 2. You'll need to create a Firebase instance. Follow the instructions at [https://console.firebase.google.com](https://console.firebase.google.com)
