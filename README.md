@@ -14,11 +14,11 @@ It is an attempt to create a cleaner, smarter and a fully featured todo manager.
 
 # Screenshots
 
-<img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/1_myday.png?raw=true" width="300"/><img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/2_todo.png?raw=true" width="300"/>
+<img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/1_promo.jpg?raw=true" width="600"/>
  
-<img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/3_lists.png?raw=true" width="300"/><img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/6_add_task.png?raw=true" width="300"/>
+<img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/2_promo.jpg?raw=true" width="600"/>
 
-<img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/5_edit_tasks.png?raw=true" width="300"/><img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/4_colors.png?raw=true" width="300"/>
+<img src="https://github.com/babanomania/CleanToDO/raw/master/images/framed/3_promo.jpg?raw=true" width="600"/>
 
 # Usage
 
