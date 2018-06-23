@@ -2,6 +2,9 @@ theme: jekyll-theme-minimal
 show_downloads: true
 
 logo: /images/logo.png
+title: Clean To-Do
+description: A Cleaner To-Do manager for Android, made with Flutter and ❤️
+
 
 author:
   name: Shouvik Basu
