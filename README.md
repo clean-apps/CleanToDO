@@ -2,13 +2,12 @@
 
 It is an attempt to create a cleaner, smarter and a fully featured todo manager.
 
-- [x] Fully featured todo list screen 
-- [x] Ability to group tasks into lists and further group those lists
-- [x] Smart reminders with support for repeat notifications
-- [x] Quickly add tasks from lists view
-- [x] Summary of tasks with the My Day screen
-- [x] Multiple Color screens, with Material UI
-- [ ] Online task sync
+* Fully featured todo list screen 
+* Ability to group tasks into lists and further group those lists
+* Smart reminders with support for repeat notifications
+* Quickly add tasks from lists view
+* Summary of tasks with the My Day screen
+* Multiple Color schemes, with Material UI
 
 [<img src="https://raw.githubusercontent.com/babanomania/CleanToDO/master/images/download-apk-version.png" />](https://github.com/babanomania/CleanToDO/releases/download/1.2.20180623/clean_todo_v1.2.20180623.apk)
 
