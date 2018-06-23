@@ -34,9 +34,7 @@ A Cleaner To-Do manager for Android, made with Flutter and ❤️
 
 4. Clean ToDo can be run like any other Flutter app, either through the IntelliJ UI or through running the following command from within the clean_todo directory:
 
-       ```
        flutter run
-       ```
 
 # License
 
