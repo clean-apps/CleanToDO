@@ -1,7 +1,7 @@
 theme: jekyll-theme-minimal
 show_downloads: true
 
-avatar: "/images/logo.png"
+logo: /images/logo.png
 
 author:
   name: Shouvik Basu
