@@ -1,4 +1,4 @@
-#### A Cleaner To-Do list for Android
+# Cleaner To-Do list for Android
 
 It is an attempt to create a cleaner, smarter and a fully featured todo manager.
 
