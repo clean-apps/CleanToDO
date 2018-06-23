@@ -1,11 +1,4 @@
 
-
-
-![alt text](https://github.com/babanomania/CleanToDO/raw/master/images/logo.png?raw=true "Clean To-Do")
-# Clean To-Do
-
-A Cleaner To-Do manager for Android, made with Flutter and ❤️
-
 It is an attempt to create a cleaner, smarter and a fully featured todo manager.
 
 - [x] Fully featured todo list screen 
