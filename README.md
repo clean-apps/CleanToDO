@@ -7,9 +7,9 @@
 A Cleaner To-Do manager for Android, made with Flutter and ❤️
 It is an attempt to create a cleaner, smarter and a fully featured todo manager. it has the below features
 
-<img src="https://use.fontawesome.com/releases/v5.1.0/svgs/regular/list-alt.svg" width="32" /> Fully featured todo list screen
-<img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/object-group.svg" width="32" /> Ability to group tasks into lists and further group those lists
-<img src="https://material.io/tools/icons/static/icons/baseline-repeat_one-24px.svg" width="32" /> Smart reminders with support for repeat notifications
+* <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/regular/list-alt.svg" width="24" /> Fully featured todo list screen
+* <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/object-group.svg" width="24" /> Ability to group tasks into lists and further group those lists
+* <img src="https://material.io/tools/icons/static/icons/baseline-repeat_one-24px.svg" width="24" /> Smart reminders with support for repeat notifications
 * Quickly add tasks from lists view
 * Summary of tasks with the My Day screen
 * Multiple Color screens, with Material UI
