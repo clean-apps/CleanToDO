@@ -14,6 +14,29 @@ A Cleaner To-Do manager for Android, made with Flutter and ❤️
 
 <img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_reminders.png?raw=true" width="300"/><img src="https://github.com/babanomania/CleanToDO/raw/master/images/graphics/mockup_colors.png?raw=true" width="300"/>
 
+#Usage
+
+1. Follow the installation instructions on [www.flutter.io](www.flutter.io) to install Flutter.
+2. You'll need to create a Firebase instance. Follow the instructions at [https://console.firebase.google.com](https://console.firebase.google.com)
+3. Once your Firebase instance is created, you'll need to enable anonymous authentication.
+    * Go to the Firebase Console for your new instance.
+    * Click "Authentication" in the left-hand menu
+    * Click the "sign-in method" tab
+    * Click "anonymous" and enable it
+    * Create an app within your Firebase instance for Android, with package name com.yourcompany.cleantodo
+    * Follow instructions to download google-services.json, and place it into clean_todo/android/app/
+    * Run the following command to get your SHA-1 key:
+    
+       ```
+       keytool -exportcert -list -v -alias androiddebugkey -keystore ~/.android/debug.keystore
+       ```
+    * In the Firebase console, in the settings of your Android app, add your SHA-1 key by clicking "Add Fingerprint".
+
+4. Clean ToDo can be run like any other Flutter app, either through the IntelliJ UI or through running the following command from within the clean_todo directory:
+
+       ```
+       flutter run
+       ```
 
 # License
 
