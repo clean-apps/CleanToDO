@@ -1,13 +1,24 @@
-# Cleaner To-Do list for Android
+# A Cleaner and an Easier way to get things done
 
-It is an attempt to create a cleaner, smarter and a fully featured todo manager.
+From work to play, Clean To-Do is the easiest way to get stuff done, every day. Whether you’re planning a holiday, preparing a shopping list or managing multiple work projects, Clean To-Do is here to help you tick off all your personal and professional to-dos very easily
 
-* Fully featured todo list screen 
-* Ability to group tasks into lists and further group those lists
-* Smart reminders with support for repeat notifications
-* Quickly add tasks from lists view
-* Summary of tasks with the My Day screen
-* Multiple Color schemes, with Material UI
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/bullseye.svg" width="22" align="left" />  Get your day in focus
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula imperdiet sem sed sollicitudin. Pellentesque quam nunc, ullamcorper eget elementum in, venenatis sed ex. 
+
+
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/list-ul.svg" width="22" align="left" />  Plan for work, play and everything in between
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquet convallis molestie. In volutpat sem sit amet augue consequat ultricies. Aliquam tempus est lectus, nec posuere diam tincidunt et.
+
+
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/edit.svg" width="22" align="left" />  Quickly Capture tasks anywhere
+Phasellus viverra id arcu et malesuada. Curabitur a felis augue. Suspendisse nec nibh et nisi fringilla gravida. Aenean nec metus leo. Nunc euismod est a massa pretium pellentesque. Sed porttitor aliquam mi, a malesuada magna eleifend non. 
+
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/object-group.svg" width="22" align="left" />  Add details, create lists and groups
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo 
+
+
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/regular/calendar-alt.svg" width="22" align="left" />  Stay on track with notes, due dates and reminders
+Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
 
 [<img src="https://raw.githubusercontent.com/babanomania/CleanToDO/master/images/download-apk-version.png" />](https://github.com/babanomania/CleanToDO/releases/download/1.2.20180623/clean_todo_v1.2.20180623.apk)
 
@@ -70,5 +81,6 @@ limitations under the License.
 * [Shared Notifications Plugin](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 * [Color Plugin](http://github.com/MichaelFenwick/Color)
 * [Google Sign-In Plugin](https://github.com/flutter/plugins/tree/master/packages/google_sign_in)
+* [Fontawesome Icons](https://fontawesome.com/)
 
 
