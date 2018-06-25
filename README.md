@@ -3,22 +3,16 @@
 From work to play, Clean To-Do is the easiest way to get stuff done, every day. Whether you’re planning a holiday, preparing a shopping list or managing multiple work projects, Clean To-Do is here to help you tick off all your personal and professional to-dos very easily
 
 ### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/bullseye.svg" width="22" align="left" />  Get your day in focus
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula imperdiet sem sed sollicitudin. Pellentesque quam nunc, ullamcorper eget elementum in, venenatis sed ex. 
-
-
-### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/list-ul.svg" width="22" align="left" />  Plan for work, play and everything in between
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquet convallis molestie. In volutpat sem sit amet augue consequat ultricies. Aliquam tempus est lectus, nec posuere diam tincidunt et.
-
+Plan what you want to focus on each morning with the My Day view, and give yourself a powerful productivity boost for the rest of the day.
 
 ### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/edit.svg" width="22" align="left" />  Quickly Capture tasks anywhere
-Phasellus viverra id arcu et malesuada. Curabitur a felis augue. Suspendisse nec nibh et nisi fringilla gravida. Aenean nec metus leo. Nunc euismod est a massa pretium pellentesque. Sed porttitor aliquam mi, a malesuada magna eleifend non. 
+Quickly add, organize and schedule your to-dos while you're on the go, add your homework to one list, your groceries to another, your packing list, your work projects and your home DIY projects to yet more lists. With Clean To-Do adding to-do is very quick.
 
 ### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/object-group.svg" width="22" align="left" />  Add details, create lists and groups
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo 
-
+Organize and share your to-do, work, grocery, movies and household lists. No matter what you’re planning, how big or small the task may be, Clean To-Do makes it super easy to get stuff done
 
 ### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/regular/calendar-alt.svg" width="22" align="left" />  Stay on track with notes, due dates and reminders
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+Set Due Dates and Reminders and notes. No matter whether your lists are work related or just for fun, you will never miss a deadline again with Clean To-Do in charge.
 
 [<img src="https://raw.githubusercontent.com/babanomania/CleanToDO/master/images/download-apk-version.png" />](https://github.com/babanomania/CleanToDO/releases/download/1.2.20180623/clean_todo_v1.2.20180623.apk)
 
