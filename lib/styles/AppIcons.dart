@@ -76,4 +76,6 @@ class AppIcons {
   reCaluclateCountsIcon(context) =>
       new Icon( Icons.format_list_numbered );
 
+  noTasksIcon(context) =>
+      new Icon( Icons.list, size: 150.0, color: _iconColor(context).withAlpha( 70 ),  );
 }

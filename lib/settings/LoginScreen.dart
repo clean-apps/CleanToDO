@@ -15,7 +15,8 @@ class LoginScreen extends StatelessWidget {
 
   LoginScreen({this.settings, this.cache});
   bool autoValidate = false;
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>(debugLabel: 'inputForm');
 
   _handleEmailLogin(context, name, email) {
 
@@ -85,14 +86,11 @@ class LoginScreen extends StatelessWidget {
     return new MaterialApp(
       home: new Builder(builder: (BuildContext bodyContext) {
         return new Scaffold(
+
             body: new Form(
+
               key: _formKey,
-
-          child: new ListView(
-
-              padding: new EdgeInsets.only( top: 120.0 ),
-              children: [
-                new Column(
+              child: new Column(
 
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -176,7 +174,6 @@ class LoginScreen extends StatelessWidget {
 
                   ],
             ),
-          ]),
         ));
       }),
     );

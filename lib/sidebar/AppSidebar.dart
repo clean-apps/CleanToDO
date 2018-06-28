@@ -13,7 +13,8 @@ class AppSidebar extends StatefulWidget {
 
   AppSidebar(
       { Key key, this.categories, this.addCategory, this.addCategoryGroup,
-        this.filter, this.filterGroup, this.userData, this.cache, this.settings })
+        this.filter, this.filterGroup, this.userData, this.cache, this.settings,
+      })
       : super(key: key);
 
   final UserData userData;

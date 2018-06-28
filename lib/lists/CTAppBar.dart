@@ -408,7 +408,7 @@ class CTAppBar {
 
                 new PopupMenuItem<int>(
                   value: 1,
-                  child: new IconText( icon: Icons.color_lens, label: 'Change Color'),
+                  child: new IconText( icon: Icons.color_lens, label: 'Color Scheme'),
                 ),
 
                 new PopupMenuItem<int>(

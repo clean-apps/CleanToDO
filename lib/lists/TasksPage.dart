@@ -229,6 +229,7 @@ class _TasksPageState extends State<TasksPage> {
 
             cache: widget.cache,
             settings: widget.settings,
+
     );
 
     Widget myDayAppBody = new MyDayTasksList(
