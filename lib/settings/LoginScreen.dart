@@ -120,6 +120,7 @@ class LoginScreen extends StatelessWidget {
 
                         controller: tecEmail,
                         autovalidate: autoValidate,
+                        keyboardType: TextInputType.emailAddress,
 
                         validator: (valueEmail) {
                           if (valueEmail.isEmpty) {

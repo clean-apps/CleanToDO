@@ -264,15 +264,13 @@ class _AboutViewState  extends State<AboutView> {
                       cacheN.userData.userName = null;
                       cacheN.userData.abbr = null;
                       settingsN.username = null;
-                      Navigator.of(context).push(
-                        new MaterialPageRoute(
-                            builder: (context) =>
-                              new LoginScreen(
-                                cache: cacheN,
-                                settings: settingsN,
-                              ),
-                        )
+                      runApp(
+                        new LoginScreen(
+                          cache: cacheN,
+                          settings: settingsN,
+                        ),
                       );
+
                     }),
                 ),
               ),
