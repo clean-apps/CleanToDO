@@ -58,24 +58,8 @@ class CTAppBar {
       ),
 
       iconSize: 75.0,
-      onPressed: (() {
-        updateColor(color.index.toString());
-        Navigator.pop(context);
+      onPressed: () => updateColor( color.index.toString()) ,
 
-        showDialog(
-            context: context,
-            builder: (_) => new AlertDialog(
-              content: new Text('please restart the app for new color scheme'),
-              actions: <Widget>[
-                new FlatButton(
-                    onPressed: () => Navigator.pop(_),
-                    child: new Text( "OK" )
-                )
-              ],
-            ),
-        );
-
-      }),
     );
   }
 

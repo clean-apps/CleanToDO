@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:clean_todo/lists/TasksList.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
 import 'package:clean_todo/styles/AppIcons.dart';
+import 'package:clean_todo/main.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -158,10 +159,18 @@ class _TasksPageState extends State<TasksPage> {
             ),
 
             themeColor: widget.settings.theme == null ? 'blue' : widget.settings.theme,
-            updateColor: ( (value) =>
-                this.setState( (){
+            updateColor: ( (value) {
+                this.setState(() {
                   widget.settings.theme = value;
-                })
+                });
+
+                runApp(
+                  new CleanToDoApp(
+                    cache: widget.cache,
+                    settings: widget.settings,
+                  ),
+                );
+              }
             ),
 
             isShowCompletedTasks: widget.cache.showCompletedTasks,

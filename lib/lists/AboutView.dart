@@ -5,6 +5,7 @@ import 'package:clean_todo/settings/LoginScreen.dart';
 import 'package:clean_todo/styles/AppIcons.dart';
 
 import 'package:clean_todo/settings/Themes.dart';
+import 'package:clean_todo/main.dart';
 
 class AboutView extends StatefulWidget {
 
@@ -125,6 +126,13 @@ class _AboutViewState  extends State<AboutView> {
     this.setState(() {
       widget.settings.theme = value;
     });
+
+    runApp(
+      new CleanToDoApp(
+        cache: widget.cache,
+        settings: widget.settings,
+      ),
+    );
   }
 
   IconButton colorIcon( Color btnColor, AppColors color, context ){
@@ -139,37 +147,7 @@ class _AboutViewState  extends State<AboutView> {
       ),
 
       iconSize: 75.0,
-      onPressed: (() {
-        _updateColor(color.index.toString());
-        Navigator.pop(context);
-
-        showDialog(
-          context: context,
-          builder: (_) => new AlertDialog(
-            content: new Text('please restart the app for new color scheme'),
-            actions: <Widget>[
-              new FlatButton(
-                  onPressed: () => Navigator.pop(_),
-                  child: new Text( "OK" )
-              )
-            ],
-          ),
-        );
-
-        /*
-        Navigator.of(context).push(
-          new MaterialPageRoute(
-              builder: (_) => new MaterialApp(
-                theme: Themes.get(widget.settings.theme),
-                home: new AboutView(
-                    settings: widget.settings,
-                    cache: widget.cache,
-                ),
-              )),
-        );
-        */
-
-      }),
+      onPressed: () => _updateColor(color.index.toString())
     );
   }
 
