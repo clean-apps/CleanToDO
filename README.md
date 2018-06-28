@@ -1,13 +1,18 @@
-# Cleaner To-Do list for Android
+# A Cleaner and an Easier way to get things done
 
-It is an attempt to create a cleaner, smarter and a fully featured todo manager.
+From work to play, Clean To-Do is the easiest way to get stuff done, every day. Whether you’re planning a holiday, preparing a shopping list or managing multiple work projects, Clean To-Do is here to help you tick off all your personal and professional to-dos very easily
 
-* Fully featured todo list screen 
-* Ability to group tasks into lists and further group those lists
-* Smart reminders with support for repeat notifications
-* Quickly add tasks from lists view
-* Summary of tasks with the My Day screen
-* Multiple Color schemes, with Material UI
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/bullseye.svg" width="22" align="left" /> &nbsp; Get your day in focus
+Plan what you want to focus on each morning with the My Day view, and give yourself a powerful productivity boost for the rest of the day.
+
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/edit.svg" width="22" align="left" /> &nbsp; Quickly Capture tasks anywhere
+Quickly add, organize and schedule your to-dos while you're on the go, add your homework to one list, your groceries to another, your packing list, your work projects and your home DIY projects to yet more lists. With Clean To-Do adding to-do is very quick.
+
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/solid/object-group.svg" width="22" align="left" /> &nbsp; Add details, create lists and groups
+Organize and share your to-do, work, grocery, movies and household lists. No matter what you’re planning, how big or small the task may be, Clean To-Do makes it super easy to get stuff done
+
+### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/regular/calendar-alt.svg" width="22" align="left" /> &nbsp; Stay on track with notes, due dates and reminders
+Set Due Dates and Reminders and notes. No matter whether your lists are work related or just for fun, you will never miss a deadline again with Clean To-Do in charge.
 
 [<img src="https://raw.githubusercontent.com/babanomania/CleanToDO/master/images/download-apk-version.png" />](https://github.com/babanomania/CleanToDO/releases/download/1.2.20180623/clean_todo_v1.2.20180623.apk)
 
@@ -70,5 +75,6 @@ limitations under the License.
 * [Shared Notifications Plugin](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 * [Color Plugin](http://github.com/MichaelFenwick/Color)
 * [Google Sign-In Plugin](https://github.com/flutter/plugins/tree/master/packages/google_sign_in)
+* [Fontawesome Icons](https://fontawesome.com/)
 
 
