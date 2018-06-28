@@ -9,7 +9,7 @@ import 'package:clean_todo/main.dart';
 
 class AboutView extends StatefulWidget {
 
-  String appVersion = "1.2.20180623";
+  String appVersion = "1.2.20180628";
 
   DataCache cache;
 
