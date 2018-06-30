@@ -16,8 +16,6 @@ dependencies:
       url: https://github.com/babanomania/flutter_local_notifications.git
   shared_preferences: ^0.4.1
   color: ^2.0.2
-  google_sign_in: ^3.0.3
-  firebase_auth: ^0.5.10
 
 dev_dependencies:
   flutter_test:

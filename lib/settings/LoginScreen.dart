@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/settings/SettingsManager.dart';
 import 'package:clean_todo/settings/Themes.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:clean_todo/lists/TasksPage.dart';
 import 'package:clean_todo/beans/UserData.dart';
 
@@ -11,7 +9,6 @@ class LoginScreen extends StatelessWidget {
 
   DataCache cache;
   SettingsManager settings;
-  GoogleSignIn _googleSignIn = new GoogleSignIn();
 
   LoginScreen({this.settings, this.cache});
   bool autoValidate = false;
@@ -36,27 +33,6 @@ class LoginScreen extends StatelessWidget {
                     )),
           );
     }
-  }
-
-  _handleGoogleLogin(context) {
-
-    _googleSignIn.signIn().then((GoogleSignInAccount value) {
-      if (value != null) {
-        settings.username = value.displayName;
-        settings.email = value.email;
-
-        cache.userData = new UserData(value.displayName, value.email);
-
-        Navigator.of(context).push(
-              new MaterialPageRoute(
-                  builder: (_) => new MaterialApp(
-                        theme: Themes.get(settings.theme),
-                        home: new TasksPage(
-                            settings: this.settings, cache: this.cache),
-                      )),
-            );
-      }
-    });
   }
 
   _handleNoLogin(context) {
