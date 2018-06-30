@@ -46,12 +46,13 @@ class NotificationManager {
                 'Task Reminders',
                 'reminders to keep you motivated for the tasks',
                 icon: 'notification',
+                playSound: true,
                 sound: 'slow_spring_board',
+                enableVibration: true,
                 vibrationPattern: vibrationPattern
             );
 
-    NotificationDetailsIOS iOSPlatformChannelSpecifics =
-            new NotificationDetailsIOS();
+    NotificationDetailsIOS iOSPlatformChannelSpecifics = new NotificationDetailsIOS();
 
     platformChannelSpecifics =
             new NotificationDetails(
@@ -74,7 +75,6 @@ class NotificationManager {
       return;
     }
 
-
     bool isTargetFuture = targetDateTime.isAfter( DateUtil.today );
 
     DateTime deadline = task.deadline_val == null ? null : DateTime.parse( task.deadline_val );
@@ -91,7 +91,8 @@ class NotificationManager {
             task.title,
             'Incomplete Task Reminder',
             targetDateTime,
-            platformChannelSpecifics
+            platformChannelSpecifics,
+            payload: task.id.toString(),
         );
       }
 

@@ -56,4 +56,22 @@ class SettingsManager {
     prefs.setString( "sortString" , pSortString );
   }
 
+  set notification_sounds ( bool enable ){
+    prefs.setString( "notification_sounds" , enable ? "true" : "false" );
+  }
+
+  bool get notification_sounds {
+    return prefs.get( "notification_sounds" ) == null ? true :
+              prefs.get( "notification_sounds" ).toString() == "true";
+  }
+
+  set notification_vibrations ( bool enable ){
+    prefs.setString( "notification_vibrations" , enable ? "true" : "false" );
+  }
+
+  bool get notification_vibrations {
+    return prefs.get( "notification_vibrations" ) == null ? true :
+              prefs.get( "notification_vibrations" ).toString() == "true";
+  }
+
 }

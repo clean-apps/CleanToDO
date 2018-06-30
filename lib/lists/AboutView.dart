@@ -217,6 +217,8 @@ class _AboutViewState  extends State<AboutView> {
     SettingsManager settingsN = widget.settings;
 
     bool isShowCompletedTasks = cacheN.showCompletedTasks ;
+    bool isEnableNotificationSounds = settingsN.notification_sounds;
+    bool isEnableNotificationVibrations = settingsN.notification_vibrations;
 
     return new Scaffold(
 
@@ -295,6 +297,28 @@ class _AboutViewState  extends State<AboutView> {
                 ]
             ),
           ),
+
+          /*
+          new Card(
+            child: new Column(
+                children: <Widget>[
+
+                  new ListTile(
+                    leading: new Icon( Icons.notifications_active ),
+                    title: new Text( isEnableNotificationSounds ? "Disable Notification Sounds"  : "Enable Notification Sounds" ),
+                    onTap: () => this.setState( () => settingsN.notification_sounds = !isEnableNotificationSounds ),
+                  ),
+
+                  new ListTile(
+                    leading: new Icon( Icons.notifications_paused ),
+                    title: new Text( isEnableNotificationVibrations ? "Disable Notification Vibrations" : "Enable Notification Vibrations" ),
+                    onTap: () => this.setState( () => settingsN.notification_vibrations = !isEnableNotificationVibrations ),
+                  ),
+
+                ],
+            ),
+          ),
+          */
 
           new Card(
             child: new Column(
