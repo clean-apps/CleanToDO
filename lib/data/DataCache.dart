@@ -468,6 +468,8 @@ class DataCache {
 
     tasksData.clear();
     await taskProvider.delete_all();
+
+    await notifications.cancelAll();
     return true;
   }
 

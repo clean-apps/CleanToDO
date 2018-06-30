@@ -227,6 +227,14 @@ class NotificationManager {
     return true;
   }
 
+  Future<bool> cancelAll() async {
+
+    await flutterLocalNotificationsPlugin.cancelAll();
+    await notificationProvider.delete_all();
+
+    return true;
+  }
+
   updateReminder( Task task ) async {
     await cancelReminder( task );
     await addReminder( task );

@@ -78,6 +78,12 @@ class NotificationProvider {
     );
   }
 
+  delete_all() async {
+
+    var dbClient = await db;
+    await dbClient.delete( table,  where: "1", );
+  }
+
   Future<int> getMaxId() async {
 
     var dbClient = await db;
@@ -130,5 +136,6 @@ class NotificationProvider {
 
     return notifications;
   }
+
 
 }
