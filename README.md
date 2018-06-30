@@ -67,14 +67,12 @@ limitations under the License.
 * [This Talk](https://www.youtube.com/watch?v=iflV0D0d1zQ) by Emily Fortuna and Matt Sullivan that inspired me to learn flutter
 * [Microsoft To-Do](https://todo.microsoft.com/en-us) team for their awesome material design UI/UX
 * [Flutter Team](https://github.com/flutter/)
-* [Firebase Team](https://firebase.google.com/docs/auth/)
 * [Launcher Icons Plugin](https://github.com/franzsilva/flutter_launcher_icons)
 * [Path Provider Plugin](https://github.com/flutter/plugins/tree/master/packages/path_provider)
 * [Sqflite Plugin](https://github.com/tekartik/sqflite)
 * [Local Notifications Plugin](https://github.com/MaikuB/flutter_local_notifications)
 * [Shared Notifications Plugin](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 * [Color Plugin](http://github.com/MichaelFenwick/Color)
-* [Google Sign-In Plugin](https://github.com/flutter/plugins/tree/master/packages/google_sign_in)
 * [Fontawesome Icons](https://fontawesome.com/)
 
 
