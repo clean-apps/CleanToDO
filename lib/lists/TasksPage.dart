@@ -368,23 +368,56 @@ class _TasksPageState extends State<TasksPage> {
               return new _SystemPadding(
                   child: new Column(
 
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
 
-                        new ListTile(
-                          dense: true,
-                          title: new Text( "Add a to-do",
-                            style: new TextStyle(color: Theme.of(context).accentColor.withAlpha(170)), ),
+                        new DropdownTileSF(
+                          icon: Icons.list,
+                          text: widget.cache.newTask.category == null ? null : widget.cache.newTask.category.id.toString(),
+                          hint: 'Select a List',
+                          options: widget.cache.filterGroupId == null ?
+
+                          widget.cache.categoryData.user.map((Category pCategory) {
+
+                            CategoryGroup categoryGroup =
+                            widget.cache.categoryData.getCategoryGroup( pCategory.id );
+
+                            return new DropdownMenuItem<String>(
+                              value: pCategory.id.toString(),
+                              child: new Text(categoryGroup.text + " / " + pCategory.text),
+                            );
+
+                          }).toList()
+                              :
+                          widget.cache.categoryData.getGroupMembers(
+                              widget.cache.categoryData.getGroup( widget.cache.filterGroupId )
+                          ).map((Category pCategory) {
+
+                            return new DropdownMenuItem<String>(
+                              value: pCategory.id.toString(),
+                              child: new Text(pCategory.text),
+                            );
+
+                          }).toList(),
+                          updateContent: (content) {
+                            this.setState(() {
+                              if (content == null)
+                                widget.cache.newTask.category = null;
+                              else
+                                widget.cache.newTask.category = widget.cache.categoryData.getCategory( int.parse( content ) );
+                            });
+                          },
+
                         ),
 
                         new ListTile(
                           dense: true,
                           leading: icons.newTaskModal(context),
                           title: new TextField(
-                            autofocus: true,
+                            autofocus: false,
                             controller: tecNewTask,
                             decoration: new InputDecoration(
-                              hintText: 'title',
+                              hintText: 'Add a to-do',
                               hintStyle: new TextStyle( color: Colors.grey ),
                               border: InputBorder.none,
                             ),
@@ -405,45 +438,6 @@ class _TasksPageState extends State<TasksPage> {
                                 }
                               }
                           ),
-                        ),
-
-                        new DropdownTileSF(
-                            icon: Icons.list,
-                            text: widget.cache.newTask.category == null ? null : widget.cache.newTask.category.id.toString(),
-                            hint: 'Select a List',
-                            options: widget.cache.filterGroupId == null ?
-
-                                widget.cache.categoryData.user.map((Category pCategory) {
-
-                                  CategoryGroup categoryGroup =
-                                      widget.cache.categoryData.getCategoryGroup( pCategory.id );
-
-                                  return new DropdownMenuItem<String>(
-                                    value: pCategory.id.toString(),
-                                    child: new Text(categoryGroup.text + " / " + pCategory.text),
-                                  );
-
-                                }).toList()
-                              :
-                                widget.cache.categoryData.getGroupMembers(
-                                    widget.cache.categoryData.getGroup( widget.cache.filterGroupId )
-                                ).map((Category pCategory) {
-
-                                  return new DropdownMenuItem<String>(
-                                    value: pCategory.id.toString(),
-                                    child: new Text(pCategory.text),
-                                  );
-
-                                }).toList(),
-                            updateContent: (content) {
-                              this.setState(() {
-                                if (content == null)
-                                  widget.cache.newTask.category = null;
-                                else
-                                  widget.cache.newTask.category = widget.cache.categoryData.getCategory( int.parse( content ) );
-                              });
-                            },
-
                         ),
 
                       ],

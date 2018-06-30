@@ -22,7 +22,7 @@ class _DropdownTileState extends State<DropdownTileSF> {
       return new ListTile(
 
           key: widget.key,
-          dense: true,
+          dense: false,
           leading: new Icon( widget.icon, color: Theme.of(context).iconTheme.color, size: 28.0 ,),
 
           title : new DropdownButtonHideUnderline(
