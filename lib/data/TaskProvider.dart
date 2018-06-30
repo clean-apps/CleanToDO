@@ -135,6 +135,12 @@ class TaskProvider {
     );
   }
 
+  delete_all() async {
+
+    var dbClient = await db;
+    await dbClient.delete(table, where: "1");
+  }
+
   update(Task task) async {
 
     var dbClient = await db;

@@ -65,26 +65,9 @@ class DataCache {
                   await taskProvider.allTasks( categoryData ):
                   await taskProvider.allTasksPending( categoryData );
 
-    print( "userGroups - " + categoryData.userGroups.length.toString() );
+    //print( "userGroups - " + categoryData.userGroups.length.toString() );
     if( categoryData.userGroups == null || categoryData.userGroups.length == 0 ){
-
-      categoryData.userGroups = [];
-      await addCategoryGroup(
-          new CategoryGroup( id: 1, text: 'Personal' )
-      );
-
-      await addCategoryGroup(
-          new CategoryGroup( id: 2, text: 'Office' )
-      );
-
-      categoryData.user = [];
-      await addCategories(
-          [
-            new Category( id: 1, groupId: 1, text: 'Home', count: 0 ),
-            new Category( id: 2, groupId: 2, text: 'Work', count: 0 ),
-            new Category( id: 3, groupId: 1, text: 'Shopping', count: 0 ),
-          ]
-      );
+      await add_default_userlists();
     }
 
     categoryData.system = [
@@ -93,6 +76,27 @@ class DataCache {
     ];
 
     return true;
+  }
+
+  add_default_userlists() async {
+
+    categoryData.userGroups = [];
+    await addCategoryGroup(
+        new CategoryGroup( id: 1, text: 'Personal' )
+    );
+
+    await addCategoryGroup(
+        new CategoryGroup( id: 2, text: 'Office' )
+    );
+
+    categoryData.user = [];
+    await addCategories(
+        [
+          new Category( id: 1, groupId: 1, text: 'Home', count: 0 ),
+          new Category( id: 2, groupId: 2, text: 'Work', count: 0 ),
+          new Category( id: 3, groupId: 1, text: 'Shopping', count: 0 ),
+        ]
+    );
   }
 
   List<Task> _filterGroup( List<Task> tasks, int groupId ){
@@ -453,6 +457,18 @@ class DataCache {
 
     return true;
 
+  }
+
+  Future<bool> clean_all() async {
+
+    categoryData.clear();
+    await categoryProvider.delete_all();
+    await categoryGroupProvider.delete_all();
+    add_default_userlists();
+
+    tasksData.clear();
+    await taskProvider.delete_all();
+    return true;
   }
 
 }

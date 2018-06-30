@@ -118,12 +118,15 @@ class _AppSidebarState extends State<AppSidebar> {
                 children: <Widget>[
 
                   new ListTile(
-                      leading: new CircleAvatar(
-                                      child: new Text( this.widget.userData.abbr == null ? '' : this.widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
-                                      backgroundColor: Theme.of(context).primaryColor,
-                                    ),
-                      title: new SidebarText( textContent : this.widget.userData.userName ) ,
-                      subtitle: new Text( this.widget.userData.email, style: new TextStyle( color: Theme.of(context).accentColor ), ),
+                      leading: this.widget.userData.abbr == null ?
+                                  new Icon( Icons.settings, color: Theme.of(context).iconTheme.color, ) :
+                                  new CircleAvatar( child: new Text( this.widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
+                                      backgroundColor: Theme.of(context).primaryColor, ),
+
+                      title: new SidebarText( textContent : this.widget.userData.userName == null ? 'Settings' : this.widget.userData.userName ) ,
+                      subtitle: this.widget.userData.email == null ? null :
+                                  new Text( this.widget.userData.email, style: new TextStyle( color: Theme.of(context).accentColor ), ),
+
                       onTap: () => Navigator.of(context).push(
                         new MaterialPageRoute(
                             builder: (context) => new AboutView(

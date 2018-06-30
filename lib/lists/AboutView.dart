@@ -229,25 +229,36 @@ class _AboutViewState  extends State<AboutView> {
 
           new Card(
             child: new ListTile(
-                leading: new CircleAvatar(
-                  child: new Text( cacheN.userData.abbr == null ? '' : cacheN.userData.abbr, style: new TextStyle( color: Colors.white ), ),
-                  backgroundColor: Theme.of(context).primaryColor,
-                ),
-                title: new Text( cacheN.userData.userName == null ? '' : cacheN.userData.userName ),
-                subtitle: new Text( cacheN.userData.email == null ? '' : cacheN.userData.email ),
+
+                leading: cacheN.userData.abbr == null ?
+                          new Icon( Icons.account_circle ):
+                          new CircleAvatar(
+                            child: new Text( cacheN.userData.abbr, style: new TextStyle( color: Colors.white ), ),
+                            backgroundColor: Theme.of(context).primaryColor,
+                          ),
+
+                title: new Text( cacheN.userData.userName == null ? 'User Data' : cacheN.userData.userName ),
+                subtitle: cacheN.userData.email == null ? null : new Text( cacheN.userData.email ),
+
                 trailing: new RaisedButton(
                     color: Colors.red,
-                    child: new Text( "logout", style: new TextStyle( color: Colors.white ), ),
+                    child: new Text( "clear", style: new TextStyle( color: Colors.white ), ),
                     onPressed: ((){
-                      cacheN.userData.userName = null;
-                      cacheN.userData.abbr = null;
-                      settingsN.username = null;
-                      runApp(
-                        new LoginScreen(
-                          cache: cacheN,
-                          settings: settingsN,
-                        ),
-                      );
+
+                      cacheN.clean_all().whenComplete( ((){
+
+                        cacheN.userData.userName = null;
+                        cacheN.userData.abbr = null;
+                        settingsN.username = null;
+
+                        runApp(
+                          new LoginScreen(
+                            cache: cacheN,
+                            settings: settingsN,
+                          ),
+                        );
+
+                      }) );
 
                     }),
                 ),

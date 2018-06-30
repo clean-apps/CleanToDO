@@ -111,6 +111,11 @@ class CategoryGroupProvider {
     await dbClient.delete(table, where: "$columnId = ?", whereArgs: [id]);
   }
 
+  delete_all() async {
+    var dbClient = await db;
+    await dbClient.delete(table, where: "1");
+  }
+
   update(CategoryGroup categoryGroup) async {
     var dbClient = await db;
     await dbClient.update(

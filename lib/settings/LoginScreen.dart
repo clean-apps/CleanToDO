@@ -59,6 +59,23 @@ class LoginScreen extends StatelessWidget {
     });
   }
 
+  _handleNoLogin(context) {
+
+    settings.username = null;
+    settings.email = null;
+
+    cache.userData = new UserData(null, null);
+
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+          builder: (_) => new MaterialApp(
+            theme: Themes.get(settings.theme),
+            home: new TasksPage(
+                settings: this.settings, cache: this.cache),
+          )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -152,7 +169,7 @@ class LoginScreen extends StatelessWidget {
                     ),
 
                     new RaisedButton(
-                      child: new Text( 'Login With Email', style: new TextStyle(fontSize: 20.0, color: Colors.white), ),
+                      child: new Text( 'Sign Up', style: new TextStyle(fontSize: 20.0, color: Colors.white), ),
                       elevation: 5.0,
                       color: Colors.blue,
                       padding: new EdgeInsets.only( top: 18.0, bottom: 18.0, left: 80.0, right: 80.0),
@@ -161,16 +178,13 @@ class LoginScreen extends StatelessWidget {
                     ),
 
                     new Padding(
-                      padding: new EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      child: new Text( 'or', style: lightSmall, ),
+                      padding: new EdgeInsets.all( 20.0 ),
                     ),
 
-                    new RaisedButton(
-                      child: new Text( 'Login With Google', style: new TextStyle(fontSize: 20.0, color: Colors.white), ),
-                      elevation: 5.0,
-                      color: Colors.blue,
-                      padding: new EdgeInsets.only( top: 18.0, bottom: 18.0, left: 75.0, right: 75.0),
-                      onPressed: () => _handleGoogleLogin(bodyContext),
+                    new FlatButton(
+                      child: new Text( 'skip', style: lightSmall, ),
+                      padding: new EdgeInsets.only( top: 18.0, bottom: 18.0, left: 80.0, right: 80.0),
+                      onPressed: () => _handleNoLogin(bodyContext),
                     )
 
                   ],

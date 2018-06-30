@@ -55,4 +55,9 @@ class CategoryData {
     return userGroups.where( (categoryGroup) => categoryGroup.id == groupId ).first;
   }
 
+  clear(){
+    userGroups.clear();
+    user.clear();
+  }
+
 }
