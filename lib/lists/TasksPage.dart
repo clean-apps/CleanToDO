@@ -15,6 +15,8 @@ import 'package:clean_todo/lists/TasksList.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
 import 'package:clean_todo/styles/AppIcons.dart';
 import 'package:clean_todo/main.dart';
+import 'package:clean_todo/beans/CategoryGroup.dart';
+import 'package:clean_todo/lists/DropdownTileSF.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -350,6 +352,111 @@ class _TasksPageState extends State<TasksPage> {
 
     );
 
+    FloatingActionButton appFabGroup = new FloatingActionButton(
+
+        child: icons.newTaskFabIcon(context),
+
+        onPressed: (){
+
+          widget.cache.newTask.clear();
+          TextEditingController tecNewTask = new TextEditingController();
+          showModalBottomSheet<void>(
+
+            context: context,
+            builder: (BuildContext bcontext){
+
+              return new _SystemPadding(
+                  child: new Column(
+
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+
+                        new ListTile(
+                          dense: true,
+                          title: new Text( "Add a to-do",
+                            style: new TextStyle(color: Theme.of(context).accentColor.withAlpha(170)), ),
+                        ),
+
+                        new ListTile(
+                          dense: true,
+                          leading: icons.newTaskModal(context),
+                          title: new TextField(
+                            autofocus: true,
+                            controller: tecNewTask,
+                            decoration: new InputDecoration(
+                              hintText: 'title',
+                              hintStyle: new TextStyle( color: Colors.grey ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                          trailing: new IconButton(
+                              icon: icons.newTaskModalArrow(context),
+                              onPressed: (){
+
+                                if( widget.cache.newTask.category == null ){
+                                  
+                                } else if( tecNewTask.text != null && tecNewTask.text.length > 0 ) {
+                                  this.setState(() {
+                                    widget.cache.newTask.id = widget.cache.tasksData.length == 0 ? 1 : widget.cache.tasksData.last.id + 1;
+                                    widget.cache.newTask.title = tecNewTask.text;
+                                    widget.cache.addTask(widget.cache.newTask);
+                                    Navigator.pop(context);
+                                  });
+                                }
+                              }
+                          ),
+                        ),
+
+                        new DropdownTileSF(
+                            icon: Icons.list,
+                            text: widget.cache.newTask.category == null ? null : widget.cache.newTask.category.id.toString(),
+                            hint: 'Select a List',
+                            options: widget.cache.filterGroupId == null ?
+
+                                widget.cache.categoryData.user.map((Category pCategory) {
+
+                                  CategoryGroup categoryGroup =
+                                      widget.cache.categoryData.getCategoryGroup( pCategory.id );
+
+                                  return new DropdownMenuItem<String>(
+                                    value: pCategory.id.toString(),
+                                    child: new Text(categoryGroup.text + " / " + pCategory.text),
+                                  );
+
+                                }).toList()
+                              :
+                                widget.cache.categoryData.getGroupMembers(
+                                    widget.cache.categoryData.getGroup( widget.cache.filterGroupId )
+                                ).map((Category pCategory) {
+
+                                  return new DropdownMenuItem<String>(
+                                    value: pCategory.id.toString(),
+                                    child: new Text(pCategory.text),
+                                  );
+
+                                }).toList(),
+                            updateContent: (content) {
+                              this.setState(() {
+                                if (content == null)
+                                  widget.cache.newTask.category = null;
+                                else
+                                  widget.cache.newTask.category = widget.cache.categoryData.getCategory( int.parse( content ) );
+                              });
+                            },
+
+                        ),
+
+                      ],
+                    ),
+
+              );
+            },
+          );
+
+        }
+
+    );
+
     FloatingActionButton appFabGeneric = new FloatingActionButton(
 
         child: icons.newTaskFabIcon(context),
@@ -378,7 +485,7 @@ class _TasksPageState extends State<TasksPage> {
     );
 
     FloatingActionButton appFab = widget.cache.showMyDay ? null :
-          ( ( widget.cache.filterCategory == null ) || widget.cache.filterGroup ? appFabGeneric : appFabFilter );
+          ( ( widget.cache.filterCategory == null ) || widget.cache.filterGroup ? appFabGroup : appFabFilter );
 
     return new Scaffold(
       appBar: appBar,
