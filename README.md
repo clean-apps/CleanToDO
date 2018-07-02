@@ -14,7 +14,8 @@ Organize and share your to-do, work, grocery, movies and household lists. No mat
 ### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/regular/calendar-alt.svg" width="22" align="left" /> &nbsp; Stay on track with notes, due dates and reminders
 Set Due Dates and Reminders and notes. No matter whether your lists are work related or just for fun, you will never miss a deadline again with Clean To-Do in charge.
 
-[<img src="https://raw.githubusercontent.com/babanomania/CleanToDO/master/images/download-apk-version.png" />](https://github.com/babanomania/CleanToDO/releases/download/1.4.20180630/clean_todo_v1.4.20180630.apk)
+<a href="https://play.google.com/store/apps/details?id=com.babanomania.cleantodo" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
 
 # Screenshots
 
