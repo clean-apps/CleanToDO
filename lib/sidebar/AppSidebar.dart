@@ -56,8 +56,8 @@ class _AppSidebarState extends State<AppSidebar> {
     return new ListTile(
       leading: icons.listIcon(context),
       title: new SidebarText( textContent : categoryData.text ),
-      trailing: new Text( categoryData.count == null ? "0" : categoryData.count.toString(),
-                          style: new TextStyle( color: Theme.of(context).accentColor ), ),
+      trailing: categoryData.count == null || categoryData.count == 0 ? null :
+                new Text( categoryData.count.toString(), style: new TextStyle( color: Theme.of(context).accentColor ), ),
       onTap: () {
         this.widget.filter( categoryData.id );
       }
