@@ -307,7 +307,7 @@ class _TasksPageState extends State<TasksPage> {
                                   autofocus: true,
                                   controller: tecNewTask,
                                   decoration: new InputDecoration(
-                                    hintText: 'Add a to-do',
+                                    hintText: 'Add a title',
                                     hintStyle: new TextStyle( color: Colors.grey ),
                                     border: InputBorder.none,
                                   ),
@@ -337,6 +337,22 @@ class _TasksPageState extends State<TasksPage> {
                                           widget.cache.addTask(widget.cache.newTask);
                                           Navigator.pop(context);
                                         });
+
+                                      }  else {
+
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => new AlertDialog(
+                                            content: new Text('Title is required'),
+                                            actions: <Widget>[
+                                              new FlatButton(
+                                                  onPressed: () => Navigator.pop(_),
+                                                  child: new Text( "OK" )
+                                              )
+                                            ],
+                                          ),
+                                        );
+
                                       }
                                     }
                                 ),
@@ -374,7 +390,7 @@ class _TasksPageState extends State<TasksPage> {
                         new DropdownTileSF(
                           icon: Icons.list,
                           text: widget.cache.newTask.category == null ? null : widget.cache.newTask.category.id.toString(),
-                          hint: 'Select a List',
+                          hint: 'Select a list',
                           options: widget.cache.filterGroupId == null ?
 
                           widget.cache.categoryData.user.map((Category pCategory) {
@@ -415,9 +431,10 @@ class _TasksPageState extends State<TasksPage> {
                           leading: icons.newTaskModal(context),
                           title: new TextField(
                             autofocus: false,
+                            enabled: widget.cache.newTask.category != null ,
                             controller: tecNewTask,
                             decoration: new InputDecoration(
-                              hintText: 'Add a to-do',
+                              hintText: 'Add a title',
                               hintStyle: new TextStyle( color: Colors.grey ),
                               border: InputBorder.none,
                             ),
@@ -427,7 +444,20 @@ class _TasksPageState extends State<TasksPage> {
                               onPressed: (){
 
                                 if( widget.cache.newTask.category == null ){
-                                  
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => new AlertDialog(
+                                      content: new Text('Title is required'),
+                                      actions: <Widget>[
+                                        new FlatButton(
+                                            onPressed: () => Navigator.pop(_),
+                                            child: new Text( "OK" )
+                                        )
+                                      ],
+                                    ),
+                                  );
+
                                 } else if( tecNewTask.text != null && tecNewTask.text.length > 0 ) {
                                   this.setState(() {
                                     widget.cache.newTask.id = widget.cache.tasksData.length == 0 ? 1 : widget.cache.tasksData.last.id + 1;
@@ -435,6 +465,22 @@ class _TasksPageState extends State<TasksPage> {
                                     widget.cache.addTask(widget.cache.newTask);
                                     Navigator.pop(context);
                                   });
+
+                                } else {
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => new AlertDialog(
+                                      content: new Text('Add a title for the To-Do item'),
+                                      actions: <Widget>[
+                                        new FlatButton(
+                                            onPressed: () => Navigator.pop(_),
+                                            child: new Text( "OK" )
+                                        )
+                                      ],
+                                    ),
+                                  );
+
                                 }
                               }
                           ),
