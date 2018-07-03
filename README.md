@@ -1,3 +1,5 @@
+<img src="http://circleci-badges-max.herokuapp.com/img/babanomania/CleanToDO?token=a94aa7a378fb5020bbbd281f914b2e127f745d5b" />
+
 # A Cleaner and an Easier way to get things done
 
 From work to play, Clean To-Do is the easiest way to get stuff done, every day. Whether you’re planning a holiday, preparing a shopping list or managing multiple work projects, Clean To-Do is here to help you tick off all your personal and professional to-dos very easily
