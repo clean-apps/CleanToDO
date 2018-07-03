@@ -6,6 +6,8 @@ jobs:
     steps:
       - checkout
       - run: echo $ENCODED_KEYSTORE | base64 --decode > android/keystore.jks
+      - run: pwd
+      - run: ls -ltr
       - run: echo "storePassword=$KEY_PASS" > android/key.properties
       - run: echo "keyPassword=$KEY_PASS" >> android/key.properties
       - run: echo "keyAlias=android" >> android/key.properties
