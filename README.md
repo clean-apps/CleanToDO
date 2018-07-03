@@ -1,3 +1,9 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Stories in Ready](https://badge.waffle.io/babanomania/CleanToDO.png?label=To%20Do&title=ToDo)](https://waffle.io/babanomania/CleanToDO)
+[![Stories in In Progress](https://badge.waffle.io/babanomania/CleanToDO.png?label=In%20Progress&title=InProgress)](https://waffle.io/babanomania/CleanToDO)
+[![Build Status](http://circleci-badges-max.herokuapp.com/img/babanomania/CleanToDO?token=a94aa7a378fb5020bbbd281f914b2e127f745d5b)](https://circleci.com/gh/babanomania/CleanToDO)
+[![GitHub release](https://img.shields.io/github/release/babanomania/CleanToDO.svg)](https://github.com/babanomania/CleanToDO/releases/latest)
+
 # A Cleaner and an Easier way to get things done
 
 From work to play, Clean To-Do is the easiest way to get stuff done, every day. Whether you’re planning a holiday, preparing a shopping list or managing multiple work projects, Clean To-Do is here to help you tick off all your personal and professional to-dos very easily
@@ -14,7 +20,8 @@ Organize and share your to-do, work, grocery, movies and household lists. No mat
 ### <img src="https://use.fontawesome.com/releases/v5.1.0/svgs/regular/calendar-alt.svg" width="22" align="left" /> &nbsp; Stay on track with notes, due dates and reminders
 Set Due Dates and Reminders and notes. No matter whether your lists are work related or just for fun, you will never miss a deadline again with Clean To-Do in charge.
 
-[<img src="https://raw.githubusercontent.com/babanomania/CleanToDO/master/images/download-apk-version.png" />](https://github.com/babanomania/CleanToDO/releases/download/1.2.20180628/clean_todo_v1.2.20180628.apk)
+<a href="https://play.google.com/store/apps/details?id=com.babanomania.cleantodo" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
 
 # Screenshots
 
