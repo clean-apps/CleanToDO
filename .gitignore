@@ -9,4 +9,6 @@ build/
 ios/.generated/
 packages
 .flutter-plugins
-google-services.json
+key.properties
+pubspec.lock
+.gradle/

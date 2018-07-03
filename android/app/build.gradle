@@ -14,6 +14,19 @@ if (flutterRoot == null) {
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+def versionPropertiesFile = rootProject.file("version.properties")
+def version = new Properties()
+version.load(new FileInputStream(versionPropertiesFile))
+
+def getDate(){
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd')
+}
+
 android {
     compileSdkVersion 27
 
@@ -25,19 +38,33 @@ android {
         applicationId "com.babanomania.cleantodo"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode version['ANDROID_VERSION_MAJOR'] as int
+        versionName "${version['ANDROID_VERSION_MAJOR']}.${version['ANDROID_VERSION_MINOR']}.${getDate()}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+
+            //minifyEnabled true
+            useProguard true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
+
+println "version ${version['ANDROID_VERSION_MAJOR']}.${version['ANDROID_VERSION_MINOR']}.${getDate()}"
 
 flutter {
     source '../..'
@@ -47,9 +74,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.google.firebase:firebase-core:12.0.1'
     compile 'com.android.support:support-compat:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
 }
-
-apply plugin: 'com.google.gms.google-services'
