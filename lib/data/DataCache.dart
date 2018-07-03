@@ -367,6 +367,12 @@ class DataCache {
           }
 
         }
+
+      } else if( !dirtyData.completed && !task.completed  ){
+
+        _update_category_count(dirtyData, -1);
+        _update_category_count(task, 1);
+
       }
 
       dirtyData.title = task.title;
