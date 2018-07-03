@@ -21,9 +21,19 @@ class LoginScreen extends StatelessWidget {
     if (form.validate()) {
       settings.username = name;
       settings.email = email;
+      settings.isLoggedIn = true;
 
       cache.userData = new UserData(name, email);
 
+      runApp(
+        new MaterialApp(
+          theme: Themes.get(settings.theme),
+          home: new TasksPage(
+              settings: this.settings, cache: this.cache),
+        ),
+      );
+
+      /*
       Navigator.of(context).push(
             new MaterialPageRoute(
                 builder: (_) => new MaterialApp(
@@ -32,16 +42,28 @@ class LoginScreen extends StatelessWidget {
                           settings: this.settings, cache: this.cache),
                     )),
           );
+          */
     }
+
   }
 
   _handleNoLogin(context) {
 
     settings.username = null;
     settings.email = null;
-
+    settings.isLoggedIn = true;
+    
     cache.userData = new UserData(null, null);
 
+    runApp(
+      new MaterialApp(
+        theme: Themes.get(settings.theme),
+        home: new TasksPage(
+            settings: this.settings, cache: this.cache),
+      ),
+    );
+
+    /*
     Navigator.of(context).push(
       new MaterialPageRoute(
           builder: (_) => new MaterialApp(
@@ -50,6 +72,7 @@ class LoginScreen extends StatelessWidget {
                 settings: this.settings, cache: this.cache),
           )),
     );
+    */
   }
 
   @override

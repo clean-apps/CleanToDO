@@ -57,7 +57,10 @@ class InitManager {
   }
 
   bool get isSignedIn {
-    return ( settings.username != null && settings.username.length > 0 );
+    return (
+              ( settings.username != null && settings.username.length > 0 ) ||
+              settings.isLoggedIn
+    );
   }
 
 }

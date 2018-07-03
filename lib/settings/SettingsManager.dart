@@ -74,4 +74,13 @@ class SettingsManager {
               prefs.get( "notification_vibrations" ).toString() == "true";
   }
 
+  bool get isLoggedIn {
+    return prefs.get( "isLoggedIn" ) == null ? false :
+              prefs.get( "isLoggedIn" ).toString() == "true";
+  }
+
+  set isLoggedIn ( bool pIsLoggedIn ){
+    prefs.setString( "isLoggedIn" , pIsLoggedIn ? "true" : "false" );
+  }
+
 }
