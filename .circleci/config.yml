@@ -5,4 +5,9 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
+      - run: echo $ENCODED_KEYSTORE | base64 --decode > android/keystore.jks
+      - run: echo "storePassword=$KEY_PASS" > android/key.properties
+      - run: echo "keyPassword=$KEY_PASS" >> android/key.properties
+      - run: echo "keyAlias=android" >> android/key.properties
+      - run: echo "storeFile=android/keystore.jks" >> android/key.properties
       - run: flutter -v build apk
