@@ -1,4 +1,8 @@
-<img src="http://circleci-badges-max.herokuapp.com/img/babanomania/CleanToDO?token=a94aa7a378fb5020bbbd281f914b2e127f745d5b" />
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Stories in Ready](https://badge.waffle.io/babanomania/CleanToDO.png?label=To%20Do&title=ToDo)](https://waffle.io/babanomania/CleanToDO)
+[![Stories in In Progress](https://badge.waffle.io/babanomania/CleanToDO.png?label=In%20Progress&title=InProgress)](https://waffle.io/babanomania/CleanToDO)
+[![Build Status](http://circleci-badges-max.herokuapp.com/img/babanomania/CleanToDO?token=a94aa7a378fb5020bbbd281f914b2e127f745d5b)](https://circleci.com/gh/babanomania/CleanToDO)
+[![GitHub release](https://img.shields.io/github/release/babanomania/CleanToDO.svg)](https://github.com/babanomania/CleanToDO/releases/latest)
 
 # A Cleaner and an Easier way to get things done
 
