@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
     settings.username = null;
     settings.email = null;
     settings.isLoggedIn = true;
-    
+
     cache.userData = new UserData(null, null);
 
     runApp(
