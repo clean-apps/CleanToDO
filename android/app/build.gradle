@@ -38,7 +38,7 @@ android {
         applicationId "com.babanomania.cleantodo"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode version['ANDROID_VERSION_MAJOR'] as int
+        versionCode version['ANDROID_VERSION_CODE'] as int
         versionName "${version['ANDROID_VERSION_MAJOR']}.${version['ANDROID_VERSION_MINOR']}.${getDate()}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
