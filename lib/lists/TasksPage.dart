@@ -431,7 +431,6 @@ class _TasksPageState extends State<TasksPage> {
                           leading: icons.newTaskModal(context),
                           title: new TextField(
                             autofocus: false,
-                            enabled: widget.cache.newTask.category != null ,
                             controller: tecNewTask,
                             decoration: new InputDecoration(
                               hintText: 'Add a title',
@@ -448,7 +447,7 @@ class _TasksPageState extends State<TasksPage> {
                                   showDialog(
                                     context: context,
                                     builder: (_) => new AlertDialog(
-                                      content: new Text('Title is required'),
+                                      content: new Text('Select a list for the task'),
                                       actions: <Widget>[
                                         new FlatButton(
                                             onPressed: () => Navigator.pop(_),
@@ -471,7 +470,7 @@ class _TasksPageState extends State<TasksPage> {
                                   showDialog(
                                     context: context,
                                     builder: (_) => new AlertDialog(
-                                      content: new Text('Add a title for the To-Do item'),
+                                      content: new Text('Add a title for the task'),
                                       actions: <Widget>[
                                         new FlatButton(
                                             onPressed: () => Navigator.pop(_),
