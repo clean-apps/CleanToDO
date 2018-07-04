@@ -54,7 +54,7 @@ class DataCache {
   }
 
   initNotifications( context ){
-    notifications.init(context);
+    notifications.init(context, categoryData, this);
   }
 
   Future<bool> initDb( bool showCompleted ) async {

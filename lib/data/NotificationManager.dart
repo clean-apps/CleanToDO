@@ -14,6 +14,10 @@ import 'dart:typed_data';
 import 'package:clean_todo/data/NotificationProvider.dart';
 import 'package:clean_todo/beans/Notification.dart';
 import 'package:clean_todo/calender/DateUtil.dart';
+import 'dart:convert';
+import 'package:clean_todo/detail/TaskDetail.dart';
+import 'package:clean_todo/data/DataCache.dart';
+import 'package:clean_todo/beans/CategoryData.dart';
 
 enum CTRepeatInterval { NONE, DAILY, WEEKLY, WEEKDAYS, WEEKENDS, MONTHLY }
 
@@ -25,7 +29,13 @@ class NotificationManager {
 
   NotificationProvider notificationProvider = new NotificationProvider();
 
-  init( context ) {
+  CategoryData categoryData ;
+  DataCache cache ;
+
+  init( context, CategoryData pCategoryData, DataCache pCache ) {
+
+    this.cache = pCache;
+    this.categoryData = pCategoryData;
 
     // initialise the plugin
     InitializationSettingsAndroid initializationSettingsAndroid = new InitializationSettingsAndroid('notification');
@@ -62,10 +72,27 @@ class NotificationManager {
   }
 
   Future onSelectNotification(String payload) async {
-    await Navigator.push(
-      context,
-      new MaterialPageRoute(builder: (context) => new TasksPage() ),
-    );
+
+    /*
+    if( payload != null ){
+
+      Task task = Task.fromMap( json.decode( payload ), this.categoryData );
+      runApp(
+        new TaskDetail(
+          task: task,
+          updateTask: (task) => this.cache.updateTask(task),
+          categoryData: this.categoryData,
+        )
+      );
+
+    } else {
+*/
+      await Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => new TasksPage()),
+      );
+
+  //  }
   }
 
   addReminder( Task task ) async {
@@ -92,7 +119,7 @@ class NotificationManager {
             'Incomplete Task Reminder',
             targetDateTime,
             platformChannelSpecifics,
-            payload: task.id.toString(),
+            payload: json.encode( task.toMap() ),
         );
       }
 
@@ -112,7 +139,8 @@ class NotificationManager {
           isTargetFuture ? targetDateTime : DateUtil.today,
           deadline,
           RepeatInterval.Daily,
-          platformChannelSpecifics
+          platformChannelSpecifics,
+          payload: json.encode( task.toMap() ),
       );
 
     } else if( task.repeat == CTRepeatInterval.WEEKLY.index ){
@@ -127,7 +155,8 @@ class NotificationManager {
           isTargetFuture ? targetDateTime : DateUtil.today,
           deadline,
           RepeatInterval.Weekly,
-          platformChannelSpecifics
+          platformChannelSpecifics,
+          payload: json.encode( task.toMap() ),
       );
 
     } else if( task.repeat == CTRepeatInterval.WEEKDAYS.index ){
@@ -147,7 +176,8 @@ class NotificationManager {
             targetDT,
             deadline,
             RepeatInterval.Weekly,
-            platformChannelSpecifics
+            platformChannelSpecifics,
+            payload: json.encode( task.toMap() ),
         );
 
       });
@@ -169,7 +199,8 @@ class NotificationManager {
             targetDT,
             deadline,
             RepeatInterval.Weekly,
-            platformChannelSpecifics
+            platformChannelSpecifics,
+            payload: json.encode( task.toMap() ),
         );
 
       });
@@ -189,7 +220,8 @@ class NotificationManager {
             task.title,
             'Incomplete Task Reminder',
             targetDT,
-            platformChannelSpecifics
+            platformChannelSpecifics,
+            payload: json.encode( task.toMap() ),
         );
 
       });
