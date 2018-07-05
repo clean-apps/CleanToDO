@@ -10,14 +10,16 @@ import 'package:clean_todo/beans/CategoryGroup.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
 import 'dart:async';
 import 'package:clean_todo/data/NotificationManager.dart';
+import 'dart:io';
 
 class TaskDetail extends StatefulWidget {
 
-  TaskDetail({ this.task, this.updateTask, this.categoryData });
+  TaskDetail({ this.task, this.updateTask, this.categoryData, this.exitApp = false });
 
   final Task task ;
   final ValueChanged<Task> updateTask ;
   final CategoryData categoryData ;
+  final bool exitApp ;
 
   _TaskDetailState createState() => new _TaskDetailState();
 }
@@ -386,7 +388,10 @@ class _TaskDetailState extends State<TaskDetail> {
           child: new Icon(Icons.save),
           onPressed: (){
 
-            if( widget.task.title == null ){
+            if( widget.exitApp ){
+              exit(0);
+
+            } else if( widget.task.title == null ){
               final snackBar = new SnackBar(content: new Text('please enter a title'), backgroundColor: Colors.red,);
               Scaffold.of(scaffoldContext).showSnackBar(snackBar);
 

@@ -17,6 +17,7 @@ import 'package:clean_todo/styles/AppIcons.dart';
 import 'package:clean_todo/main.dart';
 import 'package:clean_todo/beans/CategoryGroup.dart';
 import 'package:clean_todo/lists/DropdownTileSF.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 class _SystemPadding extends StatelessWidget {
 
@@ -46,6 +47,40 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TasksPageState extends State<TasksPage> {
+
+  @override
+  initState(){
+
+    super.initState();
+    final QuickActions quickActions = const QuickActions();
+
+    quickActions.initialize((String shortcutType) {
+      if (shortcutType == 'action_new') {
+        runApp(
+
+          new MaterialApp(
+            theme: Themes.get( widget.settings.theme ),
+            home: new TaskDetail(
+              task: widget.cache.newTask,
+              categoryData: widget.cache.categoryData,
+              updateTask: (task){
+                widget.cache.addTask(task);
+              },
+              exitApp: true,
+            ),
+          )
+        );
+      }
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      const ShortcutItem(
+          type: 'action_new', localizedTitle: 'New Task', icon: 'notification'
+      )
+    ]);
+
+  }
+
 
   filter( int categoryId ){
     this.setState( (){

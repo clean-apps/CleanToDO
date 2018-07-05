@@ -57,6 +57,24 @@ class DataCache {
     notifications.init(context, categoryData, this);
   }
 
+  Future<bool> initCategoriesDb() async {
+
+    categoryData.user = await categoryProvider.allCategories();
+    categoryData.userGroups = await categoryGroupProvider.allCategoryGroups();
+
+    //print( "userGroups - " + categoryData.userGroups.length.toString() );
+    if( categoryData.userGroups == null || categoryData.userGroups.length == 0 ){
+      await add_default_userlists();
+    }
+
+    categoryData.system = [
+      new Category( id: -1, text: 'My Day', icon: Icons.lightbulb_outline ),
+      new Category( id: -2, text: 'To-Do', icon: Icons.check )
+    ];
+
+    return true;
+  }
+
   Future<bool> initDb( bool showCompleted ) async {
 
     categoryData.user = await categoryProvider.allCategories();

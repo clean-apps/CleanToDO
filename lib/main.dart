@@ -6,6 +6,7 @@ import 'package:clean_todo/settings/InitManager.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/settings/LoginScreen.dart';
 import 'package:clean_todo/settings/SplashScreen.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 /*
 void main() => runApp(

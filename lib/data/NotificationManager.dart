@@ -18,6 +18,8 @@ import 'dart:convert';
 import 'package:clean_todo/detail/TaskDetail.dart';
 import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/beans/CategoryData.dart';
+import 'package:clean_todo/settings/Themes.dart';
+import 'package:clean_todo/settings/SettingsManager.dart';
 
 enum CTRepeatInterval { NONE, DAILY, WEEKLY, WEEKDAYS, WEEKENDS, MONTHLY }
 
@@ -73,26 +75,39 @@ class NotificationManager {
 
   Future onSelectNotification(String payload) async {
 
-    /*
+
     if( payload != null ){
 
       Task task = Task.fromMap( json.decode( payload ), this.categoryData );
+      DataCache thisCache = new DataCache();
+      SettingsManager settings = new SettingsManager();
+
+      await settings.init();
+      await thisCache.initDb( settings.showCompleted );
+      await thisCache.initNotifications(null);
+
       runApp(
-        new TaskDetail(
-          task: task,
-          updateTask: (task) => this.cache.updateTask(task),
-          categoryData: this.categoryData,
+
+        new MaterialApp(
+          theme: Themes.get( settings.theme ),
+          home: new TaskDetail(
+            task: task,
+            updateTask: (taskU) => thisCache.updateTask(taskU),
+            categoryData: thisCache.categoryData,
+            exitApp: true,
+          ),
         )
+
       );
 
     } else {
-*/
+
       await Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => new TasksPage()),
       );
 
-  //  }
+    }
   }
 
   addReminder( Task task ) async {

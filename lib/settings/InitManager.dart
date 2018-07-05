@@ -5,6 +5,7 @@ import 'package:clean_todo/data/DataProvider.dart';
 import 'package:clean_todo/beans/UserData.dart';
 import 'dart:async';
 import 'package:clean_todo/data/FakeDataGenerator.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 class InitManager {
 
