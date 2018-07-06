@@ -308,7 +308,7 @@ class _TasksPageState extends State<TasksPage> {
                                   autofocus: true,
                                   controller: tecNewTask,
                                   decoration: new InputDecoration(
-                                    hintText: 'Add a title',
+                                    hintText: 'Add task title',
                                     hintStyle: new TextStyle( color: Colors.grey ),
                                     border: InputBorder.none,
                                   ),
@@ -434,7 +434,7 @@ class _TasksPageState extends State<TasksPage> {
                             autofocus: false,
                             controller: tecNewTask,
                             decoration: new InputDecoration(
-                              hintText: 'Add a title',
+                              hintText: 'Add task title',
                               hintStyle: new TextStyle( color: Colors.grey ),
                               border: InputBorder.none,
                             ),
