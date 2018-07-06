@@ -42,8 +42,14 @@ class _AppSidebarState extends State<AppSidebar> {
   ListTile getAsSystemListTile( context, Category categoryData ){
 
     return new ListTile(
-        leading: icons.systemIcon( categoryData.icon, context),
-        title: new SidebarText( textContent : categoryData.text ),
+        dense: false,
+        title: new Row (
+          children: <Widget>[
+            icons.systemIcon( categoryData.icon, context),
+            new Padding(padding: new EdgeInsets.all( 7.0 ) ),
+            new SidebarTextBold( textContent : categoryData.text ),
+          ],
+        ),
         onTap: () {
           this.widget.filter( categoryData.id );
         }
@@ -54,8 +60,14 @@ class _AppSidebarState extends State<AppSidebar> {
   ListTile getAsListTile( context, Category categoryData ){
 
     return new ListTile(
-      leading: icons.listIcon(context),
-      title: new SidebarText( textContent : categoryData.text ),
+        dense: false,
+        title: new Row (
+          children: <Widget>[
+            icons.listIcon(context),
+            new Padding(padding: new EdgeInsets.all( 7.0 ) ),
+            new SidebarText( textContent : categoryData.text ),
+          ],
+        ),
       trailing: categoryData.count == null || categoryData.count == 0 ? null :
                 new Text( categoryData.count.toString(), style: new TextStyle( color: Theme.of(context).accentColor ), ),
       onTap: () {
@@ -71,11 +83,15 @@ class _AppSidebarState extends State<AppSidebar> {
         children: [
           new Divider(),
           new ListTile(
-            leading: ( categoryGroup.isExpanded == null || categoryGroup.isExpanded  ) ?
-                          icons.groupOpenIcon(context) : icons.groupIcon(context),
-
-            title: new SidebarTextBold( textContent: categoryGroup.text ),
-            trailing: new IconButton(
+              title: new Row (
+                children: <Widget>[
+                  ( categoryGroup.isExpanded == null || categoryGroup.isExpanded  ) ?
+                                icons.groupOpenIcon(context) : icons.groupIcon(context),
+                  new Padding(padding: new EdgeInsets.all( 7.0 ) ),
+                  new SidebarTextBold( textContent: categoryGroup.text ),
+                ],
+              ),
+              trailing: new IconButton(
                 icon: ( categoryGroup.isExpanded == null || categoryGroup.isExpanded  ) ?
                         icons.groupOpenArrowIcon(context) : icons.groupArrowIcon(context),
 
@@ -84,7 +100,7 @@ class _AppSidebarState extends State<AppSidebar> {
                     categoryGroup.isExpanded = !categoryGroup.isExpanded;
                   });
                 }
-            ),
+              ),
 
               onTap: () {
                 this.widget.filterGroup( categoryGroup.id );
@@ -118,14 +134,29 @@ class _AppSidebarState extends State<AppSidebar> {
                 children: <Widget>[
 
                   new ListTile(
-                      leading: this.widget.userData.abbr == null ?
-                                  new Icon( Icons.settings, color: Theme.of(context).iconTheme.color, ) :
-                                  new CircleAvatar( child: new Text( this.widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
-                                      backgroundColor: Theme.of(context).primaryColor, ),
+                      title: new Row(
+                        children: <Widget>[
+                          this.widget.userData.abbr == null ?
+                          new Icon( Icons.settings, color: Theme.of(context).iconTheme.color, ) :
+                          new CircleAvatar( child: new Text( this.widget.userData.abbr, style: new TextStyle( color: Colors.white ), ),
+                            backgroundColor: Theme.of(context).primaryColor, ),
 
-                      title: new SidebarText( textContent : this.widget.userData.userName == null ? 'Settings' : this.widget.userData.userName ) ,
-                      subtitle: this.widget.userData.email == null ? null :
-                                  new Text( this.widget.userData.email, style: new TextStyle( color: Theme.of(context).accentColor ), ),
+                          new Padding(padding: new EdgeInsets.all( 7.0 ) ),
+                          new Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: this.widget.userData.email == null ?
+                              <Widget>[
+                                new SidebarText( textContent : this.widget.userData.userName == null ? 'Settings' : this.widget.userData.userName ) ,
+                              ]
+                            :
+                            <Widget>[
+                              new SidebarText( textContent : this.widget.userData.userName == null ? 'Settings' : this.widget.userData.userName ) ,
+                              new Text( this.widget.userData.email, style: new TextStyle( color: Theme.of(context).accentColor ), ),
+                            ],
+                          ),
+                        ],
+                      ),
 
                       onTap: () => Navigator.of(context).push(
                         new MaterialPageRoute(
@@ -146,8 +177,14 @@ class _AppSidebarState extends State<AppSidebar> {
                   ),
 
                   new ListTile(
-                    leading: icons.newListIcon(context),
-                    title: new SidebarText( textContent : 'New List' ),
+                    dense: false,
+                    title: new Row (
+                      children: <Widget>[
+                        icons.newListIcon(context),
+                        new Padding(padding: new EdgeInsets.all( 7.0 ) ),
+                        new SidebarTextBold( textContent : 'New List' ),
+                      ],
+                    ),
                     onTap: (){
 
                         widget.cache.categoryData.newCategoryGroup.id = -1;
@@ -198,8 +235,7 @@ class SidebarText extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Text( 
       this.textContent,
-      style: new TextStyle( fontSize: 18.0, fontStyle: FontStyle.normal, fontWeight: FontWeight.w300,
-                            color: Theme.of(context).accentColor ),
+      style: new TextStyle( fontSize: 16.0, fontWeight: FontWeight.w300,color: Theme.of(context).accentColor ),
     );
   }
 
@@ -215,8 +251,7 @@ class SidebarTextBold extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Text(
       this.textContent,
-      style: new TextStyle( fontSize: 18.0, fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold, color: Theme.of(context).accentColor ),
+      style: new TextStyle( fontSize: 16.0, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor ),
     );
   }
 
