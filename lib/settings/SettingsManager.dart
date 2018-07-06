@@ -1,9 +1,12 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
+import 'package:get_version/get_version.dart';
+import 'package:flutter/services.dart';
 
 class SettingsManager {
 
   SharedPreferences prefs ;
+  String projectVersion;
 
   static Future<SettingsManager> getInstance() async {
     SettingsManager newSM = new SettingsManager();
@@ -13,6 +16,15 @@ class SettingsManager {
 
   Future<bool> init() async {
     prefs = await SharedPreferences.getInstance();
+
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      projectVersion = await GetVersion.projectVersion;
+
+    } on PlatformException {
+      projectVersion = 'Failed to get project version.';
+    }
+
     return true;
   }
 

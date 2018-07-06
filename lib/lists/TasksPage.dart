@@ -75,7 +75,7 @@ class _TasksPageState extends State<TasksPage> {
 
     quickActions.setShortcutItems(<ShortcutItem>[
       const ShortcutItem(
-          type: 'action_new', localizedTitle: 'New Task', icon: 'notification'
+          type: 'action_new', localizedTitle: 'New Task', icon: 'qa_new'
       )
     ]);
 

@@ -81,5 +81,6 @@ limitations under the License.
 * [Shared Notifications Plugin](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 * [Color Plugin](http://github.com/MichaelFenwick/Color)
 * [Fontawesome Icons](https://fontawesome.com/)
-
+* [Quick Actions Plugin](https://github.com/flutter/plugins/tree/master/packages/quick_actions)
+* [Get Version Plugin](https://github.com/AppleEducate/get_version)
 

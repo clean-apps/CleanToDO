@@ -325,7 +325,7 @@ class _AboutViewState  extends State<AboutView> {
               children: <Widget>[
                 new ListTile(
                   title: new Text( "Application Version" ),
-                  subtitle: new Text( widget.appVersion ),
+                  subtitle: new Text( settingsN.projectVersion ),
                 ),
               ]
             ),
