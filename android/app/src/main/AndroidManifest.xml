@@ -17,6 +17,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Clean To-Do"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher">
 
         <activity
