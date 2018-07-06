@@ -7,6 +7,7 @@ import 'package:clean_todo/data/DataCache.dart';
 import 'package:clean_todo/settings/LoginScreen.dart';
 import 'package:clean_todo/settings/SplashScreen.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:clean_todo/detail/TaskDetail.dart';
 
 /*
 void main() => runApp(
@@ -51,8 +52,41 @@ class CleanToDoApp extends StatelessWidget {
 
   CleanToDoApp({this.settings, this.cache});
 
+  initAppShortcuts(){
+
+    final QuickActions quickActions = const QuickActions();
+
+    quickActions.initialize((String shortcutType) {
+      if (shortcutType == 'action_new') {
+        runApp(
+
+            new MaterialApp(
+              theme: Themes.get( settings.theme ),
+              home: new TaskDetail(
+                task: cache.newTask,
+                categoryData: cache.categoryData,
+                updateTask: (task){
+                  cache.addTask(task);
+                },
+                exitApp: true,
+              ),
+            )
+        );
+      }
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      const ShortcutItem(
+          type: 'action_new', localizedTitle: 'New Task', icon: 'qa_new'
+      )
+    ]);
+
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    initAppShortcuts();
 
     return new MaterialApp(
 
