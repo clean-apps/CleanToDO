@@ -52,14 +52,15 @@ class CleanToDoApp extends StatelessWidget {
 
   CleanToDoApp({this.settings, this.cache});
 
-  initAppShortcuts(){
+  initAppShortcuts(BuildContext context){
 
     final QuickActions quickActions = const QuickActions();
 
     quickActions.initialize((String shortcutType) {
       if (shortcutType == 'action_new') {
-        runApp(
 
+        /*
+        runApp(
             new MaterialApp(
               theme: Themes.get( settings.theme ),
               home: new TaskDetail(
@@ -72,6 +73,23 @@ class CleanToDoApp extends StatelessWidget {
               ),
             )
         );
+        */
+
+        Navigator.of(context).push(
+          new MaterialPageRoute(
+              builder: (_) => new MaterialApp(
+                theme: Themes.get(settings.theme),
+                home: new TaskDetail(
+                        task: cache.newTask,
+                        categoryData: cache.categoryData,
+                        updateTask: (task){
+                          cache.addTask(task);
+                        },
+                      ),
+              )
+          ),
+        );
+
       }
     });
 
@@ -86,7 +104,7 @@ class CleanToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    //initAppShortcuts();
+    //initAppShortcuts(context);
 
     return new MaterialApp(
 

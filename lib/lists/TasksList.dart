@@ -51,13 +51,13 @@ class _TasksListState extends State<TasksList> {
       children: ListTile.divideTiles(
         tiles: widget.tasks.map(
                 (task) => new TaskTile (
-              task : task,
-              extraTask: widget.extraTask,
-              categoryData: widget.categoryData,
-              toggleTask: (task) => widget.toggleTask(task),
-              updateTask : (task) => widget.updateTask(task),
-              deleteTask: (task) => widget.deleteTask(task),
-            )
+                  task : task,
+                  extraTask: widget.extraTask,
+                  categoryData: widget.categoryData,
+                  toggleTask: (task) => widget.toggleTask(task),
+                  updateTask : (task) => widget.updateTask(task),
+                  deleteTask: (task) => widget.deleteTask(task),
+                )
 
         ).toList(),
         color: Colors.grey,
