@@ -113,7 +113,7 @@ class NotificationManager {
   addReminder( Task task ) async {
 
     DateTime targetDateTime = _getTargetDate(task);
-    if( targetDateTime == null ){
+    if( targetDateTime == null || task.completed ){
       return;
     }
 
@@ -136,6 +136,7 @@ class NotificationManager {
             platformChannelSpecifics,
             payload: json.encode( task.toMap() ),
         );
+        print( "adding notifications for - id:" + newId.toString() + " taskId:" + task.id.toString() );
       }
 
     } else if ( deadline == null ){
@@ -157,6 +158,7 @@ class NotificationManager {
           platformChannelSpecifics,
           payload: json.encode( task.toMap() ),
       );
+      print( "adding notifications for - id:" + newId.toString() + " taskId:" + task.id.toString() );
 
     } else if( task.repeat == CTRepeatInterval.WEEKLY.index ){
 
@@ -173,6 +175,7 @@ class NotificationManager {
           platformChannelSpecifics,
           payload: json.encode( task.toMap() ),
       );
+      print( "adding notifications for - id:" + newId.toString() + " taskId:" + task.id.toString() );
 
     } else if( task.repeat == CTRepeatInterval.WEEKDAYS.index ){
 
@@ -194,6 +197,7 @@ class NotificationManager {
             platformChannelSpecifics,
             payload: json.encode( task.toMap() ),
         );
+        print( "adding notifications for - id:" + newId.toString() + " taskId:" + task.id.toString() );
 
       });
 
@@ -217,6 +221,7 @@ class NotificationManager {
             platformChannelSpecifics,
             payload: json.encode( task.toMap() ),
         );
+        print( "adding notifications for - id:" + newId.toString() + " taskId:" + task.id.toString() );
 
       });
 
@@ -238,6 +243,7 @@ class NotificationManager {
             platformChannelSpecifics,
             payload: json.encode( task.toMap() ),
         );
+        print( "adding notifications for - id:" + newId.toString() + " taskId:" + task.id.toString() );
 
       });
 
@@ -267,8 +273,10 @@ class NotificationManager {
     List<NotificationData> notifications = await notificationProvider.getNotificationsForTask( task.id );
     notifications.forEach( (notification) async {
 
-      await flutterLocalNotificationsPlugin.cancel( task.id );
+      await flutterLocalNotificationsPlugin.cancel( notification.id );
       await notificationProvider.delete( notification );
+
+      print( "cancelling notifications for - " + notification.toMap().toString() );
 
     });
 

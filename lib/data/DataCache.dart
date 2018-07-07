@@ -338,9 +338,13 @@ class DataCache {
       tasksData.elementAt( tasksData.indexOf( task ) ).completed = task.completed;
       taskProvider.update(task.clone());
       task.completed ? _update_category_count(task, -1) : _update_category_count(task, 1);
-      if( task.completed ){
+
+      if( task.completed )
         notifications.cancelReminder( task.clone() );
-      }
+
+      else
+        notifications.updateReminder( task.clone() );
+
   }
 
   addTask( Task task ){

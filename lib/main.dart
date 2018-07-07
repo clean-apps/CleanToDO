@@ -86,7 +86,7 @@ class CleanToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    initAppShortcuts();
+    //initAppShortcuts();
 
     return new MaterialApp(
 
