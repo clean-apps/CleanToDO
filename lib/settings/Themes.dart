@@ -24,6 +24,7 @@ class Themes {
       accentColor: primary,
       primaryColorLight: primary,
       errorColor: error,
+      highlightColor: primary.withOpacity( 0.7 ),
 
       iconTheme: new IconThemeData(
         color: primary,

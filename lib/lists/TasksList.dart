@@ -7,7 +7,11 @@ import 'package:clean_todo/styles/AppIcons.dart';
 
 class TasksList extends StatefulWidget {
 
-  TasksList({ this.tasks, this.extraTask, this.categoryData, this.toggleTask, this.updateTask, this.deleteTask });
+  TasksList({
+    this.tasks, this.extraTask, this.categoryData,
+    this.toggleTask, this.updateTask, this.deleteTask,
+    this.selectedTask, this.selectTask, this.isSelected,
+  });
 
   final List<Task> tasks ;
   final Task extraTask ;
@@ -16,6 +20,10 @@ class TasksList extends StatefulWidget {
   final ValueChanged<Task> toggleTask;
   final ValueChanged<Task> updateTask ;
   final ValueChanged<Task> deleteTask ;
+  final ValueChanged<Task> selectTask ;
+
+  final bool isSelected ;
+  final List<int> selectedTask ;
 
   @override
   _TasksListState createState() => new _TasksListState();
@@ -57,6 +65,8 @@ class _TasksListState extends State<TasksList> {
                   toggleTask: (task) => widget.toggleTask(task),
                   updateTask : (task) => widget.updateTask(task),
                   deleteTask: (task) => widget.deleteTask(task),
+                  isSelected: widget.isSelected ? widget.selectedTask.where( (id) => id == task.id ).length > 0 : false,
+                  selectTask: widget.selectTask,
                 )
 
         ).toList(),

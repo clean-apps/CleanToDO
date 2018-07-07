@@ -219,6 +219,23 @@ class _TasksPageState extends State<TasksPage> {
                 })
             ),
 
+            isSelectedTask: widget.cache.isSelected,
+
+            unSelectTask: ( (_){
+              this.setState((){
+                widget.cache.isSelected = false;
+                widget.cache.selectedTaskId.clear();
+              });
+            }),
+
+            deleteSelectedTask: ( (_){
+              this.setState((){
+                widget.cache.deleteSelectedTask();
+                widget.cache.isSelected = false;
+                widget.cache.selectedTaskId.clear();
+              });
+            }),
+
     ).build(context);
 
     AppSidebar appSidebar = new AppSidebar(
@@ -281,6 +298,24 @@ class _TasksPageState extends State<TasksPage> {
         }),
 
         deleteTask: widget.cache.deleteTask,
+
+        isSelected: widget.cache.isSelected,
+
+        selectedTask: widget.cache.selectedTaskId,
+
+        selectTask: ( (task){
+          this.setState((){
+
+            widget.cache.selectedTaskId.contains( task.id ) ?
+              widget.cache.selectedTaskId.remove( task.id ):
+              widget.cache.selectedTaskId.add(task.id);
+
+            widget.cache.selectedTaskId.length > 0 ?
+              widget.cache.isSelected = true :
+              widget.cache.isSelected = false;
+          });
+        }),
+
     );
 
     Widget appBody = widget.cache.showMyDay ? myDayAppBody : listAppBody ;
@@ -524,7 +559,7 @@ class _TasksPageState extends State<TasksPage> {
 
     );
 
-    FloatingActionButton appFab = widget.cache.showMyDay ? null :
+    FloatingActionButton appFab = ( widget.cache.showMyDay || widget.cache.isSelected )? null :
           ( ( widget.cache.filterCategory == null ) || widget.cache.filterGroup ? appFabGroup : appFabFilter );
 
     return new Scaffold(

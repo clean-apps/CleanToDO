@@ -36,32 +36,34 @@ class AppIcons {
 
 
 
-  taskCompletedIcon( context ) =>
+  taskCompletedIcon( selected, context ) =>
       new CircleAvatar(
-        child: new Icon( Icons.check, color: Theme.of(context).scaffoldBackgroundColor, size: 14.0, ),
+        child: new Icon( Icons.check, color: selected ? Theme.of(context).highlightColor : Theme.of(context).scaffoldBackgroundColor, size: 14.0, ),
         backgroundColor: _iconColor(context),
         radius: 12.0,
       );
 
-  taskPendingIcon( context ) =>
-      new Icon( Icons.radio_button_unchecked, size: 28.0, color: _iconColor(context), );
+  taskPendingIcon( selected, context ) =>
+      new Icon( Icons.radio_button_unchecked, size: 28.0, color: selected ? Theme.of(context).highlightColor : _iconColor(context), );
 
 
 
 
   var listIconSize = 14.0;
 
-  listIconDue( context, isDue ) =>
-      new Icon( Icons.calendar_today, color: isDue ? Theme.of(context).errorColor : _iconColor(context), size: listIconSize, );
+  listIconDue( selected, context, isDue ) =>
+      new Icon( Icons.calendar_today,
+                color: selected ? Theme.of(context).highlightColor :
+                        (  isDue ? Theme.of(context).errorColor : _iconColor(context) ), size: listIconSize, );
 
-  listIconReminder( context ) =>
-      new Icon( Icons.alarm_on, color: _iconColor(context), size: listIconSize,  );
+  listIconReminder( selected, context ) =>
+      new Icon( Icons.alarm_on, color: selected ? Theme.of(context).highlightColor : _iconColor(context), size: listIconSize,  );
 
-  listIconNotes( context ) =>
-      new Icon( Icons.chat_bubble_outline, color: _iconColor(context), size: listIconSize,  );
+  listIconNotes( selected, context ) =>
+      new Icon( Icons.chat_bubble_outline, color: selected ? Theme.of(context).highlightColor : _iconColor(context), size: listIconSize,  );
 
-  listIconRepeat( context ) =>
-      new Icon( Icons.repeat, color: _iconColor(context), size: listIconSize,  );
+  listIconRepeat( selected, context ) =>
+      new Icon( Icons.repeat, color: selected ? Theme.of(context).highlightColor : _iconColor(context), size: listIconSize,  );
 
 
   newTaskModal( context ) =>

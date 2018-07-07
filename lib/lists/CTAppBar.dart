@@ -13,7 +13,8 @@ class CTAppBar {
               this.searchString, this.doSearch,
               this.themeColor, this.updateColor,
               this.isShowCompletedTasks, this.updateShowCompletedTasks,
-              this.sortString, this.updateSortTasks, this.categoryName, this.updateGroupName
+              this.sortString, this.updateSortTasks, this.categoryName, this.updateGroupName,
+              this.isSelectedTask, this.unSelectTask, this.deleteSelectedTask,
   });
 
   final String appDefaultTitle = 'To-Do';
@@ -27,6 +28,7 @@ class CTAppBar {
   final ValueChanged<int> deleteCategory ;
   final ValueChanged<int> deleteCategoryGroup ;
 
+  final bool isSelectedTask ;
   final bool isSearch ;
   final bool isMyDay ;
   final bool isGroup ;
@@ -48,6 +50,9 @@ class CTAppBar {
 
   final ValueChanged<String> updateCategoryName;
   final ValueChanged<String> updateGroupName;
+
+  final ValueChanged<bool> unSelectTask;
+  final ValueChanged<bool> deleteSelectedTask;
 
   IconButton colorIcon( Color btnColor, AppColors color, context ){
     return new IconButton(
@@ -318,6 +323,33 @@ class CTAppBar {
 
   }
 
+  AppBar selectedAppBar(){
+
+    return new AppBar(
+
+      leading: new IconButton(
+        icon: new Icon( Icons.arrow_back ),
+        onPressed: (){
+          unSelectTask(true);
+        },
+      ),
+
+      title: new Text( "Selected" ),
+
+      actions: [
+
+        new IconButton(
+          icon: new Icon( Icons.delete ),
+          onPressed: (){
+            deleteSelectedTask(true);
+          },
+        ),
+
+      ],
+    );
+
+  }
+
   AppBar searchAppBar(){
 
     return new AppBar(
@@ -469,6 +501,9 @@ class CTAppBar {
   }
 
   AppBar build(context) {
+
+    if( isSelectedTask )
+      return selectedAppBar();
 
     if( isGroup )
       return groupAppBar(context);

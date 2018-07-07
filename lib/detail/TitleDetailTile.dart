@@ -19,7 +19,7 @@ class TitleDetailTile extends StatelessWidget {
     return new ListTile(
 
       leading: new IconButton(
-        icon:  this.completed ? icons.taskCompletedIcon(context) : icons.taskPendingIcon(context),
+        icon:  this.completed ? icons.taskCompletedIcon( false, context) : icons.taskPendingIcon( false, context),
         onPressed: (){
           this.completed ? this.update_completed( false ): this.update_completed( true );
         },

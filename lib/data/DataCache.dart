@@ -35,6 +35,9 @@ class DataCache {
 
   String sortTasks = "";
 
+  List<int> selectedTaskId = new List<int>();
+  bool isSelected = false;
+
   final String dbName = "CleanToDoDB.db";
   TaskProvider taskProvider = new TaskProvider();
   CategoryProvider categoryProvider = new CategoryProvider();
@@ -429,6 +432,15 @@ class DataCache {
       }
     );
 
+  }
+
+  deleteSelectedTask() {
+
+    this.selectedTaskId.forEach( (id) =>
+        deleteTask(
+          tasksData.firstWhere( (_task) => _task.id == id )
+        )
+    );
   }
 
   deleteTask(Task task) {
